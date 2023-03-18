@@ -6911,9 +6911,6 @@
             clickButtonEvent();
             clickTabEvent();
         }
-        window.addEventListener("load", (function(e) {
-            initSliders();
-        }));
         window.addEventListener("resize", (e => {
             bigBannerSlider();
             productSlider();
@@ -7013,7 +7010,7 @@
             } else destroyTabsSwiper();
         }
         function bigBannerSlider() {
-            if (window.innerWidth >= 992 && null === bannerSwiper && isMobile.any()) {
+            if (window.innerWidth >= 992 && null === bannerSwiper && !isMobile.any()) {
                 buildBannerSlider();
                 if (document.querySelector(".big-banner__slider")) bannerSwiper = new core(".big-banner__slider", {
                     modules: [ Navigation, Pagination ],
@@ -7038,7 +7035,7 @@
             } else destroyBannerSwiper();
         }
         function productSlider() {
-            if (window.innerWidth < 991.98 && null === productSwiper && isMobile.any()) {
+            if (window.innerWidth < 991.98 && null === productSwiper) {
                 buildProductSlider();
                 if (document.querySelector(".products__slider")) productSwiper = new core(".products__slider", {
                     allowTouchMove: true,
@@ -7342,6 +7339,7 @@
                     const data = await response.json();
                     if (response.ok) {
                         loadProducts(data);
+                        initSliders();
                         console.log("Data:", data);
                     }
                 } catch (err) {
@@ -7562,6 +7560,7 @@
                     if (response.ok) {
                         console.log("Data:", data);
                         loadRecipes(data);
+                        initSliders();
                     }
                 } catch (err) {
                     console.error(err);
@@ -7630,6 +7629,7 @@
                     if (response.ok) {
                         console.log("Data:", data);
                         loadNews(data);
+                        initSliders();
                     }
                 } catch (err) {
                     console.error(err);

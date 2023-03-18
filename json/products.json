@@ -1,0 +1,312 @@
+{
+   "products": [
+      {
+         "id": "1",
+         "url": "#",
+         "type": "chicken",
+         "product": "fillet",
+         "image": "chicken.png",
+         "title": "Філе стегна курчат бройлерів",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "freezProduct": true,
+         "info": "Заморожений продукт",
+         "storageFrom": "від -18°C",
+         "storageTo": "",
+         "bestBefore": "365 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "2",
+         "url": "#",
+         "type": "chicken",
+         "product": "carcass",
+         "image": "carcass.png",
+         "title": "Тушка ціла в вакуумі",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "freezProduct": true,
+         "info": "Заморожений продукт",
+         "storageFrom": "від -18°C",
+         "storageTo": "",
+         "bestBefore": "365 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "3",
+         "url": "#",
+         "type": "chicken",
+         "product": "lump",
+         "image": "chicken.png",
+         "title": "Гомілки курчат бройлерів",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "freezProduct": true,
+         "info": "Заморожений продукт",
+         "storageFrom": "від -18°C",
+         "storageTo": "",
+         "bestBefore": "365 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "4",
+         "url": "#",
+         "type": "chicken",
+         "product": "fillet",
+         "image": "carcass.png",
+         "title": "Філе курчат бройлерів",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "info": "Заморожений продукт",
+         "freezProduct": true,
+         "storageFrom": "від -18°C",
+         "storageTo": "",
+         "bestBefore": "365 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "5",
+         "url": "#",
+         "type": "chicken",
+         "product": "wings",
+         "image": "chicken.png",
+         "title": "Печінка курчат бройлерів",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "coldProduct": true,
+         "info": "Охолоджений продукт",
+         "storageFrom": "від 0 ",
+         "storageTo": " до +2°C",
+         "bestBefore": "не більше 5 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "6",
+         "url": "#",
+         "type": "chicken",
+         "product": "shin",
+         "image": "carcass.png",
+         "title": "Сердця курчат бройлерів",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "coldProduct": true,
+         "info": "Охолоджений продукт",
+         "storageFrom": "від 0 ",
+         "storageTo": " до +2°C",
+         "bestBefore": "не більше 5 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "7",
+         "url": "#",
+         "type": "chicken",
+         "product": "thigh",
+         "image": "chicken.png",
+         "title": "Маринована печінка",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "info": "Охолоджений продукт",
+         "coldProduct": true,
+         "storageFrom": "від 0 ",
+         "storageTo": " до +2°C",
+         "bestBefore": "365 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "8",
+         "url": "#",
+         "type": "chicken",
+         "product": "offal",
+         "image": "carcass.png",
+         "title": "Шлунки курчат бройлерів",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "info": "Охолоджений продукт",
+         "coldProduct": true,
+         "storageFrom": "від 0",
+         "storageTo": " до +2°C",
+         "bestBefore": "не більше 5 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "10",
+         "url": "#",
+         "type": "souce",
+         "product": "souce-3",
+         "image": "souce.png",
+         "title": "Гострий соус",
+         "freez": "",
+         "cold": "",
+         "info": "",
+         "coldProduct": false,
+         "storageFrom": "від 0",
+         "storageTo": " до +7°C",
+         "bestBefore": "не більше 25 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "11",
+         "url": "#",
+         "type": "souce",
+         "product": "souce-2",
+         "image": "souce.png",
+         "title": "Гострий соус",
+         "freez": "",
+         "cold": "",
+         "info": "",
+         "coldProduct": false,
+         "storageFrom": "від 0",
+         "storageTo": " до +7°C",
+         "bestBefore": "не більше 25 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "12",
+         "url": "#",
+         "type": "souce",
+         "product": "souce-1",
+         "image": "souce.png",
+         "title": "Гострий соус",
+         "freez": "",
+         "cold": "",
+         "info": "",
+         "coldProduct": false,
+         "storageFrom": "від 0",
+         "storageTo": " до +7°C",
+         "bestBefore": "не більше 25 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "13",
+         "url": "#",
+         "type": "stew",
+         "product": "stew-1",
+         "image": "stew.png",
+         "title": "Tушенка",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "info": "Охолоджений продукт",
+         "coldProduct": true,
+         "storageFrom": "від 2",
+         "storageTo": " до +5°C",
+         "bestBefore": "не більше 25 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "14",
+         "url": "#",
+         "type": "stew",
+         "product": "stew-1",
+         "image": "stew.png",
+         "title": "Tушенка",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "info": "Охолоджений продукт",
+         "coldProduct": true,
+         "storageFrom": "від 2",
+         "storageTo": " до +5°C",
+         "bestBefore": "не більше 25 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "15",
+         "url": "#",
+         "type": "stew",
+         "product": "stew-2",
+         "image": "stew.png",
+         "title": "Tушенка",
+         "freez": "freez.png",
+         "cold": "cold.png",
+         "info": "Охолоджений продукт",
+         "coldProduct": true,
+         "storageFrom": "від 2",
+         "storageTo": " до +5°C",
+         "bestBefore": "не більше 25 діб",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      }
+   ]
+}

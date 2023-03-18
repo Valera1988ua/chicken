@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Home</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230318121820" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.min.css?_v=20230318121820">
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<!---HEADER-->
+		<header class="header">
+			<div class="header__top top-header">
+				<div class="top-header__container">
+					<div class="top-header__nav">
+						<a href="index.html" class="top-header__logo"><picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Лого"></picture></a>
+						<div class="top-header__menu menu">
+							<nav class="menu__body">
+								<ul class="menu__list">
+									<li class="menu__item"><a href="" class="menu__link">Продукція</a></li>
+									<li class="menu__item"><a href="" class="menu__link">Рецепти</a></li>
+									<li class="menu__item"><a href="" class="menu__link">Про компанію</a></li>
+									<li class="menu__item"><a href="" class="menu__link">Новини та Акції</a></li>
+									<li class="menu__item"><a href="" class="menu__link">Контакти</a></li>
+								</ul>
+							</nav>
+						</div>
+						<div data-popup="#search" class="top-header__search search">
+							<div class="search__text">Пошук</div>
+							<svg class="search__icon">
+								<use xlink:href="img/icons/icons.svg#search"></use>
+							</svg>
+						</div>
+						<div data-da=".menu__body,767.98" class="top-header__phone phone">
+							<a class="phone__number" href="tel:0 800 10 10 00">0 123 56 78 90</a>
+							<div data-popup="#callback" class="phone__modal">Зворотній зв’язок</div>
+						</div>
+						<button type="button" class="menu__icon icon-menu"><span></span></button>
+					</div>
+				</div>
+				<div class="header__body body-header">
+					<div class="body-header__container">
+						<div class="body-header__title">
+							<div class="body-header__title title-first">
+								<h1 class="title-first__title">Завжди</h1>
+								<p data-da=".second-title,767.98" class="title-first__text">від зерна до курки, знатне м’ясо зі
+									знатним смаком</p>
+							</div>
+							<div class="body-header__title second-title">
+								<span>свіжа</span>та<span>смачна</span>
+							</div>
+						</div>
+						<div class="body-header__image">
+							<picture><source data-srcset="img/header/header-image.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  class="body-header__destop" data-src="img/header/header-image.png" class="lazy" alt="Смачна курка"></picture>
+							<picture><source data-srcset="img/header/basil.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  class="body-header__mobile" data-src="img/header/basil.png" class="lazy" alt="Смачна курка"></picture>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main class="home">
+			<!---SMALL BANNERS-->
+			<section class="home__banner banner">
+				<div class="banner__container">
+					<article class="banner__recipe item-banner">
+						<div class="item-banner__body">
+							<div class="item-banner__image">
+								<picture><source data-srcset="img/small_banner/dish_1.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/small_banner/dish_1.png" class="lazy" alt="Нові рецепти від Знатної Курки"></picture>
+							</div>
+							<div class="item-banner__info">
+								<h2 class="item-banner__title banner-title">Нові рецепти від Смачної Курки</h2>
+								<div class="item-banner__text banner-text">
+									<p>порадуй себе та здивуй рідних</p>
+								</div>
+								<a class="item-banner__link link-banner" href="#">
+									<button class="link-banner__button">До розділу</button>
+									<svg class="link-banner__icon">
+										<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</article>
+					<article class="banner__meatballs  item-banner">
+						<div class="item-banner__body">
+							<div class="item-banner__image">
+								<picture><source data-srcset="img/small_banner/dish_1.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/small_banner/dish_1.png" class="lazy" alt="Мітболи з філе"></picture>
+							</div>
+							<div class="item-banner__info">
+								<h2 class="item-banner__title banner-title">Нові рецепти від Смачної Курки</h2>
+								<div class="item-banner__text banner-text">
+									<p>порадуй себе та здивуй рідних</p>
+								</div>
+								<a href="#" class="item-banner__link link-banner">
+									<button class="link-banner__button">До розділу</button>
+									<svg class="link-banner__icon">
+										<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+									</svg>
+								</a>
+							</div>
+						</div>
+					</article>
+				</div>
+			</section>
+			<!---BIG BANNER-->
+			<section class="home__banner-big big-banner">
+				<div class="big-banner__container">
+					<div class="big-banner__slider">
+						<div class="big-banner__banner-swiper">
+							<div class="big-banner__slide slide-big-banner">
+								<div class="slide-big-banner__body">
+									<div class="slide-big-banner__image-collage collage-image">
+										<div class="collage-image__circle">
+										</div>
+										<div class="collage-image__image">
+											<picture><source data-srcset="img/big_banner/collage.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/collage.png" class="lazy" alt="Колаж"></picture>
+										</div>
+									</div>
+									<div class="slide-big-banner__content">
+										<div class="slide-big-banner__info">
+											<h2 class="slide-big-banner__title banner-title">Готуй смачніше ніж будь-коли</h2>
+											<div class="slide-big-banner__text banner-text">
+												<p>Сотні пошагових рецептів від смачної курки</p>
+											</div>
+											<a class="slide-big-banner__link link-banner" href="#">
+												<button class="link-banner__button">Смачні рецепти</button>
+												<svg class="link-banner__icon">
+													<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+												</svg>
+											</a>
+										</div>
+										<div class="slide-big-banner__image image-circle">
+											<div class="image-circle__circle-1">
+												<div class="image-circle__circle-big big-circle">
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_6.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_6.png" class="lazy" alt="Базилік"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_5.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_5.png" class="lazy" alt="Перець"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_4.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_4.png" class="lazy" alt="Курка"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_3.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_3.png" class="lazy" alt="Спагетті"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_2.png" class="lazy" alt="Помедор"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_1.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_1.png" class="lazy" alt="Лук"></picture>
+													</div>
+												</div>
+											</div>
+											<div class="image-circle__circle-2">
+												<div class="image-circle__circle-small"></div>
+												<div class="image-circle__big-image">
+													<picture><source data-srcset="img/big_banner/big-image2x2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/big-image.png" src="img/big_banner/big-image2x2.jpg" class="lazy" alt="Страва"></picture>
+													<div class="swiper-lazy-preloader"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="big-banner__slide slide-big-banner">
+								<div class="slide-big-banner__body">
+									<div class="slide-big-banner__image-collage collage-image">
+										<div class="collage-image__circle">
+										</div>
+										<div class="collage-image__image">
+											<picture><source data-srcset="img/big_banner/collage.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/collage.png" class="lazy" alt="Колаж"></picture>
+										</div>
+									</div>
+									<div class="slide-big-banner__content">
+										<div class="slide-big-banner__info">
+											<h2 class="slide-big-banner__title banner-title">Готуй смачніше ніж будь-коли</h2>
+											<div class="slide-big-banner__text banner-text">
+												<p>Сотні пошагових рецептів від смачної курки</p>
+											</div>
+											<a class="slide-big-banner__link link-banner" href="#">
+												<button class="link-banner__button">Смачні рецепти</button>
+												<svg class="link-banner__icon">
+													<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+												</svg>
+											</a>
+										</div>
+										<div class="slide-big-banner__image image-circle">
+											<div class="image-circle__circle-1">
+												<div class="image-circle__circle-big big-circle">
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_6.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_6.png" class="lazy" alt="Базилік"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_5.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_5.png" class="lazy" alt="Перець"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_4.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_4.png" class="lazy" alt="Курка"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_3.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_3.png" class="lazy" alt="Спагетті"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_2.png" class="lazy" alt="Помедор"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_1.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_1.png" class="lazy" alt="Лук"></picture>
+													</div>
+												</div>
+											</div>
+											<div class="image-circle__circle-2">
+												<div class="image-circle__circle-small"></div>
+												<div class="image-circle__big-image">
+													<picture><source data-srcset="img/big_banner/big-image2x2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/big-image.png" src="img/big_banner/big-image2x2.jpg" class="lazy" alt="Страва"></picture>
+													<div class="swiper-lazy-preloader"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="big-banner__slide slide-big-banner">
+								<div class="slide-big-banner__body">
+									<div class="slide-big-banner__image-collage collage-image">
+										<div class="collage-image__circle">
+										</div>
+										<div class="collage-image__image">
+											<picture><source data-srcset="img/big_banner/collage.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/collage.png" class="lazy" alt="Колаж"></picture>
+										</div>
+									</div>
+									<div class="slide-big-banner__content">
+										<div class="slide-big-banner__info">
+											<h2 class="slide-big-banner__title banner-title">Готуй смачніше ніж будь-коли</h2>
+											<div class="slide-big-banner__text banner-text">
+												<p>Сотні пошагових рецептів від смачної курки</p>
+											</div>
+											<a class="slide-big-banner__link link-banner" href="#">
+												<button class="link-banner__button">Смачні рецепти</button>
+												<svg class="link-banner__icon">
+													<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+												</svg>
+											</a>
+										</div>
+										<div class="slide-big-banner__image image-circle">
+											<div class="image-circle__circle-1">
+												<div class="image-circle__circle-big big-circle">
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_6.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_6.png" class="lazy" alt="Базилік"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_5.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_5.png" class="lazy" alt="Перець"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_4.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_4.png" class="lazy" alt="Курка"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_3.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_3.png" class="lazy" alt="Спагетті"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_2.png" class="lazy" alt="Помедор"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_1.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_1.png" class="lazy" alt="Лук"></picture>
+													</div>
+												</div>
+											</div>
+											<div class="image-circle__circle-2">
+												<div class="image-circle__circle-small"></div>
+												<div class="image-circle__big-image">
+													<picture><source data-srcset="img/big_banner/big-image2x2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/big-image.png" src="img/big_banner/big-image2x2.jpg" class="lazy" alt="Страва"></picture>
+													<div class="swiper-lazy-preloader"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="big-banner__slide slide-big-banner">
+								<div class="slide-big-banner__body">
+									<div class="slide-big-banner__image-collage collage-image">
+										<div class="collage-image__circle">
+										</div>
+										<div class="collage-image__image">
+											<picture><source data-srcset="img/big_banner/collage.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/collage.png" class="lazy" alt="Колаж"></picture>
+										</div>
+									</div>
+									<div class="slide-big-banner__content">
+										<div class="slide-big-banner__info">
+											<h2 class="slide-big-banner__title banner-title">Готуй смачніше ніж будь-коли</h2>
+											<div class="slide-big-banner__text banner-text">
+												<p>Сотні пошагових рецептів від смачної курки</p>
+											</div>
+											<a class="slide-big-banner__link link-banner" href="#">
+												<button class="link-banner__button">Смачні рецепти</button>
+												<svg class="link-banner__icon">
+													<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+												</svg>
+											</a>
+										</div>
+										<div class="slide-big-banner__image image-circle">
+											<div class="image-circle__circle-1">
+												<div class="image-circle__circle-big big-circle">
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_6.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_6.png" class="lazy" alt="Базилік"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_5.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_5.png" class="lazy" alt="Перець"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_4.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_4.png" class="lazy" alt="Курка"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_3.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_3.png" class="lazy" alt="Спагетті"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_2.png" class="lazy" alt="Перець"></picture>
+													</div>
+													<div class="big-circle__item">
+														<picture><source data-srcset="img/big_banner/image_1.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/image_1.png" class="lazy" alt="Лук"></picture>
+													</div>
+												</div>
+											</div>
+											<div class="image-circle__circle-2">
+												<div class="image-circle__circle-small"></div>
+												<div class="image-circle__big-image">
+													<picture><source data-srcset="img/big_banner/big-image2x2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/big_banner/big-image.png" src="img/big_banner/big-image2x2.jpg" class="lazy" alt="Страва"></picture>
+													<div class="swiper-lazy-preloader"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="swiper-pagination"></div>
+						<!-- Если нужна навигация (влево/вправо) -->
+						<button type="button" class="swiper-button-prev">
+							<svg class="big-banner__arrow-prew">
+								<use xlink:href="img/icons/icons.svg#long-arrow-red"></use>
+							</svg>
+						</button>
+						<button type="button" class="swiper-button-next">
+							<svg class="big-banner__arrow-next">
+								<use xlink:href="img/icons/icons.svg#long-arrow-red"></use>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</section>
+			<!---PRODUCTS-->
+			<section class="home__products poducts">
+				<div class="poducts__container">
+					<div class="poducts__header header-section">
+						<h2 class="products__title title">Наша продукція</h2>
+						<a data-da=".poducts__mobile-link,480.98" href="#" class="products__link link">
+							Вся продукція
+							<svg class="link__icon">
+								<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+							</svg>
+						</a>
+					</div>
+					<div data-tabs class="tabs">
+						<nav id="filterCategory" data-tabs-titles class="tabs__navigation">
+							<button data-category="chicken" type="button" class="tabs__title _tab-active">
+								<svg class="tabs__icon">
+									<use xlink:href="img/icons/icons.svg#chicken-leg"></use>
+								</svg>
+								<span>Знатна</span><span>курка</span></button>
+							<button data-category="souce" type="button" class="tabs__title">
+								<svg svg class="tabs__icon">
+									<use xlink:href="img/icons/icons.svg#sauce"></use>
+								</svg>
+								<span>Знатний</span><span>маринад</span></button>
+							<button data-category="stew" type="button" class="tabs__title">
+								<svg svg class="tabs__icon">
+									<use xlink:href="img/icons/icons.svg#conserved"></use>
+								</svg>
+								<span>Знатна</span><span>тушонка</span></button>
+						</nav>
+						<div id="filterType" data-tabs-body class="tabs__content">
+							<div class="tabs__body tabs__slider">
+								<nav data-type="chicken" class="tabs__nav tabs__tab-swiper">
+									<button data-product="all" class="tabs__button all _active" type="button">Все</button>
+									<button data-product="carcass" class="tabs__button" type="button">Тушка</button>
+									<button data-product="lump" class="tabs__button" type="button">Грудка</button>
+									<button data-product="fillet" class="tabs__button" type="button">Філе</button>
+									<button data-product="wings" class="tabs__button" type="button">Крила</button>
+									<button data-product="shin" class="tabs__button" type="button">Гомілка</button>
+									<button data-product="thigh" class="tabs__button" type="button">Стегно</button>
+									<button data-product="offal" class="tabs__button" type="button">Субпродукти</button>
+								</nav>
+							</div>
+							<div class="tabs__body tabs__slider">
+								<nav data-type="souce" class="tabs__nav souce tabs__tab-swiper">
+									<button data-product="all" class="tabs__button all" type="button">Все</button>
+									<button data-product="souce-1" class="tabs__button" type="button">Маринад 1</button>
+									<button data-product="souce-2" class="tabs__button" type="button">Маринад 2</button>
+									<button data-product="souce-3" class="tabs__button" type="button">Маринад 3</button>
+								</nav>
+							</div>
+							<div class="tabs__body tabs__slider">
+								<nav data-type="stew" class="tabs__nav tabs__tab-swiper">
+									<button data-product="all" class="tabs__button all" type="button">Все</button>
+									<button data-product="stew-1" class="tabs__button" type="button">Тушонка 1</button>
+									<button data-product="stew-2" class="tabs__button" type="button">Тушонка 2</button>
+								</nav>
+							</div>
+						</div>
+					</div>
+					<div class="products__slider">
+						<div id="products" class="products__items items-product products__product-swiper">
+						</div>
+					</div>
+					<div class="poducts__mobile-link link-mobile"></div>
+				</div>
+			</section>
+			<!---RECIPES-->
+			<section class="home__recipes recipes">
+				<div class="recipes__container">
+					<div class="recipes__header header-section">
+						<div class="recipes__info">
+							<h2 class="recipes__title title">Наша продукція</h2>
+							<div class="recipes__text text">тільки найсмачніші</div>
+						</div>
+						<a data-da=".recipes__mobile-link,480.98" href="#" class="recipes__link link">
+							Всі рецепти
+							<svg class="link__icon">
+								<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+							</svg>
+						</a>
+					</div>
+					<div class="recipes__slider">
+						<div id="recipesHome" class="recipes__items items-recipes recipes__recipes_news-swiper">
+						</div>
+					</div>
+					<div class="recipes__mobile-link link-mobile"></div>
+				</div>
+			</section>
+			<!---NEWS AND ACTION-->
+			<section class="home__news news">
+				<div class="news__container">
+					<div class="news__header header-section">
+						<div class="news__info">
+							<h2 class="news__title title">Новини та Акції</h2>
+							<div class="news__text text">цікавинки Смачної Курки</div>
+						</div>
+						<a data-da=".news__mobile-link,600.98" href="#" class="news__link link">
+							Всі новини та акції
+							<svg class="link__icon">
+								<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+							</svg>
+						</a>
+					</div>
+					<div class="news__slider">
+						<div id="newsHome" class="news__items items-news news__recipes_news-swiper">
+						</div>
+					</div>
+					<div class="news__mobile-link link-mobile"></div>
+				</div>
+			</section>
+			<!--BECAUSE-->
+			<section class="page__because because">
+				<div class="because__container">
+					<div class="because__body">
+						<div class="because__info">
+							<h2 class="because__title">Курка знатна — бо смачна</h2>
+							<div class="because__text">
+								<p>
+									Cмачна курка забезпечує покупця завжди свіжим та смачним м’ясом. Ми досягаємо цього завдяки унікальній
+									рецептурі,
+									міжнародним стандартам та контролю всіх етапів виробництва: від зерна до курки!
+								</p>
+							</div>
+							<div class="because__links links-because">
+								<a href="#" class="links-because__link link">
+									Всі рецепти
+									<svg class="link__icon">
+										<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+									</svg>
+								</a>
+								<a href="#" class="links-because__link link">
+									Всі рецепти
+									<svg class="link__icon">
+										<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+									</svg>
+								</a>
+							</div>
+						</div>
+						<div class="because__image">
+							<picture><source data-srcset="img/because/because-chicken.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/because/because-chicken.png" class="lazy" style="width:100%; height: 100%" alt="Курка"></picture>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="home__quality quality">
+				<div class="quality__container">
+					<div class="quality__items items-quality">
+						<div class="items-quality__item">
+							<div class="items-quality__number">
+								<span>01</span>
+							</div>
+							<h4 class="items-quality__title">Тільки природні корми</h4>
+							<div class="items-quality__text">
+								<p>спеціально розроблені, унікальні рецепти кормів з власновирощеного зерна</p>
+							</div>
+						</div>
+						<div class="items-quality__item">
+							<div class="items-quality__number">
+								<span>02</span>
+							</div>
+							<h4 class="items-quality__title">Без гормонів росту</h4>
+							<div class="items-quality__text">
+								<p>наші курочки зростають смачними та знатними без зайвої хімії</p>
+							</div>
+						</div>
+						<div class="items-quality__item">
+							<div class="items-quality__number">
+								<span>03</span>
+							</div>
+							<h4 class="items-quality__title">Жодних консервантів</h4>
+							<div class="items-quality__text">
+								<p>ми поставляємо лише свіжу продукція, тому нема ніяких потреб в консервантах</p>
+							</div>
+						</div>
+						<div class="items-quality__item">
+							<div class="items-quality__number">
+								<span>04</span>
+							</div>
+							<h4 class="items-quality__title">Без антибіотиків та ГМО</h4>
+							<div class="items-quality__text">
+								<p>створили найкращі умови для зростання здорових курочок без антибіотиків та ГМО</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!---BRANDS-->
+			<section class="home__brands brands">
+				<div class="brands__container">
+					<div class="brands__body">
+						<div class="brands__image">
+							<picture><source data-srcset="img/brands/brand.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/brands/brand.png" class="lazy" style="width:100%; height: 100%" alt="Бренд"></picture>
+						</div>
+						<div class="brands__image">
+							<picture><source data-srcset="img/brands/brand.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/brands/brand.png" class="lazy" style="width:100%; height: 100%" alt="Бренд"></picture>
+						</div>
+						<div class="brands__image">
+							<picture><source data-srcset="img/brands/brand.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/brands/brand.png" class="lazy" style="width:100%; height: 100%" alt="Бренд"></picture>
+						</div>
+						<div class="brands__image">
+							<picture><source data-srcset="img/brands/brand.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/brands/brand.png" class="lazy"" style=" width:100%; height: 100%" alt="Бренд"></picture>
+						</div>
+						<div class="brands__image">
+							<picture><source data-srcset="img/brands/brand.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/brands/brand.png" class="lazy" style="width:100%; height: 100%" alt="Бренд"></picture>
+						</div>
+						<div class="brands__image">
+							<picture><source data-srcset="img/brands/brand.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/brands/brand.png" class="lazy" style="width:100%; height: 100%" alt="Бренд"></picture>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!---LOOK-->
+			<section class="home__look look">
+				<div class="look__container">
+					<div class="look__body">
+						<h2 class="look__title">Шукай в своїх улюблених магазинах по всій Україні</h2>
+					</div>
+				</div>
+				<div class="look__map">
+					<picture><source data-srcset="img/look/map.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/look/map.png" class="lazy" alt="Карта України"></picture>
+				</div>
+			</section>
+			<!--CALLBACK-->
+			<section class="home__callback callback">
+				<div class="callback__container">
+					<div class="callback__body">
+						<h3 class="callback__title">Виникли питання?</h3>
+						<div class="callback__text">
+							<p>вкажіть контактні дані і ми з вами зв'яжемось, або перейдіть до розділу контаків та сконтактуйте з нами
+								самостійно</p>
+						</div>
+						<form action="#" data-dev class="callback__form form">
+							<div class="form__item">
+								<input autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
+								<label class="form__label" for="">Ваше ім’я</label>
+							</div>
+							<div class="form__item ">
+								<input autocomplete="on" type="text" name="form[]" data-required="email" data-validate data-error="Введіть Ваш email" placeholder="" class="form__input">
+								<label class="form__label" for="">Ваш email</label>
+							</div>
+							<div class="form__item">
+								<input autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
+								<label class="form__label" for="">Номер телефону</label>
+							</div>
+							<div class="input__item">
+								<textarea data-autoheight data-autoheight-min='130' data-autoheight-max='500' autocomplete="off" name="form[]" placeholder="Повідомлення тут..." data-error="" class="form__input"></textarea>
+							</div>
+							<div class="input__item">
+								<button type="submit" class="form__button">
+									Надіслати повідомлення
+									<svg class="form__icon">
+										<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+									</svg>
+								</button>
+							</div>
+						</form>
+					</div>
+					<div class="callback__image">
+						<picture><source data-srcset="img/form/chicken.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/form/chicken.png" class="lazy" alt="Курка"></picture>
+					</div>
+				</div>
+			</section>
+		</main>
+		<!--FOOTER-->
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__top top-footer">
+					<div class="top-footer__logo">
+						<a href="index.html" class="top-footer__logo"><picture><source data-srcset="img/logo.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/logo.png" class="lazy" alt="Лого"></picture></a>
+					</div>
+					<div class="top-footer__contact contact-top-footer">
+						<div class="contact-top-footer__phone">
+							<h6 class="contact-top-footer__title title-footer">Зателефонуйте</h6>
+							<div class="contact-top-footer__number footer-contact">
+								<div class="contact-top-footer__link">
+									<a href="tel:+38 123 456-78-90">+38 (123)
+										456-78-90</a>
+								</div>
+								<div class="contact-top-footer__link">
+									<a href="tel:+38 123 456-78-90">+38 (123)
+										456-78-90</a>
+								</div>
+							</div>
+						</div>
+						<div class="contact-top-footer__email">
+							<h6 class="contact-top-footer__title title-footer">Напишіть</h6>
+							<div class="contact-top-footer__email footer-contact">
+								<a href="mailto:chicken@mail.com">chicken@mail.com</a>
+							</div>
+						</div>
+						<div class="contact-top-footer__social">
+							<h6 class="contact-top-footer__title title-footer">Відстежуйте</h6>
+							<a href="#" class="contact-top-footer__link">
+								<svg class="contact-top-footer__icon facebook">
+									<use xlink:href="img/icons/icons.svg#facebook"></use>
+								</svg>
+							</a>
+							<a href="#" class="contact-top-footer__link">
+								<svg class="contact-top-footer__icon instagram">
+									<use xlink:href="img/icons/icons.svg#instagram"></use>
+								</svg>
+							</a>
+							<a href="#" class="contact-top-footer__link">
+								<svg class="contact-top-footer__icon twitter">
+									<use xlink:href="img/icons/icons.svg#twitter"></use>
+								</svg>
+							</a>
+							<a href="#" class="contact-top-footer__link">
+								<svg class="contact-top-footer__icon linkedin">
+									<use xlink:href="img/icons/icons.svg#linkedin"></use>
+								</svg>
+							</a>
+						</div>
+					</div>
+					<div class="top-footer__adress adress-top-footer">
+						<h6 class="adress-top-footer__title title-footer">Наша адреса</h6>
+						<div class="adress-top-footer__map footer-contact">
+							<a href="https://goo.gl/maps/7oenX4xPABvLW3Ga6">Україна, 12345, місто Київ
+							</a>
+						</div>
+						<div class="adress-top-footer__company">
+							<h6 class="adress-top-footer__title title-footer">Група компаній «Company»</h6>
+							<a href="https://www.google.com.ua" class="adress-top-footer__link footer-contact">company.com</a>
+						</div>
+						<div class="adress-top-footer__graphic">
+							<h6 class="adress-top-footer__title title-footer">Графік роботи офісу</h6>
+							<div class="adress-top-footer__office footer-contact">Пн – Пт 10:00 - 17:00</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer__down down-footer">
+					<div class="down-footer__copy title-footer">© ТМ Курка</div>
+					<button data-goto-speed="1200" data-goto-header data-goto=".top-header" class="down-footer__arrow arrow-up">
+						<svg class="arrow-up__icon">
+							<use xlink:href="img/icons/icons.svg#long-arrow-red"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</footer>
+	</div>
+	<!--CALLBACK POPUP -->
+	<div id="callback" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body">
+					<h3 class="popup__title">Виникли питання?</h3>
+					<div class="popup__text">вкажіть контактні дані і ми з вами зв'яжемось, або перейдіть до розділу контаків та
+						сконтактуйте з нами самостійно
+					</div>
+					<form action="#" data-popup-message="#form-complete" data-popup-error="#form-error" data-dev class="callback__form form">
+						<div class="form__item">
+							<input autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
+							<label class="form__label" for="">Ваше ім’я</label>
+						</div>
+						<div class="form__item">
+							<input autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
+							<label class="form__label" for="">Номер телефону</label>
+						</div>
+						<div class="input__item">
+							<button type="submit" class="form__button">
+								Надіслати повідомлення
+								<svg class="form__icon">
+									<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+								</svg>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--CALLBACK COMPLETE -->
+	<div id="form-complete" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body complete">
+					<svg class="icon-complete">
+						<use xlink:href="img/icons/icons.svg#complete"></use>
+					</svg>
+					<h3 class="popup__title">Запит відправлено!</h3>
+					<div class="popup__text">Дякуємо за звернення, ми обов’язково зв'яжемося з вами найближчим часом</div>
+					<button data-close class="popup__button">
+						Повернутися до сайту
+						<svg class="popup__icon">
+							<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--CALLBACK ERROR -->
+	<div id="form-error" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body complete">
+					<svg class="icon-error">
+						<use xlink:href="img/icons/icons.svg#error"></use>
+					</svg>
+					<h3 class="popup__title">Щось пішло не так</h3>
+					<div class="popup__text">Нажаль ця форма зараз не працює, ми працюємо над вирішенняім цієї проблеми, якщо
+						вам потрібно сконтактувати з нами,
+						зателефонуйте за будь яким номером на сторінці контаків</div>
+					<a href="#" data-close class="popup__button">
+						До контактів
+						<svg class="popup__icon">
+							<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!---SEARCH-->
+	<div id="search" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body body-input">
+					<div class="body-input__search">
+						<input id="search" type="text" name="" placeholder="Що саме ви шукаєте?">
+						<svg class="body-input__icon">
+							<use xlink:href="img/icons/icons.svg#search"></use>
+						</svg>
+					</div>
+					<ul class="popup__list list-items"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Стилі для body -->
+	<style>
+		.lock body {
+			overflow: hidden;
+			touch-action: none;
+			overscroll-behavior: none;
+		}
+
+		.loading body {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.loaded body {
+			transition: opacity 0.5s ease 0s;
+			opacity: 1;
+			visibility: visible;
+		}
+	</style>
+	<div id="preloader">
+		<!-- Стилі для прелоадера -->
+		<style>
+			* {
+				padding: 0px;
+				margin: 0px;
+				border: 0px;
+			}
+
+			*,
+			*:before,
+			*:after {
+				box-sizing: border-box;
+			}
+
+			/* Головний блок */
+			.preloader {
+				pointer-events: none;
+				z-index: -1;
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			/* Блок з елементами */
+			.preloader__body {
+				padding: 0.93rem;
+				max-width: 31.25rem;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* Блок з лічильником */
+			.preloader__counter {
+				font-size: 10rem;
+			}
+
+			/* Прогресбар */
+			.preloader__line {}
+
+			/* Лінія прогресбару */
+			.preloader__line span {
+				display: inline-block;
+				transition: width 0.2s ease;
+				height: 0.8rem;
+				background-color: #799ADC;
+			}
+		</style>
+		<!-- Скріпт прелоадера -->
+		<script>
+			function preloader() {
+				const preloaderImages = document.querySelector('[data-preloader]') ? document.querySelectorAll('[data-preloader] img') : document.querySelectorAll('img');
+				const preloaderContainer = document.querySelector('#preloader');
+				if (preloaderImages.length) {
+					const preloaderTemplate = `
+					<div class="preloader">
+						<div class="preloader__body">
+							<div class="preloader__counter">0%</div>
+							<div class="preloader__line"><span></span></div>
+						</div>
+					</div>`;
+					document.querySelector('html').insertAdjacentHTML("beforeend", preloaderTemplate);
+
+					const
+						preloader = document.querySelector('.preloader'),
+						showPecentLoad = document.querySelector('.preloader__counter'),
+						showLineLoad = document.querySelector('.preloader__line span'),
+						htmlDocument = document.documentElement;
+
+					let imagesLoadedCount = counter = progress = 0;
+
+					htmlDocument.classList.add('loading');
+					htmlDocument.classList.add('lock');
+
+					preloaderImages.forEach(preloaderImage => {
+						const imgClone = document.createElement('img');
+						if (imgClone) {
+							imgClone.onload = imageLoaded;
+							imgClone.onerror = imageLoaded;
+							preloaderImage.dataset.src ? imgClone.src = preloaderImage.dataset.src : imgClone.src = preloaderImage.src;
+						}
+					});
+
+					function setValueProgress(progress) {
+						showPecentLoad ? showPecentLoad.innerText = `${progress}%` : null;
+						showLineLoad ? showLineLoad.style.width = `${progress}%` : null;
+					}
+					showPecentLoad ? setValueProgress(progress) : null;
+
+					function imageLoaded() {
+						imagesLoadedCount++;
+						progress = Math.round((100 / preloaderImages.length) * imagesLoadedCount);
+						const intervalId = setInterval(() => {
+							counter >= progress ? clearInterval(intervalId) : setValueProgress(++counter);
+							counter >= 100 ? addLoadedClass() : null;
+						}, 10);
+					}
+
+					function addLoadedClass() {
+						htmlDocument.classList.add('loaded');
+						htmlDocument.classList.remove('lock');
+						htmlDocument.classList.remove('loading');
+						setInterval(() => {
+							preloader.remove();
+							preloaderContainer.remove();
+						}, 500);
+					}
+				} else {
+					preloaderContainer.remove();
+				}
+			}
+			preloader();
+		</script>
+	</div>
+	<script src="js/app.min.js?_v=20230318121820"></script>
+</body>
+
+</html>

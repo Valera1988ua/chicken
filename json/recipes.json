@@ -1,0 +1,108 @@
+{
+   "recipes": [
+      {
+         "id": "1",
+         "url": "#",
+         "image": "chickenRamen.png",
+         "title": "Курячий рамен",
+         "text": "з м’ясом стегна та рисовою локшиною",
+         "spicinessIcon": "peppers_2",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "40 хв.",
+               "portion": "1 порція",
+               "complexity": "Складний"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "2",
+         "url": "#",
+         "image": "conCarne.png",
+         "title": "Куряче Чиллі Кон Карне",
+         "text": "з булгуром та соусом «бешамель»",
+         "spicinessIcon": "peppers_2",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "90 хв.",
+               "portion": "2 порція",
+               "complexity": "Складний"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "3",
+         "url": "#",
+         "image": "cesar.png",
+         "title": "Тихуанський Цезар",
+         "text": "з курятиною та соусом з анчоусів",
+         "spicinessIcon": "peppers_1",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "40 хв.",
+               "portion": "1 порція",
+               "complexity": "Складний"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "4",
+         "url": "#",
+         "image": "strips.png",
+         "title": "Пряні стріпси з соусом",
+         "text": "з рисом басматі та соусом «голландез»",
+         "spicinessIcon": "peppers_1",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "45 хв.",
+               "portion": "3 порція",
+               "complexity": "Легкий"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      }
+   ]
+}

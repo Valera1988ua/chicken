@@ -3619,7 +3619,7 @@ button.swiper-pagination-bullet {
   }
 
   .look {
-    padding-bottom: 6.25rem;
+    padding-bottom: 6.25rem !important;
   }
 
   .look__map img {

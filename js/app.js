@@ -3598,6 +3598,26 @@
                 document.documentElement.classList.add(className);
             }));
         }
+        let isMobile = {
+            Android: function() {
+                return navigator.userAgent.match(/Android/i);
+            },
+            BlackBerry: function() {
+                return navigator.userAgent.match(/BlackBerry/i);
+            },
+            iOS: function() {
+                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+            },
+            Opera: function() {
+                return navigator.userAgent.match(/Opera Mini/i);
+            },
+            Windows: function() {
+                return navigator.userAgent.match(/IEMobile/i);
+            },
+            any: function() {
+                return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+            }
+        };
         function FLS(message) {
             setTimeout((() => {
                 if (window.FLS) console.log(message);
@@ -6941,7 +6961,7 @@
             }));
         }
         function recipesNewsSlider() {
-            if (window.innerWidth <= 669.98 && null === recipesSwiper && null === newsSwiper) {
+            if (window.innerWidth <= 669.98 && null === recipesSwiper && null === newsSwiper && isMobile.any()) {
                 buildRecipesNewsSlider();
                 if (document.querySelector(".recipes__slider")) recipesSwiper = new core(".recipes__slider", {
                     observer: true,
@@ -6962,7 +6982,7 @@
             } else destroyRecipesNewsSlider();
         }
         function tabsSlider() {
-            if (window.innerWidth < 860.98 && null === tabsSwiper) {
+            if (window.innerWidth < 860.98 && null === tabsSwiper && isMobile.any()) {
                 buildTabsSlider();
                 if (document.querySelector(".tabs__slider")) tabsSwiper = new core(".tabs__slider", {
                     observer: true,
@@ -6993,7 +7013,7 @@
             } else destroyTabsSwiper();
         }
         function bigBannerSlider() {
-            if (window.innerWidth >= 992 && null === bannerSwiper) {
+            if (window.innerWidth >= 992 && null === bannerSwiper && isMobile.any()) {
                 buildBannerSlider();
                 if (document.querySelector(".big-banner__slider")) bannerSwiper = new core(".big-banner__slider", {
                     modules: [ Navigation, Pagination ],
@@ -7018,7 +7038,7 @@
             } else destroyBannerSwiper();
         }
         function productSlider() {
-            if (window.innerWidth < 991.98 && null === productSwiper) {
+            if (window.innerWidth < 991.98 && null === productSwiper && isMobile.any()) {
                 buildProductSlider();
                 if (document.querySelector(".products__slider")) productSwiper = new core(".products__slider", {
                     allowTouchMove: true,

@@ -6905,9 +6905,6 @@
         let newsSwiper = null;
         function initSliders() {
             bigBannerSlider();
-            tabsSlider();
-            clickButtonEvent();
-            clickTabEvent();
         }
         window.addEventListener("load", (function(e) {
             initSliders();
@@ -6916,7 +6913,8 @@
             bigBannerSlider();
             productSlider();
             tabsSlider();
-            recipesNewsSlider();
+            recipesSlider();
+            newsSlider();
         }));
         function buildBannerSlider() {
             let sliders = document.querySelectorAll('[class*="__banner-swiper"]:not(.swiper-wrapper)');
@@ -6950,25 +6948,25 @@
                 }
             }
         }
-        function buildRecipesNewsSlider() {
-            let sliders = document.querySelectorAll('[class*="__recipes_news-swiper"]:not(.swiper-wrapper)');
+        function buildRecipesSlider() {
+            let sliders = document.querySelectorAll('[class*="__recipes-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
                 slider.classList.add("swiper-wrapper");
                 for (const slide of slider.children) slide.classList.add("swiper-slide");
             }));
         }
-        function recipesNewsSlider() {
-            if (window.innerWidth <= 669.98 && null === recipesSwiper && null === newsSwiper && isMobile.any()) {
-                buildRecipesNewsSlider();
-                if (document.querySelector(".recipes__slider")) recipesSwiper = new core(".recipes__slider", {
-                    observer: true,
-                    observeParents: true,
-                    slidesPerView: 1.3,
-                    spaceBetween: 0,
-                    autoHeight: true,
-                    speed: 800
-                });
+        function buildNewsSlider() {
+            let sliders = document.querySelectorAll('[class*="__news-swiper"]:not(.swiper-wrapper)');
+            if (sliders) sliders.forEach((slider => {
+                slider.parentElement.classList.add("swiper");
+                slider.classList.add("swiper-wrapper");
+                for (const slide of slider.children) slide.classList.add("swiper-slide");
+            }));
+        }
+        function newsSlider() {
+            if (window.innerWidth <= 669.98 && null === newsSwiper && isMobile.any()) {
+                buildNewsSlider();
                 if (document.querySelector(".news__slider")) newsSwiper = new core(".news__slider", {
                     observer: true,
                     observeParents: true,
@@ -6977,7 +6975,20 @@
                     autoHeight: true,
                     speed: 800
                 });
-            } else destroyRecipesNewsSlider();
+            } else destroyNewsSlider();
+        }
+        function recipesSlider() {
+            if (window.innerWidth <= 669.98 && null === recipesSwiper && isMobile.any()) {
+                buildRecipesSlider();
+                if (document.querySelector(".recipes__slider")) recipesSwiper = new core(".recipes__slider", {
+                    observer: true,
+                    observeParents: true,
+                    slidesPerView: 1.3,
+                    spaceBetween: 0,
+                    autoHeight: true,
+                    speed: 800
+                });
+            } else destroyRecipesSlider();
         }
         function tabsSlider() {
             if (window.innerWidth < 860.98 && null === tabsSwiper && isMobile.any()) {
@@ -7116,13 +7127,25 @@
                 }));
             }
         }
-        function destroyRecipesNewsSlider() {
+        function destroyRecipesSlider() {
+            if (window.innerWidth > 670 && null !== recipesSwiper) {
+                recipesSwiper.destroy(true, true);
+                recipesSwiper = null;
+                let sliders = document.querySelectorAll('[class*="__recipes-swiper"]');
+                if (sliders) sliders.forEach((slider => {
+                    slider.parentElement.classList.remove("swiper");
+                    slider.classList.remove("swiper-wrapper");
+                    for (const slide of slider.children) slide.classList.remove("swiper-slide");
+                }));
+            }
+        }
+        function destroyNewsSlider() {
             if (window.innerWidth > 670 && null !== recipesSwiper && null !== newsSwiper) {
                 newsSwiper.destroy(true, true);
                 newsSwiper = null;
                 recipesSwiper.destroy(true, true);
                 recipesSwiper = null;
-                let sliders = document.querySelectorAll('[class*="__recipes_news-swiper"]');
+                let sliders = document.querySelectorAll('[class*="__news-swiper"]');
                 if (sliders) sliders.forEach((slider => {
                     slider.parentElement.classList.remove("swiper");
                     slider.classList.remove("swiper-wrapper");
@@ -7341,6 +7364,9 @@
                     if (response.ok) {
                         loadProducts(data);
                         productSlider();
+                        tabsSlider();
+                        clickButtonEvent();
+                        clickTabEvent();
                         console.log("Data:", data);
                     }
                 } catch (err) {
@@ -7561,7 +7587,7 @@
                     if (response.ok) {
                         console.log("Data:", data);
                         loadRecipes(data);
-                        recipesNewsSlider();
+                        recipesSlider();
                     }
                 } catch (err) {
                     console.error(err);
@@ -7630,7 +7656,7 @@
                     if (response.ok) {
                         console.log("Data:", data);
                         loadNews(data);
-                        recipesNewsSlider();
+                        newsSlider();
                     }
                 } catch (err) {
                     console.error(err);

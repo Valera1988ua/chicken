@@ -7011,7 +7011,7 @@
             } else destroyTabsSwiper();
         }
         function bigBannerSlider() {
-            if (window.innerWidth >= 992 && null === bannerSwiper && !isMobile.any()) {
+            if (window.innerWidth >= 992 && null === bannerSwiper) {
                 buildBannerSlider();
                 if (document.querySelector(".big-banner__slider")) bannerSwiper = new core(".big-banner__slider", {
                     modules: [ Navigation, Pagination ],

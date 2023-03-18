@@ -705,6 +705,11 @@ body::after {
   color: #0036A0;
 }
 
+.swiper-slide {
+  display: -ms-grid !important;
+  display: grid !important;
+}
+
 .header {
   background: -o-linear-gradient(282.1deg, rgba(0, 54, 160, 0.7) 0.3%, rgba(24, 171, 187, 0.7) 118.94%);
   background: linear-gradient(167.9deg, rgba(0, 54, 160, 0.7) 0.3%, rgba(24, 171, 187, 0.7) 118.94%);
@@ -1776,9 +1781,9 @@ body::after {
   position: relative;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: auto 1fr;
+  -ms-grid-rows: 1fr 7.8125rem;
   -ms-grid-columns: 1fr;
-      grid-template: auto 1fr/1fr;
+      grid-template: 1fr 7.8125rem/1fr;
   grid-auto-flow: row;
   border-radius: 0.625rem;
   background: #FFFFFF;
@@ -3461,7 +3466,7 @@ button.swiper-pagination-bullet {
   }
 
   .menu__link {
-    font-size: 2rem;
+    font-size: 1.75rem !important;
     color: #232323;
   }
 }

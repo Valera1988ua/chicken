@@ -6970,8 +6970,8 @@
                 if (document.querySelector(".news__slider")) newsSwiper = new core(".news__slider", {
                     observer: true,
                     observeParents: true,
-                    slidesPerView: 1.3,
-                    spaceBetween: 0,
+                    slidesPerView: 1.2,
+                    spaceBetween: 10,
                     autoHeight: true,
                     speed: 800
                 });
@@ -6983,8 +6983,8 @@
                 if (document.querySelector(".recipes__slider")) recipesSwiper = new core(".recipes__slider", {
                     observer: true,
                     observeParents: true,
-                    slidesPerView: 1.3,
-                    spaceBetween: 0,
+                    slidesPerView: 1.2,
+                    spaceBetween: 10,
                     autoHeight: true,
                     speed: 800
                 });
@@ -7089,7 +7089,15 @@
                         if (sliders) sliders.forEach((slider => {
                             for (const slide of slider.children) {
                                 const slideProduct = slide.dataset.product;
-                                if ("all" !== product) productSwiper.slideTo(0); else if (slideProduct !== product) productSwiper.slideTo(0); else productSwiper.slideTo(0);
+                                if ("all" !== product) {
+                                    destroyProductSwiper();
+                                    productSlider();
+                                    productSwiper.slideTo(0);
+                                } else if (slideProduct !== product) {
+                                    destroyProductSwiper();
+                                    productSlider();
+                                    productSwiper.slideTo(0);
+                                }
                             }
                         }));
                     }
@@ -7114,14 +7122,9 @@
                             if (!targetElement && category !== type || iconTabCategory !== type || spanTabs !== type) {
                                 if (swiperClass) swiperClass.style.display = "none";
                                 destroyProductSwiper();
-                                buildProductSlider();
+                                productSlider();
                                 productSwiper.slideTo(0);
-                            } else {
-                                if (swiperClass) swiperClass.style.display = "";
-                                destroyProductSwiper();
-                                buildProductSlider();
-                                productSwiper.slideTo(0);
-                            }
+                            } else if (swiperClass) swiperClass.style.display = "";
                         }));
                     }));
                 }));
@@ -7173,7 +7176,7 @@
                 if (sliders) sliders.forEach((slider => {
                     slider.parentElement.classList.remove("swiper");
                     slider.classList.remove("swiper-wrapper");
-                    for (const slide of slider.children) slide.classList.remove("swiper-slide");
+                    for (const slide of slider.children) if (slide.classList.contains("swiper-slide")) slide.classList.remove("swiper-slide");
                 }));
             }
         }
@@ -7815,6 +7818,7 @@
                     let inputs = form.querySelectorAll("input,textarea");
                     for (let index = 0; index < inputs.length; index++) {
                         const el = inputs[index];
+                        el.classList.remove("_form-done");
                         el.parentElement.classList.remove("_form-focus");
                         el.classList.remove("_form-focus");
                         formValidate.removeError(el);

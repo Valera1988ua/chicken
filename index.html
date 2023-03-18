@@ -6,8 +6,8 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230318142714" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.min.css?_v=20230318142714">
+	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230318195104" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.min.css?_v=20230318195104">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -426,7 +426,7 @@
 				<div class="recipes__container">
 					<div class="recipes__header header-section">
 						<div class="recipes__info">
-							<h2 class="recipes__title title">Наша продукція</h2>
+							<h2 class="recipes__title title">Рецепти</h2>
 							<div class="recipes__text text">тільки найсмачніші</div>
 						</div>
 						<a data-da=".recipes__mobile-link,480.98" href="#" class="recipes__link link">
@@ -466,7 +466,7 @@
 				</div>
 			</section>
 			<!--BECAUSE-->
-			<section class="page__because because">
+			<section class="home__because because">
 				<div class="because__container">
 					<div class="because__body">
 						<div class="because__info">
@@ -586,7 +586,7 @@
 							<p>вкажіть контактні дані і ми з вами зв'яжемось, або перейдіть до розділу контаків та сконтактуйте з нами
 								самостійно</p>
 						</div>
-						<form action="#" data-dev class="callback__form form">
+						<form action="#" data-popup-message="#form-complete" data-popup-error="#form-error" data-dev class="callback__form form">
 							<div class="form__item">
 								<input id="firstname" autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
 								<label class="form__label" for="firstname">Ваше ім’я</label>
@@ -712,12 +712,12 @@
 					</div>
 					<form action="#" data-popup-message="#form-complete" data-popup-error="#form-error" data-dev class="callback__form form">
 						<div class="form__item">
-							<input id="firstname" autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
-							<label class="form__label" for="firstname">Ваше ім’я</label>
+							<input id="popupFirstname" autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
+							<label class="form__label" for="popupFirstname">Ваше ім’я</label>
 						</div>
 						<div class="form__item">
-							<input id="phone" autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
-							<label class="form__label" for="phone">Номер телефону</label>
+							<input id="popupPhone" autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
+							<label class="form__label" for="popupPhone">Номер телефону</label>
 						</div>
 						<div class="input__item">
 							<button type="submit" class="form__button">
@@ -948,7 +948,7 @@
 			preloader();
 		</script>
 	</div>
-	<script src="js/app.min.js?_v=20230318142714"></script>
+	<script src="js/app.min.js?_v=20230318195104"></script>
 </body>
 
 </html>

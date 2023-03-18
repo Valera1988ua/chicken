@@ -6905,12 +6905,13 @@
         let newsSwiper = null;
         function initSliders() {
             bigBannerSlider();
-            productSlider();
             tabsSlider();
-            recipesNewsSlider();
             clickButtonEvent();
             clickTabEvent();
         }
+        window.addEventListener("load", (function(e) {
+            initSliders();
+        }));
         window.addEventListener("resize", (e => {
             bigBannerSlider();
             productSlider();
@@ -7339,7 +7340,7 @@
                     const data = await response.json();
                     if (response.ok) {
                         loadProducts(data);
-                        initSliders();
+                        productSlider();
                         console.log("Data:", data);
                     }
                 } catch (err) {
@@ -7560,7 +7561,7 @@
                     if (response.ok) {
                         console.log("Data:", data);
                         loadRecipes(data);
-                        initSliders();
+                        recipesNewsSlider();
                     }
                 } catch (err) {
                     console.error(err);
@@ -7629,7 +7630,7 @@
                     if (response.ok) {
                         console.log("Data:", data);
                         loadNews(data);
-                        initSliders();
+                        recipesNewsSlider();
                     }
                 } catch (err) {
                     console.error(err);

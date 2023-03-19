@@ -7121,12 +7121,18 @@
                             const swiperClass = nav.closest(".swiper-wrapper");
                             if (!targetElement && category !== type || iconTabCategory !== type || spanTabs !== type) {
                                 if (swiperClass) swiperClass.style.display = "none";
+                                destroyProductSwiper();
+                                productSlider();
+                                productSwiper.slideTo(0);
                             } else {
                                 if (swiperClass) swiperClass.style.display = "";
                                 destroyProductSwiper();
                                 productSlider();
                                 productSwiper.slideTo(0);
                             }
+                            destroyProductSwiper();
+                            productSlider();
+                            productSwiper.slideTo(0);
                         }));
                     }));
                 }));

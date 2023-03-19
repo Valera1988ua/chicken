@@ -7380,8 +7380,10 @@
                     console.log("Finally");
                 }
             }
-            function loadProducts(data) {
-                const productsBlock = document.querySelector("#products");
+        }));
+        function loadProducts(data) {
+            const productsBlock = document.querySelector("#products");
+            if (productsBlock) {
                 data.products.forEach((item => {
                     const id = item.id, url = item.url, type = item.type, product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
                     let productTemplate = "";
@@ -7401,185 +7403,193 @@
                 productsAction(productsBlock);
                 filterCategoryProducts(productsBlock);
             }
-            function spanClear(productsBlock) {
-                const spanFreez = productsBlock.querySelectorAll(".small-image__freez");
-                const spanCold = productsBlock.querySelectorAll(".small-image__cold");
-                spanFreez.forEach((freez => {
-                    const parent = freez.closest(".small-image__item");
-                    const image = parent.querySelector("img");
-                    if ("" === freez.textContent) {
-                        freez.style.display = "none";
-                        image.style.opacity = "0.5";
-                    }
+        }
+        function spanClear(productsBlock) {
+            const spanFreez = productsBlock.querySelectorAll(".small-image__freez");
+            const spanCold = productsBlock.querySelectorAll(".small-image__cold");
+            spanFreez.forEach((freez => {
+                const parent = freez.closest(".small-image__item");
+                const image = parent.querySelector("img");
+                if ("" === freez.textContent) {
+                    freez.style.display = "none";
+                    image.style.opacity = "0.5";
+                }
+            }));
+            spanCold.forEach((cold => {
+                const parent = cold.closest(".small-image__item");
+                const image = parent.querySelector("img");
+                if ("" === cold.textContent) {
+                    cold.style.display = "none";
+                    image.style.opacity = "0.5";
+                }
+            }));
+        }
+        function hideSmallImage(productsBlock) {
+            const productsArray = productsBlock.querySelectorAll(".items-product__item");
+            productsArray.forEach((productType => {
+                const {type} = productType.dataset;
+                const smallImageBlock = productType.querySelectorAll(".small-image img");
+                const smallImageBlockSpan = productType.querySelectorAll(".small-image__item span");
+                smallImageBlock.forEach((img => {
+                    if ("souce" === type || "stew" === type) img.remove();
                 }));
-                spanCold.forEach((cold => {
-                    const parent = cold.closest(".small-image__item");
-                    const image = parent.querySelector("img");
-                    if ("" === cold.textContent) {
-                        cold.style.display = "none";
-                        image.style.opacity = "0.5";
-                    }
+                smallImageBlockSpan.forEach((span => {
+                    if ("souce" === type || "stew" === type) span.remove();
                 }));
-            }
-            function hideSmallImage(productsBlock) {
-                const productsArray = productsBlock.querySelectorAll(".items-product__item");
-                productsArray.forEach((productType => {
-                    const {type} = productType.dataset;
-                    const smallImageBlock = productType.querySelectorAll(".small-image img");
-                    const smallImageBlockSpan = productType.querySelectorAll(".small-image__item span");
-                    smallImageBlock.forEach((img => {
-                        if ("souce" === type || "stew" === type) img.remove();
-                    }));
-                    smallImageBlockSpan.forEach((span => {
-                        if ("souce" === type || "stew" === type) span.remove();
-                    }));
-                }));
-            }
-            function smallImageAction(target) {
-                const spanBlock = target.querySelector(".small-image");
-                const spanCold = spanBlock.querySelector(".small-image__cold");
-                if (target.closest(".items-product")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
-            }
-            function productsAction(productsBlock) {
-                const productArray = productsBlock.querySelectorAll(".items-product__item");
-                productArray.forEach((product => {
-                    product.addEventListener("mouseenter", (e => {
-                        const targetElement = e.target;
-                        if (targetElement.closest(".items-product")) {
-                            const productHideInfo = targetElement.querySelector(".info-hide");
-                            if (productHideInfo.style.maxHeight) productHideInfo.style.maxHeight = null; else {
+            }));
+        }
+        function smallImageAction(target) {
+            const spanBlock = target.querySelector(".small-image");
+            const spanCold = spanBlock.querySelector(".small-image__cold");
+            if (target.closest(".items-product")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
+        }
+        function productsAction(productsBlock) {
+            const productArray = productsBlock.querySelectorAll(".items-product__item");
+            productArray.forEach((product => {
+                product.addEventListener("mouseenter", (e => {
+                    e.preventDefault();
+                    const targetElement = e.target;
+                    if (targetElement.closest(".items-product")) {
+                        const productHideInfo = targetElement.querySelector(".info-hide");
+                        if (productHideInfo.style.maxHeight) productHideInfo.style.maxHeight = null; else {
+                            productHideInfo.style.maxHeight = null;
+                            productHideInfo.style.maxHeight = productHideInfo.scrollHeight + "px";
+                            productHideInfo.classList.add("_show");
+                            targetElement.classList.add("_show");
+                            smallImageAction(targetElement);
+                        }
+                        targetElement.addEventListener("mouseleave", (e => {
+                            e.preventDefault();
+                            if (productHideInfo.style.maxHeight) {
                                 productHideInfo.style.maxHeight = null;
-                                productHideInfo.style.maxHeight = productHideInfo.scrollHeight + "px";
-                                productHideInfo.classList.add("_show");
-                                targetElement.classList.add("_show");
+                                productHideInfo.classList.remove("_show");
+                                targetElement.classList.remove("_show");
                                 smallImageAction(targetElement);
                             }
-                            targetElement.addEventListener("mouseleave", (e => {
-                                if (productHideInfo.style.maxHeight) {
-                                    productHideInfo.style.maxHeight = null;
-                                    productHideInfo.classList.remove("_show");
-                                    targetElement.classList.remove("_show");
-                                    smallImageAction(targetElement);
-                                }
-                            }));
-                        }
-                    }));
+                        }));
+                    }
+                }));
+            }));
+        }
+        function filterCategoryProducts(productsBlock) {
+            const productArray = productsBlock.querySelectorAll(".items-product__item");
+            const filterProductsCategory = document.querySelector("#filterCategory");
+            const filterTabsCategory = filterProductsCategory.querySelectorAll(".tabs__title");
+            const filterTabsType = document.querySelector("#filterType");
+            const filterTypeBlock = filterTabsType.querySelectorAll(".tabs__nav>.tabs__button");
+            const filterButtonHasAllClass = filterTabsType.querySelectorAll(".tabs__button.all");
+            filterTypeBlock.forEach((button => {
+                button.addEventListener("click", (e => {
+                    e.preventDefault();
+                    const targetElement = e.target;
+                    const {product} = targetElement.dataset;
+                    const typeProductBlock = targetElement.closest("[data-type]").dataset.type;
+                    if (!targetElement.classList.contains("_active")) {
+                        remove_Class();
+                        targetElement.classList.add("_active");
+                        productArray.forEach((item => {
+                            const {type} = item.dataset;
+                            const categoryProduct = item.dataset.product;
+                            if (type === typeProductBlock) if (product && "all" !== product && !categoryProduct.includes(product)) {
+                                item.classList.add("_hide");
+                                setTimeout((() => {
+                                    item.style.display = "none";
+                                    item.hidden = true;
+                                }), 500);
+                            } else {
+                                item.classList.add("_hide");
+                                setTimeout((() => {
+                                    item.style.display = "";
+                                    item.classList.remove("_hide");
+                                    item.hidden = false;
+                                }), 500);
+                            }
+                        }));
+                    }
+                }));
+            }));
+            filterTabsCategory.forEach((button => {
+                const {category} = button.dataset;
+                const activeTab = button.classList.contains("_tab-active");
+                productsTabsAction(category, activeTab);
+                button.addEventListener("click", (e => {
+                    e.preventDefault;
+                    const targetElement = e.target;
+                    const iconTab = targetElement.closest(".tabs__title");
+                    if (targetElement.classList.contains("tabs__title") || iconTab && !targetElement.classList.contains("_tab-active")) {
+                        findActiveTab(targetElement);
+                        remove_Class();
+                        add_Class();
+                    }
+                }));
+            }));
+            function findActiveTab(el) {
+                const {category} = el.dataset;
+                const iconTabCategory = el.closest(".tabs__title").dataset.category;
+                const spanTabs = el.closest(".tabs__title").dataset.category;
+                productArray.forEach((product => {
+                    const {type} = product.dataset;
+                    if (el && category === type || iconTabCategory === type || spanTabs === type) {
+                        product.classList.remove("_hide");
+                        setTimeout((() => {
+                            product.style.display = "";
+                            product.hidden = false;
+                        }), 300);
+                    } else {
+                        product.classList.add("_hide");
+                        setTimeout((() => {
+                            product.style.display = "none";
+                            product.hidden = true;
+                        }), 300);
+                    }
                 }));
             }
-            function filterCategoryProducts(productsBlock) {
-                const productArray = productsBlock.querySelectorAll(".items-product__item");
+            function productsTabsAction(productType, activeTab) {
+                productArray.forEach((product => {
+                    const {type} = product.dataset;
+                    if (activeTab) if (productType === type) {
+                        product.classList.remove("_hide");
+                        setTimeout((() => {
+                            product.style.display = "";
+                            product.hidden = false;
+                        }), 300);
+                    } else {
+                        product.classList.add("_hide");
+                        setTimeout((() => {
+                            product.style.display = "none";
+                            product.hidden = true;
+                        }), 300);
+                    }
+                }));
+            }
+            function remove_Class() {
+                filterTypeBlock.forEach((button => {
+                    button.classList.remove("_active");
+                }));
+            }
+            function add_Class() {
+                filterButtonHasAllClass.forEach((button => {
+                    button.classList.add("_active");
+                }));
+            }
+            function resizeTabs() {
                 const filterProductsCategory = document.querySelector("#filterCategory");
                 const filterTabsCategory = filterProductsCategory.querySelectorAll(".tabs__title");
-                const filterTabsType = document.querySelector("#filterType");
-                const filterTypeBlock = filterTabsType.querySelectorAll(".tabs__nav>.tabs__button");
-                const filterButtonHasAllClass = filterTabsType.querySelectorAll(".tabs__button.all");
-                filterTypeBlock.forEach((button => {
-                    button.addEventListener("click", (e => {
-                        e.preventDefault();
-                        const targetElement = e.target;
-                        const {product} = targetElement.dataset;
-                        const typeProductBlock = targetElement.closest("[data-type]").dataset.type;
-                        if (!targetElement.classList.contains("_active")) {
-                            remove_Class();
-                            targetElement.classList.add("_active");
-                            productArray.forEach((item => {
-                                const {type} = item.dataset;
-                                const categoryProduct = item.dataset.product;
-                                if (type === typeProductBlock) if (product && "all" !== product && !categoryProduct.includes(product)) {
-                                    item.classList.add("_hide");
-                                    setTimeout((() => {
-                                        item.style.display = "none";
-                                    }), 500);
-                                } else {
-                                    item.classList.add("_hide");
-                                    setTimeout((() => {
-                                        item.style.display = "";
-                                        item.classList.remove("_hide");
-                                    }), 500);
-                                }
-                            }));
-                        }
-                    }));
-                }));
-                filterTabsCategory.forEach((button => {
-                    const {category} = button.dataset;
-                    const activeTab = button.classList.contains("_tab-active");
-                    productsTabsAction(category, activeTab);
-                    button.addEventListener("click", (e => {
-                        e.preventDefault;
-                        const targetElement = e.target;
-                        const iconTab = targetElement.closest(".tabs__title");
-                        if (targetElement.classList.contains("tabs__title") || iconTab && !targetElement.classList.contains("_tab-active")) {
-                            findActiveTab(targetElement);
-                            remove_Class();
-                            add_Class();
-                        }
-                    }));
-                }));
-                function findActiveTab(el) {
-                    const {category} = el.dataset;
-                    const iconTabCategory = el.closest(".tabs__title").dataset.category;
-                    const spanTabs = el.closest(".tabs__title").dataset.category;
-                    productArray.forEach((product => {
-                        const {type} = product.dataset;
-                        if (el && category === type || iconTabCategory === type || spanTabs === type) {
-                            product.classList.remove("_hide");
-                            setTimeout((() => {
-                                product.style.display = "";
-                            }), 300);
-                        } else {
-                            product.classList.add("_hide");
-                            setTimeout((() => {
-                                product.style.display = "none";
-                            }), 300);
-                        }
-                    }));
-                }
-                function productsTabsAction(productType, activeTab) {
-                    productArray.forEach((product => {
-                        const {type} = product.dataset;
-                        if (activeTab) if (productType === type) {
-                            product.classList.remove("_hide");
-                            setTimeout((() => {
-                                product.style.display = "";
-                            }), 300);
-                        } else {
-                            product.classList.add("_hide");
-                            setTimeout((() => {
-                                product.style.display = "none";
-                            }), 300);
-                        }
-                    }));
-                }
-                function remove_Class() {
-                    filterTypeBlock.forEach((button => {
-                        button.classList.remove("_active");
-                    }));
-                }
-                function add_Class() {
-                    filterButtonHasAllClass.forEach((button => {
-                        button.classList.add("_active");
-                    }));
-                }
-                function resizeTabs() {
-                    const filterProductsCategory = document.querySelector("#filterCategory");
-                    const filterTabsCategory = filterProductsCategory.querySelectorAll(".tabs__title");
-                    filterTabsCategory.forEach((tab => {
-                        let spanText = tab.children[2].textContent;
-                        if (window.innerWidth <= 610) {
-                            tab.children[1].style.display = "none";
-                            tab.children[2].textContent = toUpperCase(spanText);
-                        } else {
-                            tab.children[1].style.display = "block";
-                            tab.children[2].textContent = toLoverCase(spanText);
-                        }
-                    }));
-                }
-                window.addEventListener("resize", (e => {
-                    resizeTabs();
+                filterTabsCategory.forEach((tab => {
+                    let spanText = tab.children[2].textContent;
+                    if (window.innerWidth <= 610) {
+                        tab.children[1].style.display = "none";
+                        tab.children[2].textContent = toUpperCase(spanText);
+                    } else {
+                        tab.children[1].style.display = "block";
+                        tab.children[2].textContent = toLoverCase(spanText);
+                    }
                 }));
             }
-        }));
+            window.addEventListener("resize", (e => {
+                resizeTabs();
+            }));
+        }
         window.addEventListener("load", (e => {
             const file = "json/recipes.json";
             getRecipes();
@@ -7602,29 +7612,32 @@
             }
             function loadRecipes(data) {
                 const recipesBlock = document.querySelector("#recipesHome");
-                data.recipes.forEach((item => {
-                    const id = item.id, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
-                    let recipesTemplate = "";
-                    const recipesItem = `\n           <article id="${id}" class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}">\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <h3 class="items-recipes__title">${title}</h3>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
-                    info.forEach((value => {
-                        const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n              <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                  <span>${value.time}</span>\n              </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                    <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                  <span>${value.complexity}</span>\n              </div>\n           </div>\n            `;
-                        recipesTemplate += recipesItem;
-                        recipesTemplate += specificationRecipes;
+                if (recipesBlock) {
+                    data.recipes.forEach((item => {
+                        const id = item.id, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
+                        let recipesTemplate = "";
+                        const recipesItem = `\n           <article id="${id}" class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}">\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <h3 class="items-recipes__title">${title}</h3>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
+                        info.forEach((value => {
+                            const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n              <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                  <span>${value.time}</span>\n              </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                    <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                  <span>${value.complexity}</span>\n              </div>\n           </div>\n            `;
+                            recipesTemplate += recipesItem;
+                            recipesTemplate += specificationRecipes;
+                        }));
+                        energyValue.forEach((value => {
+                            const recipesItemHideInfo = `<div class="items-recipes__hide hide-recipes-items">\n            <div class="hide-recipes-items__info">${energyText}</div>\n               <div class="hide-recipes-items__energy">\n                 <div class="hide-recipes-items__kkal">\n                   <h6 class="hide-recipes-items__title">${value.kkal}</h6>\n                    <div class="hide-recipes-items__text">колорії</div>\n                  </div>\n                     <div class="hide-recipes-items__protein">\n                      <h6 class="hide-recipes-items__title">${value.protein}</h6>\n                       <div class="hide-recipes-items__text">білки</div>\n                   </div>\n                    <div class="hide-recipes-items__fat">\n                     <h6 class="hide-recipes-items__title">${value.fat}</h6>\n                     <div class="hide-recipes-items__text">жири</div>\n                  </div>\n               </div>\n            </div>\n               `;
+                            recipesTemplate += recipesItemHideInfo;
+                            recipesTemplate += `</article>`;
+                        }));
+                        recipesBlock.insertAdjacentHTML("beforeend", recipesTemplate);
+                        lazyMedia.update();
                     }));
-                    energyValue.forEach((value => {
-                        const recipesItemHideInfo = `<div class="items-recipes__hide hide-recipes-items">\n            <div class="hide-recipes-items__info">${energyText}</div>\n               <div class="hide-recipes-items__energy">\n                 <div class="hide-recipes-items__kkal">\n                   <h6 class="hide-recipes-items__title">${value.kkal}</h6>\n                    <div class="hide-recipes-items__text">колорії</div>\n                  </div>\n                     <div class="hide-recipes-items__protein">\n                      <h6 class="hide-recipes-items__title">${value.protein}</h6>\n                       <div class="hide-recipes-items__text">білки</div>\n                   </div>\n                    <div class="hide-recipes-items__fat">\n                     <h6 class="hide-recipes-items__title">${value.fat}</h6>\n                     <div class="hide-recipes-items__text">жири</div>\n                  </div>\n               </div>\n            </div>\n               `;
-                        recipesTemplate += recipesItemHideInfo;
-                        recipesTemplate += `</article>`;
-                    }));
-                    recipesBlock.insertAdjacentHTML("beforeend", recipesTemplate);
-                    lazyMedia.update();
-                }));
-                recipesAction(recipesBlock);
+                    recipesAction(recipesBlock);
+                }
             }
             function recipesAction(recipesBlock) {
                 const recipesArray = recipesBlock.querySelectorAll(".items-recipes__item");
                 recipesArray.forEach((recipes => {
                     recipes.addEventListener("mouseenter", (e => {
+                        e.preventDefault();
                         const targetElement = e.target;
                         const recipesHideInfo = targetElement.querySelector(".hide-recipes-items");
                         const recipesInfo = targetElement.querySelector(".items-recipes__info");
@@ -7637,6 +7650,7 @@
                                 targetElement.classList.add("_show");
                             }
                             targetElement.addEventListener("mouseleave", (e => {
+                                e.preventDefault();
                                 if (recipesHideInfo.style.maxHeight && recipesInfo.classList.contains("_show")) {
                                     recipesHideInfo.classList.remove("_show");
                                     recipesInfo.classList.remove("_show");
@@ -7671,7 +7685,7 @@
             }
             function loadNews(data) {
                 const newsBlock = document.querySelector("#newsHome");
-                data.news.forEach((item => {
+                if (newsBlock) data.news.forEach((item => {
                     const id = item.id, url = item.url, image = item.image, logo = item.logo, title = item.title, date = item.date, type = item.type;
                     let newsTemplate = "";
                     const newsItem = `\n                <article id="${id}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo">\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}">\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <h3 class="items-news__title">${title}</h3>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type">${type}</div>\n              `;

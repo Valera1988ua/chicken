@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>404</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230319145332" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.min.css?_v=20230319145332">
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header error-header">
+			<div class="header__top top-header">
+				<div class="top-header__container">
+					<div class="top-header__nav">
+						<a href="index.html" class="top-header__logo"><picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Лого"></picture></a>
+						<div class="top-header__menu menu">
+							<nav class="menu__body">
+								<ul class="menu__list">
+									<li class="menu__item"><a href="#" class="menu__link">Продукція</a></li>
+									<li class="menu__item"><a href="#" class="menu__link">Рецепти</a></li>
+									<li class="menu__item"><a href="#" class="menu__link">Про компанію</a></li>
+									<li class="menu__item"><a href="#" class="menu__link">Новини та Акції</a></li>
+									<li class="menu__item"><a href="#" class="menu__link">Контакти</a></li>
+								</ul>
+							</nav>
+						</div>
+						<div data-popup="#search" class="top-header__search search">
+							<div class="search__text">Пошук</div>
+							<svg class="search__icon">
+								<use xlink:href="img/icons/icons.svg#search"></use>
+							</svg>
+						</div>
+						<div data-da=".menu__body,767.98" class="top-header__phone phone">
+							<a class="phone__number" href="tel:0 800 10 10 00">0 123 56 78 90</a>
+							<div data-popup="#callback" class="phone__modal">Зворотній зв’язок</div>
+						</div>
+						<button type="button" class="menu__icon icon-menu"><span></span></button>
+					</div>
+				</div>
+		</header>
+		<main class="page__error error">
+			<div class="error__container">
+				<div class="error__image">
+					<picture><source data-srcset="img/header/header-image.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/header/header-image.png" class="lazy" alt="Курча"></picture>
+				</div>
+				<div class="error__info">
+					<h3 class="error__title">Упс... 404</h3>
+					<div class="error__text">ми запитали в кожної курочки, ало ніхто з них не знає куди подівалася ця
+						сторінка</div>
+					<button type="button" class="error__button">
+						<a href="index.html" aria-label="home">
+							До головної
+							<svg class="error__icon">
+								<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+							</svg>
+						</a>
+					</button>
+				</div>
+			</div>
+		</main>
+	</div>
+	<!--CALLBACK POPUP -->
+	<div id="callback" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body">
+					<h3 class="popup__title">Виникли питання?</h3>
+					<div class="popup__text">вкажіть контактні дані і ми з вами зв'яжемось, або перейдіть до розділу контаків та
+						сконтактуйте з нами самостійно
+					</div>
+					<form action="#" data-popup-message="#form-complete" data-popup-error="#form-error" data-dev class="callback__form form">
+						<div class="form__item">
+							<input id="popupFirstname" autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
+							<label class="form__label" for="popupFirstname">Ваше ім’я</label>
+						</div>
+						<div class="form__item">
+							<input id="popupPhone" autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
+							<label class="form__label" for="popupPhone">Номер телефону</label>
+						</div>
+						<div class="input__item">
+							<button type="submit" class="form__button">
+								Надіслати повідомлення
+								<svg class="form__icon">
+									<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+								</svg>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--CALLBACK COMPLETE -->
+	<div id="form-complete" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body complete">
+					<svg class="icon-complete">
+						<use xlink:href="img/icons/icons.svg#complete"></use>
+					</svg>
+					<h3 class="popup__title">Запит відправлено!</h3>
+					<div class="popup__text">Дякуємо за звернення, ми обов’язково зв'яжемося з вами найближчим часом</div>
+					<button data-close class="popup__button">
+						Повернутися до сайту
+						<svg class="popup__icon">
+							<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--CALLBACK ERROR -->
+	<div id="form-error" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body complete">
+					<svg class="icon-error">
+						<use xlink:href="img/icons/icons.svg#error"></use>
+					</svg>
+					<h3 class="popup__title">Щось пішло не так</h3>
+					<div class="popup__text">Нажаль ця форма зараз не працює, ми працюємо над вирішенняім цієї проблеми, якщо
+						вам потрібно сконтактувати з нами,
+						зателефонуйте за будь яким номером на сторінці контаків</div>
+					<a href="#" data-close class="popup__button">
+						До контактів
+						<svg class="popup__icon">
+							<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!---SEARCH-->
+	<div id="search" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body body-input">
+					<div class="body-input__search">
+						<input id="search" aria-label="Search" type="text" name="" placeholder="Що саме ви шукаєте?">
+						<svg class="body-input__icon">
+							<use xlink:href="img/icons/icons.svg#search"></use>
+						</svg>
+					</div>
+					<ul class="popup__list list-items"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/app.min.js?_v=20230319145332"></script>
+</body>
+
+</html>

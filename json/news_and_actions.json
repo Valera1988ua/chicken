@@ -2,7 +2,7 @@
    "news": [
       {
          "id": "1",
-         "url": "#",
+         "url": "news.html",
          "image": "chicken.png",
          "logo": "logo.png",
          "title": "На 15% більше, за ту саму вартість",
@@ -11,7 +11,7 @@
       },
       {
          "id": "2",
-         "url": "#",
+         "url": "news.html",
          "image": "open.png",
          "logo": "logo.png",
          "title": "Купуй звичайну + мариновану курку, та отримай -15% на чек",
@@ -20,7 +20,7 @@
       },
       {
          "id": "3",
-         "url": "#",
+         "url": "news.html",
          "image": "open.png",
          "logo": "logo.png",
          "title": "Відкриття нового магазину в Києві",
@@ -29,7 +29,7 @@
       },
       {
          "id": "4",
-         "url": "#",
+         "url": "news.html",
          "image": "chicken.png",
          "logo": "logo.png",
          "title": "Зроби селфі зі Знатною Куркою, та бери участь в розіграші Iphone 13",

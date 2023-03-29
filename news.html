@@ -2,7 +2,7 @@
 <html lang="uk-UA">
 
 <head>
-	<title>404</title>
+	<title>News</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
@@ -46,27 +46,152 @@
 					</div>
 				</div>
 		</header>
-		<!--ERROR 404-->
-		<main class="page__error error">
-			<div class="error__container">
-				<div class="error__image">
-					<picture><source data-srcset="img/header/header-image.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/header/header-image.png" class="lazy" alt="Курча"></picture>
-				</div>
-				<div class="error__info">
-					<h3 class="error__title">Упс... 404</h3>
-					<div class="error__text">ми запитали в кожної курочки, ало ніхто з них не знає куди подівалася ця
-						сторінка</div>
-					<button type="button" class="error__button">
-						<a href="index.html" aria-label="home">
-							До головної
-							<svg class="error__icon">
-								<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
-							</svg>
-						</a>
-					</button>
+		<!--CONTACTS-->
+		<main class="page">
+			<div class="page__news-actions news-actions">
+				<div class="news-actions__small-container">
+					<div class="news-actions__header">
+						<div class="news-actions__links text">
+							<a href="index.html" class="news-actions__link">Головна / </a>
+							<a href="#" class="news__link">Новини та Акції /</a>
+						</div>
+						<div id="date" class="news-actions__date">
+						</div>
+					</div>
+					<div id="content" class="news-actions__content"></div>
+					<div class="news-actions__text">
+						<p>Але щоб ви зрозуміли, звідки виникає це хибне уявлення людей, цуратись насолоди і вихваляти
+							страждання, я розкрию перед
+							вами всю картину і роз’ясню, що саме говорив цей чоловік, який відкрив істину, якого я б назвав
+							зодчим щасливого життя.
+							Дійсно, ніхто не відкидає, не зневажає, не уникає насолод тільки через те, що це насолоди, але лише
+							через те, що тих,
+							хто не вміє розумно вдаватися насолоді, осягають великі страждання.
+							Так само як немає нікого, хто полюбивши, вважав за краще і зажадав би саме страждання тільки за те,
+							що це страждання, а
+							не тому, що інший раз виникають такі обставини, коли страждання і біль приносять якесь і чималу
+							насолоду.</p>
+					</div>
+					<div class="news-actions__contact">
+						<div class="news-actions__social social">
+							<a href="#" class="social__link" aria-label="Facebook">
+								<svg class="social__icon facebook">
+									<use xlink:href="img/icons/icons.svg#facebook"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Instagram">
+								<svg class="social__icon instagram">
+									<use xlink:href="img/icons/icons.svg#instagram"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Twitter">
+								<svg class="social__icon twitter">
+									<use xlink:href="img/icons/icons.svg#twitter"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Linkedin">
+								<svg class="social__icon linkedin">
+									<use xlink:href="img/icons/icons.svg#linkedin"></use>
+								</svg>
+							</a>
+						</div>
+						<div class="news__all-news">
+							<a href="#" class="news__link link">
+								Всі новини
+								<svg class="link__icon">
+									<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+								</svg>
+							</a>
+						</div>
+					</div>
+					<div class="news-actions__more more-news">
+						<h3 class="more-news__title">Вас також може зацікавити</h3>
+						<div class="news__slider">
+							<div id="newsHome" class="news__items items-news news__news-swiper">
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</main>
+		<!--FOOTER-->
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__top top-footer">
+					<div class="top-footer__logo">
+						<a href="index.html" class="top-footer__logo"><picture><source data-srcset="img/logo.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/logo.png" class="lazy" alt="Лого"></picture></a>
+					</div>
+					<div class="top-footer__contact contact-top-footer">
+						<div class="contact-top-footer__phone">
+							<h6 class="contact-top-footer__title title-footer">Зателефонуйте</h6>
+							<div class="contact-top-footer__number footer-contact">
+								<div class="contact-top-footer__link">
+									<a href="tel:+38 123 456-78-90" aria-label="Phone">+38 (123)
+										456-78-90</a>
+								</div>
+								<div class="contact-top-footer__link">
+									<a href="tel:+38 123 456-78-90" aria-label="Phone">+38 (123)
+										456-78-90</a>
+								</div>
+							</div>
+						</div>
+						<div class="contact-top-footer__email">
+							<h6 class="contact-top-footer__title title-footer">Напишіть</h6>
+							<div class="contact-top-footer__email footer-contact">
+								<a href="mailto:chicken@mail.com" aria-label="Email">chicken@mail.com</a>
+							</div>
+						</div>
+						<div class="contact-top-footer__social social">
+							<h6 class="contact-top-footer__title title-footer">Відстежуйте</h6>
+							<a href="#" class="social__link" aria-label="Facebook">
+								<svg class="social__icon facebook">
+									<use xlink:href="img/icons/icons.svg#facebook"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Instagram">
+								<svg class="social__icon instagram">
+									<use xlink:href="img/icons/icons.svg#instagram"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Twitter">
+								<svg class="social__icon twitter">
+									<use xlink:href="img/icons/icons.svg#twitter"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Linkedin">
+								<svg class="social__icon linkedin">
+									<use xlink:href="img/icons/icons.svg#linkedin"></use>
+								</svg>
+							</a>
+						</div>
+					</div>
+					<div class="top-footer__adress adress-top-footer">
+						<h6 class="adress-top-footer__title title-footer">Наша адреса</h6>
+						<div class="adress-top-footer__map footer-contact">
+							<a href="https://goo.gl/maps/7oenX4xPABvLW3Ga6" target="_blank" aria-label="Україна">Україна, 12345, місто Київ
+							</a>
+						</div>
+						<div class="adress-top-footer__company">
+							<h6 class="adress-top-footer__title title-footer">Група компаній «Company»</h6>
+							<a href="https://www.google.com.ua" target="_blank" aria-label="Company" class="adress-top-footer__link footer-contact">company.com</a>
+						</div>
+						<div class="adress-top-footer__graphic">
+							<h6 class="adress-top-footer__title title-footer">Графік роботи офісу</h6>
+							<div class="adress-top-footer__office footer-contact">Пн – Пт 10:00 - 17:00</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer__down down-footer">
+					<div class="down-footer__copy title-footer">© ТМ Курка</div>
+					<button data-goto-speed="1000" data-goto-header data-goto=".top-header" class="down-footer__arrow arrow-up">
+						<svg class="arrow-up__icon">
+							<use xlink:href="img/icons/icons.svg#long-arrow-red"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+	</div>
+	</footer>
 	</div>
 	<!--CALLBACK POPUP -->
 	<div id="callback" aria-hidden="true" class="popup">

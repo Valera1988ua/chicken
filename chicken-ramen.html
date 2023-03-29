@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="uk-UA">
+
+<head>
+	<title>Recipe</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<!-- <style>body{opacity: 0;}</style> -->
+	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230330012243" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.min.css?_v=20230330012243">
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<!---HEADER-->
+		<header class="header header-white">
+			<div class="header__top top-header">
+				<div class="top-header__container">
+					<div class="top-header__nav">
+						<a href="index.html" class="top-header__logo"><picture><source srcset="img/logo.webp" type="image/webp"><img src="img/logo.png" alt="Лого"></picture></a>
+						<div class="top-header__menu menu">
+							<nav class="menu__body">
+								<ul class="menu__list">
+									<li class="menu__item"><a href="#" class="menu__link">Продукція</a></li>
+									<li class="menu__item"><a href="#" class="menu__link">Рецепти</a></li>
+									<li class="menu__item"><a href="about.html" class="menu__link">Про компанію</a></li>
+									<li class="menu__item"><a href="#" class="menu__link">Новини та Акції</a></li>
+									<li class="menu__item"><a href="contacts.html" class="menu__link">Контакти</a></li>
+								</ul>
+							</nav>
+						</div>
+						<div data-popup="#search" class="top-header__search search">
+							<div class="search__text">Пошук</div>
+							<svg class="search__icon">
+								<use xlink:href="img/icons/icons.svg#search"></use>
+							</svg>
+						</div>
+						<div data-da=".menu__body,767.98" class="top-header__phone phone">
+							<a class="phone__number" href="tel:0 800 10 10 00">0 123 56 78 90</a>
+							<div data-popup="#callback" class="phone__modal">Зворотній зв’язок</div>
+						</div>
+						<button type="button" class="menu__icon icon-menu"><span></span></button>
+					</div>
+				</div>
+		</header>
+		<!--CONTACTS-->
+		<main class="page">
+			<div class="page__ramen ramen">
+				<div class="ramen__recipe-container">
+					<div id="ramenInfo" class="ramen__block"></div>
+					<div data-tabs class="tabs">
+						<nav id="recipeNav" data-tabs-titles class="tabs__navigation recipe-nav">
+							<button type="button" class="tabs__title ">
+								<svg class="tabs__icon">
+									<use xlink:href="img/icons/icons.svg#chicken-leg"></use>
+								</svg>
+								<span>Що</span><span>потрібно</span></button>
+							<button type="button" class="tabs__title ">
+								<svg class="tabs__icon">
+									<use xlink:href="img/icons/icons.svg#chef"></use>
+								</svg>
+								<span>Як</span><span>готувати</span></button>
+							<button type="button" class="tabs__title ">
+								<svg class="tabs__icon">
+									<use xlink:href="img/icons/icons.svg#nutrition"></use>
+								</svg>
+								<span>Харчова</span><span>цінність</span></button>
+						</nav>
+						<div data-tabs-body class="tabs__content">
+							<div class="tabs__body body-recipe">
+								<div class="body-recipe__image image-items">
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/fillet.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/fillet.png" class="lazy" alt="Філе"></picture>
+										</div>
+										<div class="image-items__title">
+											<a href="#" class="image-items__link">Знатне Філе
+												<svg class="image-items__icon">
+													<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+												</svg>
+											</a>
+										</div>
+										<div class="image-items__quality"><span>200 грам</span></div>
+									</div>
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/garlic.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/garlic.png" class="lazy" alt="Часник"></picture>
+										</div>
+										<div class="image-items__title">Часник</div>
+										<div class="image-items__quality"><span>2 зубчики</span></div>
+									</div>
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/fresh_tomato.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/fresh_tomato.png" class="lazy" alt="Помідор свіжий"></picture>
+										</div>
+										<div class="image-items__title">Помідор свіжий</div>
+										<div class="image-items__quality"><span>1 штука</span></div>
+									</div>
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/pepper.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/pepper.png" class="lazy" alt="Перець"></picture>
+										</div>
+										<div class="image-items__title">Перець</div>
+										<div class="image-items__quality"><span>за смаком</span></div>
+									</div>
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/baguette.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/baguette.png" class="lazy" alt="Багет"></picture>
+										</div>
+										<div class="image-items__title">Багет</div>
+										<div class="image-items__quality"><span>100 грам</span></div>
+									</div>
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/parmesan_cheese.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/parmesan_cheese.png" class="lazy" alt="Сир Пармезан"></picture>
+										</div>
+										<div class="image-items__title">Сир Пармезан</div>
+										<div class="image-items__quality"><span>60 грам</span></div>
+									</div>
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/Lettuce_salad.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/Lettuce_salad.png" class="lazy" alt="Салат Латук"></picture>
+										</div>
+										<div class="image-items__title">Салат Латук</div>
+										<div class="image-items__quality"><span>200 грам</span></div>
+									</div>
+									<div class="image-items__item">
+										<div class="image-items__image">
+											<picture><source data-srcset="img/recipe_images/mayonnaise.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/recipe_images/mayonnaise.png" class="lazy" alt="Майонез"></picture>
+										</div>
+										<div class="image-items__title">Майонез</div>
+										<div class="image-items__quality"><span>140 грам</span></div>
+									</div>
+								</div>
+								<div class="image-items__to-taste">*Сіль, рослинна олія та будь-які спеції на ваш смак</div>
+							</div>
+							<div class="tabs__body body-recipe">
+								<ol class="body-recipe__list">
+									<li class="body-recipe__item">Знатні грудки посоліть і обсмажуйте на розігрітій сковороді
+										з олією з кожного боку по <span>4 хв</span>, після чого зробіть жар плити
+										близько мінімума, щільно накрийте кришкою та доведіть до готовності ще приблизно <span>10
+											хвилин</span>. Наріжте скибочками перед
+										додаванням в салат.</li>
+									<li class="body-recipe__item"><span class="body-recipe__span-bg">Заправка:</span>Змішайте
+										майонез з часником, сіллю та молотим перцем,
+										додайте рослинну олію,
+										та <span>1/4</span> від Пармезану у мілко
+										натертому вигляді.</li>
+									<li class="body-recipe__item">Промийте листя салату, нарвіть його руками, або наріжте
+										на зручні для
+										вас шматочки і
+										складіть у миску в якій робили
+										заправку, обежерно змішайте салат з заправкою.</li>
+									<li class="body-recipe__item">Багет наріжте так, як вам буде зручно його їсти, кубиками,
+										скибочками
+										чи брусочками,
+										увімкніть духовку, та виставте
+										температуру від <span>180 до 200 °C</span> та готуйте до ледь рум’яної скоринки, вони
+										повинні бути
+										золотавими та хрусткими зовні,
+										але м’якими в середині.</li>
+									<li class="body-recipe__item">Далі потрібно довільно нарізати помідори (на ваш смак),
+										Пармезан
+										перетворити на тонкі
+										скибочки за допомогою овочечистки.</li>
+									<li class="body-recipe__item">Викладіть на тарілку салатне листя із заправкою.
+										Покладіть скибочки
+										знатно обсмаженої
+										курячої грудки, додайте сухарики,
+										помідори та скибочки Пармезану.</li>
+									<li class="body-recipe__item">Полийте салат заправкою, що залишилася та подавайте відразу,
+										щоб
+										сухарики не розмокли.
+									</li>
+								</ol>
+							</div>
+							<div class="tabs__body body-recipe-parameters">
+								<div class="body-recipe-parameters__grid">
+									<div class="body-recipe-parameters__exactly">
+										<div class="body-recipe-parameters__title">Що саме:</div>
+										<ul class="body-recipe-parameters__list">
+											<li class="body-recipe-parameters__item">
+												Калорії
+											</li>
+											<li class="body-recipe-parameters__item">
+												Вуглеводи
+											</li>
+											<li class="body-recipe-parameters__item">
+												Жири
+											</li>
+											<li class="body-recipe-parameters__item">
+												Протеїни (білки)
+											</li>
+											<li class="body-recipe-parameters__item">
+												Транс-Жири
+											</li>
+											<li class="body-recipe-parameters__item">
+												Цукор
+											</li>
+											<li class="body-recipe-parameters__item">
+												Харчові волокна
+											</li>
+											<li class="body-recipe-parameters__item">
+												Холестерин
+											</li>
+											<li class="body-recipe-parameters__item">
+												Натрий
+											</li>
+										</ul>
+									</div>
+									<div class="body-recipe-parameters__quantity">
+										<div class="body-recipe-parameters__title">Кількість:</div>
+										<ul class="body-recipe-parameters__list">
+											<li class="body-recipe-parameters__item">
+												760ккал
+											</li>
+											<li class="body-recipe-parameters__item">
+												73г
+											</li>
+											<li class="body-recipe-parameters__item">
+												14г
+											</li>
+											<li class="body-recipe-parameters__item">
+												48г
+											</li>
+											<li class="body-recipe-parameters__item">
+												6г
+											</li>
+											<li class="body-recipe-parameters__item">
+												4г
+											</li>
+											<li class="body-recipe-parameters__item">
+												32г
+											</li>
+											<li class="body-recipe-parameters__item">
+												155мг
+											</li>
+											<li class="body-recipe-parameters__item">
+												270мг
+											</li>
+										</ul>
+									</div>
+									<div class="body-recipe-parameters__norms">
+										<div class="body-recipe-parameters__title">% норми/д</div>
+										<ul class="body-recipe-parameters__list">
+											<li class="body-recipe-parameters__item">
+												33%
+											</li>
+											<li class="body-recipe-parameters__item">
+												11%
+											</li>
+											<li class="body-recipe-parameters__item">
+												20%
+											</li>
+											<li class="body-recipe-parameters__item">
+												15%
+											</li>
+											<li class="body-recipe-parameters__item">
+												8%
+											</li>
+											<li class="body-recipe-parameters__item">
+												22%
+											</li>
+											<li class="body-recipe-parameters__item">
+												19%
+											</li>
+											<li class="body-recipe-parameters__item">
+												10%
+											</li>
+											<li class="body-recipe-parameters__item">
+												9%
+											</li>
+										</ul>
+									</div>
+								</div>
+								<div class="body-recipe-parameters__allergens">
+									<div class="body-recipe-parameters__title">
+										<span>*</span>Алергени:
+									</div>
+									<p>Пшениця,молоко</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="news-actions__contact">
+						<div class="news-actions__social social">
+							<a href="#" class="social__link" aria-label="Facebook">
+								<svg class="social__icon facebook">
+									<use xlink:href="img/icons/icons.svg#facebook"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Instagram">
+								<svg class="social__icon instagram">
+									<use xlink:href="img/icons/icons.svg#instagram"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Twitter">
+								<svg class="social__icon twitter">
+									<use xlink:href="img/icons/icons.svg#twitter"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Linkedin">
+								<svg class="social__icon linkedin">
+									<use xlink:href="img/icons/icons.svg#linkedin"></use>
+								</svg>
+							</a>
+						</div>
+						<div class="news__all-news">
+							<a href="#" class="news__link link">
+								Усі рецепти
+								<svg class="link__icon">
+									<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+								</svg>
+							</a>
+						</div>
+					</div>
+					<div class="ramen__more more-recipes">
+						<h3 class="more-recipes__title">Вас також може зацікавити</h3>
+						<div class="more-recipes__block">
+							<div class="recipes__slider">
+								<div id="recipesHome" class="recipes__items items-recipes recipes__recipes-swiper">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<!--FOOTER-->
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="footer__top top-footer">
+					<div class="top-footer__logo">
+						<a href="index.html" class="top-footer__logo"><picture><source data-srcset="img/logo.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" type="image/webp"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="  data-src="img/logo.png" class="lazy" alt="Лого"></picture></a>
+					</div>
+					<div class="top-footer__contact contact-top-footer">
+						<div class="contact-top-footer__phone">
+							<h6 class="contact-top-footer__title title-footer">Зателефонуйте</h6>
+							<div class="contact-top-footer__number footer-contact">
+								<div class="contact-top-footer__link">
+									<a href="tel:+38 123 456-78-90" aria-label="Phone">+38 (123)
+										456-78-90</a>
+								</div>
+								<div class="contact-top-footer__link">
+									<a href="tel:+38 123 456-78-90" aria-label="Phone">+38 (123)
+										456-78-90</a>
+								</div>
+							</div>
+						</div>
+						<div class="contact-top-footer__email">
+							<h6 class="contact-top-footer__title title-footer">Напишіть</h6>
+							<div class="contact-top-footer__email footer-contact">
+								<a href="mailto:chicken@mail.com" aria-label="Email">chicken@mail.com</a>
+							</div>
+						</div>
+						<div class="contact-top-footer__social social">
+							<h6 class="contact-top-footer__title title-footer">Відстежуйте</h6>
+							<a href="#" class="social__link" aria-label="Facebook">
+								<svg class="social__icon facebook">
+									<use xlink:href="img/icons/icons.svg#facebook"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Instagram">
+								<svg class="social__icon instagram">
+									<use xlink:href="img/icons/icons.svg#instagram"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Twitter">
+								<svg class="social__icon twitter">
+									<use xlink:href="img/icons/icons.svg#twitter"></use>
+								</svg>
+							</a>
+							<a href="#" class="social__link" aria-label="Linkedin">
+								<svg class="social__icon linkedin">
+									<use xlink:href="img/icons/icons.svg#linkedin"></use>
+								</svg>
+							</a>
+						</div>
+					</div>
+					<div class="top-footer__adress adress-top-footer">
+						<h6 class="adress-top-footer__title title-footer">Наша адреса</h6>
+						<div class="adress-top-footer__map footer-contact">
+							<a href="https://goo.gl/maps/7oenX4xPABvLW3Ga6" target="_blank" aria-label="Україна">Україна, 12345, місто Київ
+							</a>
+						</div>
+						<div class="adress-top-footer__company">
+							<h6 class="adress-top-footer__title title-footer">Група компаній «Company»</h6>
+							<a href="https://www.google.com.ua" target="_blank" aria-label="Company" class="adress-top-footer__link footer-contact">company.com</a>
+						</div>
+						<div class="adress-top-footer__graphic">
+							<h6 class="adress-top-footer__title title-footer">Графік роботи офісу</h6>
+							<div class="adress-top-footer__office footer-contact">Пн – Пт 10:00 - 17:00</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer__down down-footer">
+					<div class="down-footer__copy title-footer">© ТМ Курка</div>
+					<button data-goto-speed="1000" data-goto-header data-goto=".top-header" class="down-footer__arrow arrow-up">
+						<svg class="arrow-up__icon">
+							<use xlink:href="img/icons/icons.svg#long-arrow-red"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+	</div>
+	</footer>
+	</div>
+	<!--CALLBACK POPUP -->
+	<div id="callback" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body">
+					<h3 class="popup__title">Виникли питання?</h3>
+					<div class="popup__text">вкажіть контактні дані і ми з вами зв'яжемось, або перейдіть до розділу контаків та
+						сконтактуйте з нами самостійно
+					</div>
+					<form action="#" data-popup-message="#form-complete" data-popup-error="#form-error" data-dev class="callback__form form">
+						<div class="form__item">
+							<input id="firstname" autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
+							<label class="form__label" for="firstname">Ваше ім’я</label>
+						</div>
+						<div class="form__item">
+							<input id="phone" autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
+							<label class="form__label" for="phone">Номер телефону</label>
+						</div>
+						<div class="input__item">
+							<button type="submit" class="form__button">
+								Надіслати повідомлення
+								<svg class="form__icon">
+									<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+								</svg>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--CALLBACK COMPLETE -->
+	<div id="form-complete" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body complete">
+					<svg class="icon-complete">
+						<use xlink:href="img/icons/icons.svg#complete"></use>
+					</svg>
+					<h3 class="popup__title">Запит відправлено!</h3>
+					<div class="popup__text">Дякуємо за звернення, ми обов’язково зв'яжемося з вами найближчим часом</div>
+					<button data-close class="popup__button">
+						Повернутися до сайту
+						<svg class="popup__icon">
+							<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--CALLBACK ERROR -->
+	<div id="form-error" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body complete">
+					<svg class="icon-error">
+						<use xlink:href="img/icons/icons.svg#error"></use>
+					</svg>
+					<h3 class="popup__title">Щось пішло не так</h3>
+					<div class="popup__text">Нажаль ця форма зараз не працює, ми працюємо над вирішенняім цієї проблеми, якщо
+						вам потрібно сконтактувати з нами,
+						зателефонуйте за будь яким номером на сторінці контаків</div>
+					<a href="#" data-close class="popup__button">
+						До контактів
+						<svg class="popup__icon">
+							<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!---SEARCH-->
+	<div id="search" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<button data-close type="button" class="popup__close popup-close">
+					<svg class="popup-close__icon">
+						<use xlink:href="img/icons/icons.svg#close"></use>
+					</svg>
+				</button>
+				<div class="popup__body body-input">
+					<div class="body-input__search">
+						<input id="search" aria-label="Search" type="text" name="" placeholder="Що саме ви шукаєте?">
+						<svg class="body-input__icon">
+							<use xlink:href="img/icons/icons.svg#search"></use>
+						</svg>
+					</div>
+					<ul class="popup__list list-items"></ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Стилі для body -->
+	<style>
+		.lock body {
+			overflow: hidden;
+			touch-action: none;
+			overscroll-behavior: none;
+		}
+
+		.loading body {
+			opacity: 0;
+			visibility: hidden;
+		}
+
+		.loaded body {
+			transition: opacity 0.5s ease 0s;
+			opacity: 1;
+			visibility: visible;
+		}
+	</style>
+	<div id="preloader">
+		<!-- Стилі для прелоадера -->
+		<style>
+			* {
+				padding: 0px;
+				margin: 0px;
+				border: 0px;
+			}
+
+			*,
+			*:before,
+			*:after {
+				box-sizing: border-box;
+			}
+
+			/* Головний блок */
+			.preloader {
+				pointer-events: none;
+				z-index: -1;
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+
+			/* Блок з елементами */
+			.preloader__body {
+				padding: 0.93rem;
+				max-width: 31.25rem;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* Блок з лічильником */
+			.preloader__counter {
+				font-size: 10rem;
+			}
+
+			/* Прогресбар */
+			.preloader__line {}
+
+			/* Лінія прогресбару */
+			.preloader__line span {
+				display: inline-block;
+				transition: width 0.2s ease;
+				height: 0.8rem;
+				background-color: #799ADC;
+			}
+		</style>
+		<!-- Скріпт прелоадера -->
+		<script>
+			function preloader() {
+				const preloaderImages = document.querySelector('[data-preloader]') ? document.querySelectorAll('[data-preloader] img') : document.querySelectorAll('img');
+				const preloaderContainer = document.querySelector('#preloader');
+				if (preloaderImages.length) {
+					const preloaderTemplate = `
+					<div class="preloader">
+						<div class="preloader__body">
+							<div class="preloader__counter">0%</div>
+							<div class="preloader__line"><span></span></div>
+						</div>
+					</div>`;
+					document.querySelector('html').insertAdjacentHTML("beforeend", preloaderTemplate);
+
+					const
+						preloader = document.querySelector('.preloader'),
+						showPecentLoad = document.querySelector('.preloader__counter'),
+						showLineLoad = document.querySelector('.preloader__line span'),
+						htmlDocument = document.documentElement;
+
+					let imagesLoadedCount = counter = progress = 0;
+
+					htmlDocument.classList.add('loading');
+					htmlDocument.classList.add('lock');
+
+					preloaderImages.forEach(preloaderImage => {
+						const imgClone = document.createElement('img');
+						if (imgClone) {
+							imgClone.onload = imageLoaded;
+							imgClone.onerror = imageLoaded;
+							preloaderImage.dataset.src ? imgClone.src = preloaderImage.dataset.src : imgClone.src = preloaderImage.src;
+						}
+					});
+
+					function setValueProgress(progress) {
+						showPecentLoad ? showPecentLoad.innerText = `${progress}%` : null;
+						showLineLoad ? showLineLoad.style.width = `${progress}%` : null;
+					}
+					showPecentLoad ? setValueProgress(progress) : null;
+
+					function imageLoaded() {
+						imagesLoadedCount++;
+						progress = Math.round((100 / preloaderImages.length) * imagesLoadedCount);
+						const intervalId = setInterval(() => {
+							counter >= progress ? clearInterval(intervalId) : setValueProgress(++counter);
+							counter >= 100 ? addLoadedClass() : null;
+						}, 10);
+					}
+
+					function addLoadedClass() {
+						htmlDocument.classList.add('loaded');
+						htmlDocument.classList.remove('lock');
+						htmlDocument.classList.remove('loading');
+						setInterval(() => {
+							preloader.remove();
+							preloaderContainer.remove();
+						}, 500);
+					}
+				} else {
+					preloaderContainer.remove();
+				}
+			}
+			preloader();
+		</script>
+	</div>
+	<script src="js/app.min.js?_v=20230330012243"></script>
+</body>
+
+</html>

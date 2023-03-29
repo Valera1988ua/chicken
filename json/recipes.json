@@ -2,19 +2,23 @@
    "recipes": [
       {
          "id": "1",
-         "url": "#",
+         "url": "chicken-ramen.html",
          "image": "chickenRamen.png",
+         "ramenPageImage": "chickenRamen_page.png",
          "title": "Курячий рамен",
          "text": "з м’ясом стегна та рисовою локшиною",
          "spicinessIcon": "peppers_2",
          "timeIcon": "time.png",
          "personIcon": "person.png",
          "hardIcon": "hard.png",
+         "groupIcon": "group.png",
          "info": [
             {
                "time": "40 хв.",
                "portion": "1 порція",
-               "complexity": "Складний"
+               "complexity": "Складний",
+               "recipeComplexity": "Низька складність",
+               "inPortion": "3 порції"
             }
          ],
          "energyText": "На 100г готової страви",
@@ -24,11 +28,12 @@
                "protein": "17",
                "fat": "4"
             }
-         ]
+         ],
+         "recipeHistory": "Рецепт з'явився 4 липня 1924 року в День Незалежності, коли в невеликий ресторанчик шефа Цезаря Гардіні в Тихуані раптово наринув натовп американських туристів у пошуках випивки.Ресторан, не розрахований на таку кількість відвідувачів, швидко залишився без закусок, і тоді містер Гардіні, щоб не втратити обличчя, на ходу придумав простий салат з яєць, салатного листя і сухариків, приправлений соусом власного приготування. Цей салат згодом став дуже популярним і його назвали ім'ям автора «Цезар»."
       },
       {
          "id": "2",
-         "url": "#",
+         "url": "chicken-ramen.html",
          "image": "conCarne.png",
          "title": "Куряче Чиллі Кон Карне",
          "text": "з булгуром та соусом «бешамель»",
@@ -54,11 +59,11 @@
       },
       {
          "id": "3",
-         "url": "#",
+         "url": "chicken-ramen.html",
          "image": "cesar.png",
          "title": "Тихуанський Цезар",
          "text": "з курятиною та соусом з анчоусів",
-         "spicinessIcon": "peppers_1",
+         "spicinessIcon": "peppers_2",
          "timeIcon": "time.png",
          "personIcon": "person.png",
          "hardIcon": "hard.png",
@@ -80,11 +85,11 @@
       },
       {
          "id": "4",
-         "url": "#",
+         "url": "chicken-ramen.html",
          "image": "strips.png",
          "title": "Пряні стріпси з соусом",
          "text": "з рисом басматі та соусом «голландез»",
-         "spicinessIcon": "peppers_1",
+         "spicinessIcon": "peppers_2",
          "timeIcon": "time.png",
          "personIcon": "person.png",
          "hardIcon": "hard.png",

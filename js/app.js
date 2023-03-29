@@ -3789,6 +3789,62 @@
             bodyUnlock();
             document.documentElement.classList.remove("menu-open");
         }
+        const productFile = "json/products.json";
+        const recipesFile = "json/recipes.json";
+        const newsFile = "json/news_and_actions.json";
+        window.addEventListener("load", (() => {
+            const fetchJsonData = async url => {
+                const response = await fetch(url);
+                const data = await response.json();
+                return data;
+            };
+            const urls = [ productFile, recipesFile, newsFile ];
+            const promises = urls.map((url => fetchJsonData(url)));
+            Promise.all(promises).then((data => {
+                const allData = data.reduce(((acc, cur) => acc.concat(cur)), []);
+                searchFilter(allData);
+                console.log(allData);
+            })).catch((error => console.error(error)));
+        }));
+        function searchFilter(arr) {
+            const searchBlock = document.querySelector(".body-input");
+            const searchInput = document.querySelector("#search");
+            const searchList = searchBlock.querySelector(".popup__list");
+            searchInput.addEventListener("input", inputEvent);
+            function inputEvent(e) {
+                let text = "";
+                let searchValue = [];
+                let searchAll = [];
+                let searchProducts = [];
+                let searchRecipes = [];
+                let searchNews = [];
+                text = e.target.value;
+                arr.forEach((item => {
+                    if (item.products) searchProducts = item.products.filter((product => {
+                        const regex = new RegExp(text, "gi");
+                        const title = product.title;
+                        return title.match(regex);
+                    }));
+                    if (item.recipes) searchRecipes = item.recipes.filter((product => {
+                        const regex = new RegExp(text, "gi");
+                        const title = product.title;
+                        return title.match(regex);
+                    }));
+                    if (item.news) searchNews = item.news.filter((product => {
+                        const regex = new RegExp(text, "gi");
+                        const title = product.title;
+                        return title.match(regex);
+                    }));
+                }));
+                searchValue = searchAll.concat(searchProducts, searchRecipes, searchNews);
+                const html = searchValue.map((value => {
+                    const regex = new RegExp(text, "gi");
+                    const productName = value.title.replace(regex, `<span class="search-hl">${text}</span>`);
+                    return `\n              <li class="list-items__item">\n                <a class="list-items__link" href="${value.url}">\n                  <h6 class="list-items__title">${productName}</h6>\n                  <svg class="list-items__icon">\n\t                <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n               </svg>\n               </a>\n             </li>`;
+                })).slice(0, 10).join("");
+                searchList.innerHTML = text ? html : null;
+            }
+        }
         class DynamicAdapt {
             constructor(type) {
                 this.type = type;
@@ -6898,13 +6954,285 @@
                 destroy
             });
         }
+        function productsAction(productsBlock) {
+            const productArray = productsBlock.querySelectorAll(".items-product__item");
+            productArray.forEach((product => {
+                product.addEventListener("mouseenter", (e => {
+                    e.preventDefault();
+                    const targetElement = e.target;
+                    if (targetElement.closest(".items-product")) {
+                        const productHideInfo = targetElement.querySelector(".info-hide");
+                        if (productHideInfo.style.maxHeight) productHideInfo.style.maxHeight = null; else {
+                            productHideInfo.style.maxHeight = null;
+                            productHideInfo.style.maxHeight = productHideInfo.scrollHeight + "px";
+                            productHideInfo.classList.add("_show");
+                            targetElement.classList.add("_show");
+                            smallImageAction(targetElement);
+                        }
+                        targetElement.addEventListener("mouseleave", (e => {
+                            e.preventDefault();
+                            if (productHideInfo.style.maxHeight) {
+                                productHideInfo.style.maxHeight = null;
+                                productHideInfo.classList.remove("_show");
+                                targetElement.classList.remove("_show");
+                                smallImageAction(targetElement);
+                            }
+                        }));
+                    }
+                }));
+            }));
+        }
+        function smallImageAction(target) {
+            const spanBlock = target.querySelector(".small-image");
+            const spanCold = spanBlock.querySelector(".small-image__cold");
+            if (target.closest(".items-product")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
+        }
+        function createHTML(products, productsBlock) {
+            products.forEach((item => {
+                const id = item.id, url = item.url, type = item.type, product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
+                let productTemplate = "";
+                const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product}">\n        <div class="items-product__image">\n          <div class="items-product__big-image">\n            <img data-src="img/products/${image}" class="lazy" alt="${title}">\n          </div>\n            <div class="items-product__small-image small-image">\n              <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                    <img data-src="img/products/${freez}" class="lazy" alt="Іконка">\n                 </div>\n               <div class="small-image__item">\n                <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                  <img data-src="img/products/${cold}" class="lazy" alt="Іконка">\n                </div>\n             </div>\n          </div>\n          <div class="items-product__info">\n            <h3 class="items-product__title">${title}</h3>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n             </div>\n            </div>\n      `;
+                energyValue.forEach((value => {
+                    const productItemHideInfo = `<div class="items-product__hide-info info-hide">\n               <div class="info-hide__energy">\n                 <div class="info-hide__kkal">\n                   <h6 class="info-hide__title">${value.kkal}</h6>\n                    <div class="info-hide__text">колорії</div>\n                  </div>\n                     <div class="info-hide__protein">\n                      <h6 class="info-hide__title">${value.protein}</h6>\n                       <div class="info-hide__text">білки</div>\n                   </div>\n                    <div class="info-hide__fat">\n                     <h6 class="info-hide__title">${value.fat}</h6>\n                     <div class="info-hide__text">жири</div>\n                  </div>\n               </div>\n                <a href="${url}" class="info-hide__link-product product-link">\n                   <span class="product-link__text">Детальніше</span>\n                     <svg class="product-link__icon">\n                        <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n                    </svg>\n                  </a>\n              `;
+                    productTemplate += productItem;
+                    productTemplate += productItemHideInfo;
+                    productTemplate += `</article>`;
+                }));
+                productsBlock.insertAdjacentHTML("beforeend", productTemplate);
+                lazyMedia.update();
+            }));
+            spanClear(productsBlock);
+            hideSmallImage(productsBlock);
+            productsAction(productsBlock);
+        }
+        function spanClear(productsBlock) {
+            const spanFreez = productsBlock.querySelectorAll(".small-image__freez");
+            const spanCold = productsBlock.querySelectorAll(".small-image__cold");
+            spanFreez.forEach((freez => {
+                const parent = freez.closest(".small-image__item");
+                const image = parent.querySelector("img");
+                if ("" === freez.textContent) {
+                    freez.style.display = "none";
+                    image.style.opacity = "0.5";
+                }
+            }));
+            spanCold.forEach((cold => {
+                const parent = cold.closest(".small-image__item");
+                const image = parent.querySelector("img");
+                if ("" === cold.textContent) {
+                    cold.style.display = "none";
+                    image.style.opacity = "0.5";
+                }
+            }));
+        }
+        function hideSmallImage(productsBlock) {
+            const productsArray = productsBlock.querySelectorAll(".items-product__item");
+            productsArray.forEach((productType => {
+                const {type} = productType.dataset;
+                const smallImageBlock = productType.querySelectorAll(".small-image img");
+                const smallImageBlockSpan = productType.querySelectorAll(".small-image__item span");
+                smallImageBlock.forEach((img => {
+                    if ("souce" === type || "stew" === type) img.remove();
+                }));
+                smallImageBlockSpan.forEach((span => {
+                    if ("souce" === type || "stew" === type) span.remove();
+                }));
+            }));
+        }
+        function toUpperCase(text) {
+            const splitted = text.split("");
+            const first = splitted[0].toUpperCase();
+            const rest = [ ...splitted ];
+            rest.splice(0, 1);
+            return text = [ first, ...rest ].join("");
+        }
+        function toLoverCase(text) {
+            const splitted = text.split("");
+            const first = splitted[0].toLowerCase();
+            const rest = [ ...splitted ];
+            rest.splice(0, 1);
+            return text = [ first, ...rest ].join("");
+        }
+        function resizeTabs(selector) {
+            if (selector) {
+                const tabs = selector.querySelectorAll(".tabs__title");
+                tabs.forEach((tab => {
+                    let spanText = tab.children[2].textContent;
+                    if (window.innerWidth <= 610) {
+                        tab.children[1].style.display = "none";
+                        tab.children[2].textContent = toUpperCase(spanText);
+                    } else {
+                        tab.children[1].style.display = "block";
+                        tab.children[2].textContent = toLoverCase(spanText);
+                    }
+                }));
+            }
+        }
+        let productsLoaded = false;
+        let sliderLoad = false;
+        let products = [];
+        const file = "json/products.json";
+        window.addEventListener("load", (e => {
+            getProducts(file);
+        }));
+        async function getProducts(file) {
+            if (productsLoaded) return;
+            try {
+                const response = await fetch(file, {
+                    method: "GET"
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    products = [];
+                    products.push(...data.products);
+                    loadProducts(products);
+                    if (sliderLoad = true && window.innerWidth < 991.98) {
+                        productSlider();
+                        sliderLoad = false;
+                    }
+                    tabsSlider();
+                    productsLoaded = true;
+                    console.log("Data:", data);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                console.log("Finally");
+            }
+        }
+        function clearBlock(block) {
+            while (block.firstChild) block.removeChild(block.firstChild);
+        }
+        const productsBlock = document.querySelector("#products");
+        function loadProducts(data) {
+            if (productsBlock) {
+                createHTML(data, productsBlock);
+                productsFilter();
+            }
+        }
+        function productsFilter() {
+            const filterTabsCategory = document.querySelectorAll(".tabs__title");
+            const filterTypeBlock = document.querySelectorAll(".tabs__nav>.tabs__button");
+            const filterTabsType = document.querySelector("#filterType");
+            const filterButtonHasAllClass = filterTabsType.querySelectorAll(".tabs__button.all");
+            filterTabsCategory.forEach((tab => {
+                const {category} = tab.dataset;
+                productsActiveTabs(category, tab);
+                tab.addEventListener("click", productsTabClick);
+            }));
+            function productsTabClick(e) {
+                e.preventDefault();
+                const targetElement = e.target;
+                const tabElements = targetElement.closest(".tabs__title");
+                const activeClass = tabElements.classList.contains("_tab-active");
+                if (targetElement && tabElements && !activeClass) {
+                    if (!productsLoaded) return;
+                    productsLoaded = false;
+                    if (null !== productSwiper && window.innerWidth < 991.98) {
+                        sliderLoad = true;
+                        destroyProductSwiper();
+                    }
+                    clearBlock(productsBlock);
+                    getProducts(file);
+                    remove_Class();
+                    add_Class();
+                }
+            }
+            function productsActiveTabs(category, tab) {
+                const productArray = document.querySelectorAll(".items-product__item");
+                const activeTab = tab.classList.contains("_tab-active");
+                productArray.forEach((product => {
+                    const {type} = product.dataset;
+                    if (activeTab) if (category !== type) product.remove();
+                }));
+            }
+            filterTypeBlock.forEach((button => {
+                button.addEventListener("click", productsButtonClick);
+            }));
+            function productsButtonClick(e) {
+                e.preventDefault();
+                const productsArray = document.querySelectorAll(".items-product__item");
+                const targetElement = e.target;
+                const {product} = targetElement.dataset;
+                const typeProductBlock = targetElement.closest("[data-type]").dataset.type;
+                if (!targetElement.classList.contains("_active")) {
+                    remove_Class();
+                    targetElement.classList.add("_active");
+                    productsArray.forEach((item => {
+                        const {type} = item.dataset;
+                        const categoryProduct = item.dataset.product;
+                        if (type === typeProductBlock) if (product && "all" !== product && !categoryProduct.includes(product)) {
+                            item.classList.add("_hide");
+                            setTimeout((() => {
+                                item.style.display = "none";
+                                item.hidden = true;
+                            }), 500);
+                        } else {
+                            item.classList.add("_hide");
+                            setTimeout((() => {
+                                item.style.display = "";
+                                item.classList.remove("_hide");
+                                item.hidden = false;
+                            }), 500);
+                        }
+                    }));
+                }
+            }
+            function remove_Class() {
+                filterTypeBlock.forEach((button => {
+                    button.classList.remove("_active");
+                }));
+            }
+            function add_Class() {
+                filterButtonHasAllClass.forEach((button => {
+                    button.classList.add("_active");
+                }));
+            }
+            const filterProductsCategory = document.querySelector("#filterCategory");
+            window.addEventListener("resize", (e => {
+                resizeTabs(filterProductsCategory);
+            }));
+        }
+        function cirlceActions(slider, index) {
+            const circleBlock = document.querySelector("#circle-menu");
+            if (circleBlock) {
+                const circleTitle = circleBlock.querySelector(".menu-cycle__title");
+                const circleItems = circleBlock.querySelectorAll("[data-circle]");
+                circleItems.forEach((item => {
+                    if (item.classList.contains("_active")) {
+                        const dataValue = item.dataset.circle;
+                        if ("robot" === dataValue) circleTitle.textContent = "Наше виробництво";
+                    }
+                    item.addEventListener("click", (e => {
+                        e.preventDefault();
+                        const targetElement = e.target;
+                        const menuItem = targetElement.querySelector(".menu-cycle__item") ? targetElement : targetElement.closest(".menu-cycle__item");
+                        const dataValue = menuItem.dataset.circle;
+                        const blockItems = menuItem.closest(".menu-cycle__list");
+                        const activeItem = blockItems.querySelector(".menu-cycle__item._active");
+                        if (!menuItem.classList.contains("_active")) ;
+                        activeItem.classList.remove("_active");
+                        menuItem.classList.add("_active");
+                        if ("robot" === dataValue) circleTitle.textContent = "Наше виробництво"; else if ("egg" === dataValue) circleTitle.textContent = "Виробництво яєць"; else if ("chicken" === dataValue) circleTitle.textContent = "Виробництво кур"; else if ("grain" === dataValue) circleTitle.textContent = "Вирощування пшениці"; else if ("feed" === dataValue) circleTitle.textContent = "Виробництво кормів";
+                        if (slider === dataValue) aboutSwiper.slideTo(index);
+                    }));
+                }));
+            }
+        }
         let bannerSwiper = null;
         let productSwiper = null;
         let tabsSwiper = null;
         let recipesSwiper = null;
         let newsSwiper = null;
+        let aboutSwiper = null;
         function initSliders() {
             bigBannerSlider();
+            aboutSlider();
+            clickTabEvent();
+            clickButtonEvent();
+            aboutSliderActions();
+            aboutSliderPaginations();
+            touchSlideChange();
         }
         window.addEventListener("load", (function(e) {
             initSliders();
@@ -6916,6 +7244,89 @@
             recipesSlider();
             newsSlider();
         }));
+        function aboutSlider() {
+            if (document.querySelector(".cycle__slider")) aboutSwiper = new core(".cycle__slider", {
+                modules: [ Pagination ],
+                observer: true,
+                observeParents: true,
+                slidesPerView: 1,
+                allowTouchMove: true,
+                spaceBetween: 10,
+                autoHeight: true,
+                speed: 800,
+                direction: "vertical",
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                    renderBullet: function(index, className) {
+                        return '<span class="' + className + ' cycle__pagination " data-slide="' + index + '"></span>';
+                    }
+                }
+            });
+        }
+        function aboutSliderActions() {
+            const sliderAbout = document.querySelector(".cycle__slider");
+            if (sliderAbout) {
+                const sliderAboutSliders = sliderAbout.querySelectorAll(".swiper-slide");
+                sliderAboutSliders.forEach(((slider, index) => {
+                    const indexSlide = index;
+                    const sliderDataValue = slider.dataset.slide;
+                    cirlceActions(sliderDataValue, indexSlide);
+                }));
+            }
+        }
+        function aboutSliderPaginations() {
+            const sliderPagination = document.querySelectorAll(".cycle__pagination");
+            if (sliderPagination) sliderPagination.forEach((bullet => {
+                bullet.addEventListener("click", aboutPaginationActions);
+            }));
+        }
+        function aboutPaginationActions(e) {
+            e.preventDefault();
+            const targetBullet = e.target;
+            const indexBullet = targetBullet.dataset.slide;
+            const sliderAbout = document.querySelector(".cycle__slider");
+            if (sliderAbout) {
+                const sliderAboutSliders = sliderAbout.querySelectorAll(".swiper-slide");
+                sliderAboutSliders.forEach(((slider, index) => {
+                    const indexSlide = index;
+                    const sliderDataValue = slider.dataset.slide;
+                    if (indexBullet == indexSlide) cirlceSlideActions(sliderDataValue);
+                }));
+            }
+        }
+        function cirlceSlideActions(sliderDataValue) {
+            const circleBlock = document.querySelector("#circle-menu");
+            if (circleBlock) {
+                const circleTitle = circleBlock.querySelector(".menu-cycle__title");
+                const circleItems = circleBlock.querySelectorAll("[data-circle]");
+                circleItems.forEach((item => {
+                    const dataValue = item.dataset.circle;
+                    const activeItem = item.classList.contains("_active");
+                    const blockItems = item.closest(".menu-cycle__list");
+                    const activeClass = blockItems.querySelector(".menu-cycle__item._active");
+                    if (sliderDataValue === dataValue && !activeItem) {
+                        if ("robot" === dataValue) circleTitle.textContent = "Наше виробництво "; else if ("egg" === dataValue) circleTitle.textContent = "Виробництво яєць"; else if ("chicken" === dataValue) circleTitle.textContent = "Виробництво кур"; else if ("grain" === dataValue) circleTitle.textContent = "Вирощування пшениці"; else if ("feed" === dataValue) circleTitle.textContent = "Виробництво кормів";
+                        activeClass.classList.remove("_active");
+                        item.classList.add("_active");
+                    }
+                }));
+            }
+        }
+        function touchSlideChange() {
+            if (null !== aboutSwiper) aboutSwiper.on("slideChangeTransitionStart", (e => {
+                let activeSlideIndex = aboutSwiper.activeIndex;
+                const sliderAbout = document.querySelector(".cycle__slider");
+                if (sliderAbout) {
+                    const sliderAboutSliders = sliderAbout.querySelectorAll(".swiper-slide");
+                    sliderAboutSliders.forEach(((slider, index) => {
+                        const indexSlide = index;
+                        const sliderDataValue = slider.dataset.slide;
+                        if (activeSlideIndex == indexSlide) cirlceSlideActions(sliderDataValue);
+                    }));
+                }
+            }));
+        }
         function buildBannerSlider() {
             let sliders = document.querySelectorAll('[class*="__banner-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
@@ -6966,115 +7377,126 @@
         }
         function newsSlider() {
             if (window.innerWidth <= 669.98 && null === newsSwiper && isMobile.any()) {
-                buildNewsSlider();
-                if (document.querySelector(".news__slider")) newsSwiper = new core(".news__slider", {
-                    observer: true,
-                    observeParents: true,
-                    slidesPerView: 1.2,
-                    spaceBetween: 10,
-                    autoHeight: true,
-                    speed: 800
-                });
+                if (document.querySelector(".news__slider")) {
+                    buildNewsSlider();
+                    newsSwiper = new core(".news__slider", {
+                        observer: true,
+                        observeParents: true,
+                        slidesPerView: 1.2,
+                        spaceBetween: 10,
+                        autoHeight: true,
+                        speed: 800
+                    });
+                }
             } else destroyNewsSlider();
         }
         function recipesSlider() {
             if (window.innerWidth <= 669.98 && null === recipesSwiper && isMobile.any()) {
-                buildRecipesSlider();
-                if (document.querySelector(".recipes__slider")) recipesSwiper = new core(".recipes__slider", {
-                    observer: true,
-                    observeParents: true,
-                    slidesPerView: 1.2,
-                    spaceBetween: 10,
-                    autoHeight: true,
-                    speed: 800
-                });
+                if (document.querySelector(".recipes__slider")) {
+                    buildRecipesSlider();
+                    recipesSwiper = new core(".recipes__slider", {
+                        observer: true,
+                        observeParents: true,
+                        slidesPerView: 1.2,
+                        spaceBetween: 10,
+                        autoHeight: true,
+                        speed: 800
+                    });
+                }
             } else destroyRecipesSlider();
         }
         function tabsSlider() {
-            if (window.innerWidth < 860.98 && null === tabsSwiper && isMobile.any()) {
-                buildTabsSlider();
-                if (document.querySelector(".tabs__slider")) tabsSwiper = new core(".tabs__slider", {
-                    observer: true,
-                    observeParents: true,
-                    slidesPerView: 5,
-                    spaceBetween: 10,
-                    autoHeight: true,
-                    speed: 800,
-                    breakpoints: {
-                        280: {
-                            slidesPerView: 1.2,
-                            spaceBetween: 10
-                        },
-                        320: {
-                            slidesPerView: 1.75,
-                            spaceBetween: 10
-                        },
-                        375: {
-                            slidesPerView: 2.5,
-                            spaceBetween: 10
-                        },
-                        700: {
-                            slidesPerView: 4.5,
-                            spaceBetween: 10
+            if (window.innerWidth < 860.98 && null === tabsSwiper && isMobile.any() && null !== productSwiper) {
+                if (document.querySelector(".tabs__slider")) {
+                    buildTabsSlider();
+                    tabsSwiper = new core(".tabs__slider", {
+                        observer: true,
+                        observeParents: true,
+                        slidesPerView: 5,
+                        spaceBetween: 10,
+                        autoHeight: true,
+                        speed: 800,
+                        breakpoints: {
+                            280: {
+                                slidesPerView: 1.2,
+                                spaceBetween: 10
+                            },
+                            320: {
+                                slidesPerView: 1.75,
+                                spaceBetween: 10
+                            },
+                            375: {
+                                slidesPerView: 2.5,
+                                spaceBetween: 10
+                            },
+                            700: {
+                                slidesPerView: 4.5,
+                                spaceBetween: 10
+                            }
                         }
-                    }
-                });
+                    });
+                }
             } else destroyTabsSwiper();
         }
         function bigBannerSlider() {
             if (window.innerWidth >= 992 && null === bannerSwiper) {
-                buildBannerSlider();
-                if (document.querySelector(".big-banner__slider")) bannerSwiper = new core(".big-banner__slider", {
-                    modules: [ Navigation, Pagination ],
-                    observer: true,
-                    observeParents: true,
-                    slidesPerView: 1,
-                    spaceBetween: 10,
-                    autoHeight: true,
-                    speed: 800,
-                    preloadImages: true,
-                    lazy: true,
-                    pagination: {
-                        el: ".swiper-pagination",
-                        clickable: true
-                    },
-                    navigation: {
-                        prevEl: ".swiper-button-prev",
-                        nextEl: ".swiper-button-next"
-                    },
-                    on: {}
-                });
+                if (document.querySelector(".big-banner__slider")) {
+                    buildBannerSlider();
+                    bannerSwiper = new core(".big-banner__slider", {
+                        modules: [ Navigation, Pagination ],
+                        observer: true,
+                        observeParents: true,
+                        slidesPerView: 1,
+                        spaceBetween: 10,
+                        autoHeight: true,
+                        speed: 800,
+                        preloadImages: true,
+                        lazy: true,
+                        pagination: {
+                            el: ".swiper-pagination",
+                            clickable: true
+                        },
+                        navigation: {
+                            prevEl: ".swiper-button-prev",
+                            nextEl: ".swiper-button-next"
+                        },
+                        on: {}
+                    });
+                }
             } else destroyBannerSwiper();
         }
         function productSlider() {
-            if (window.innerWidth < 991.98 && null === productSwiper) {
-                buildProductSlider();
-                if (document.querySelector(".products__slider")) productSwiper = new core(".products__slider", {
-                    allowTouchMove: true,
-                    observer: true,
-                    observeParents: true,
-                    observeSlideChildren: true,
-                    watchSlidesVisibility: true,
-                    autoHeight: false,
-                    speed: 800,
-                    preloadImages: true,
-                    lazy: true,
-                    breakpoints: {
-                        320: {
-                            slidesPerView: 1.2,
-                            spaceBetween: 10
+            if (window.innerWidth < 991.98 && null === productSwiper || sliderLoad) {
+                if (document.querySelector(".products__slider")) {
+                    buildProductSlider();
+                    productSwiper = new core(".products__slider", {
+                        allowTouchMove: true,
+                        observer: true,
+                        observeParents: true,
+                        observeSlideChildren: true,
+                        watchSlidesVisibility: true,
+                        autoHeight: false,
+                        speed: 800,
+                        preloadImages: true,
+                        lazy: true,
+                        breakpoints: {
+                            320: {
+                                slidesPerView: 1.2,
+                                spaceBetween: 10
+                            },
+                            580: {
+                                slidesPerView: 2.2,
+                                spaceBetween: 10
+                            },
+                            823: {
+                                slidesPerView: 3.2,
+                                spaceBetween: 10
+                            }
                         },
-                        580: {
-                            slidesPerView: 2.2,
-                            spaceBetween: 10
-                        },
-                        823: {
-                            slidesPerView: 3.2,
-                            spaceBetween: 10
-                        }
-                    },
-                    on: {}
-                });
+                        on: {}
+                    });
+                    productSwiper.slideTo(0);
+                }
             } else destroyProductSwiper();
         }
         function clickButtonEvent() {
@@ -7105,7 +7527,7 @@
             }));
         }
         function clickTabEvent() {
-            if (null !== productSwiper) {
+            if (null !== productSwiper || !sliderLoad) {
                 const tabTitle = document.querySelectorAll(".tabs__title");
                 tabTitle.forEach((tab => {
                     tab.addEventListener("click", (e => {
@@ -7121,18 +7543,8 @@
                             const swiperClass = nav.closest(".swiper-wrapper");
                             if (!targetElement && category !== type || iconTabCategory !== type || spanTabs !== type) {
                                 if (swiperClass) swiperClass.style.display = "none";
-                                destroyProductSwiper();
-                                productSlider();
-                                productSwiper.slideTo(0);
-                            } else {
-                                if (swiperClass) swiperClass.style.display = "";
-                                destroyProductSwiper();
-                                productSlider();
-                                productSwiper.slideTo(0);
-                            }
-                            destroyProductSwiper();
-                            productSlider();
-                            productSwiper.slideTo(0);
+                            } else if (swiperClass) swiperClass.style.display = "";
+                            if (null !== productSwiper) productSwiper.slideTo(0);
                         }));
                     }));
                 }));
@@ -7151,11 +7563,9 @@
             }
         }
         function destroyNewsSlider() {
-            if (window.innerWidth > 670 && null !== recipesSwiper && null !== newsSwiper) {
+            if (window.innerWidth > 670 && null !== newsSwiper) {
                 newsSwiper.destroy(true, true);
                 newsSwiper = null;
-                recipesSwiper.destroy(true, true);
-                recipesSwiper = null;
                 let sliders = document.querySelectorAll('[class*="__news-swiper"]');
                 if (sliders) sliders.forEach((slider => {
                     slider.parentElement.classList.remove("swiper");
@@ -7177,7 +7587,7 @@
             }
         }
         function destroyProductSwiper() {
-            if (window.innerWidth >= 992 && null !== productSwiper) {
+            if (window.innerWidth >= 992 && null !== productSwiper || sliderLoad) {
                 productSwiper.destroy(true, true);
                 productSwiper = null;
                 let sliders = document.querySelectorAll(".products__product-swiper");
@@ -7326,276 +7736,6 @@
             hash: false,
             activeTab: "1"
         });
-        function toUpperCase(text) {
-            const splitted = text.split("");
-            const first = splitted[0].toUpperCase();
-            const rest = [ ...splitted ];
-            rest.splice(0, 1);
-            return text = [ first, ...rest ].join("");
-        }
-        function toLoverCase(text) {
-            const splitted = text.split("");
-            const first = splitted[0].toLowerCase();
-            const rest = [ ...splitted ];
-            rest.splice(0, 1);
-            return text = [ first, ...rest ].join("");
-        }
-        function searchFilter(arr) {
-            const searchBlock = document.querySelector(".body-input");
-            const searchInput = document.querySelector("#search");
-            const searchList = searchBlock.querySelector(".popup__list");
-            searchInput.addEventListener("input", inputEvent);
-            function inputEvent(e) {
-                let text = e.target.value;
-                const searchValue = searchProduct(text, arr);
-                const html = searchValue.map((value => {
-                    const regex = new RegExp(text, "gi");
-                    const productName = value.title.replace(regex, `<span class="search-hl">${text}</span>`);
-                    return `\n              <li class="list-items__item">\n                <a class="list-items__link" href="${value.url}">\n                  <h6 class="list-items__title">${productName}</h6>\n                  <svg class="list-items__icon">\n\t                <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n               </svg>\n               </a>\n             </li>`;
-                })).slice(0, 10).join("");
-                searchList.innerHTML = text ? html : null;
-            }
-            function searchProduct(text, products) {
-                return products.filter((product => {
-                    const regex = new RegExp(text, "gi");
-                    const title = toUpperCase(product.title);
-                    return title.match(regex);
-                }));
-            }
-        }
-        window.addEventListener("load", (e => {
-            const file = "json/products.json";
-            getProducts();
-            async function getProducts() {
-                try {
-                    const response = await fetch(file, {
-                        method: "GET"
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        loadProducts(data);
-                        productSlider();
-                        tabsSlider();
-                        clickButtonEvent();
-                        clickTabEvent();
-                        console.log("Data:", data);
-                    }
-                } catch (err) {
-                    console.error(err);
-                } finally {
-                    console.log("Finally");
-                }
-            }
-        }));
-        function loadProducts(data) {
-            const productsBlock = document.querySelector("#products");
-            if (productsBlock) {
-                data.products.forEach((item => {
-                    const id = item.id, url = item.url, type = item.type, product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
-                    let productTemplate = "";
-                    searchFilter(data.products);
-                    const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product}">\n        <div class="items-product__image">\n          <div class="items-product__big-image">\n            <img data-src="img/products/${image}" class="lazy" alt="${title}">\n          </div>\n            <div class="items-product__small-image small-image">\n              <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                    <img data-src="img/products/${freez}" class="lazy" alt="Іконка">\n                 </div>\n               <div class="small-image__item">\n                <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                  <img data-src="img/products/${cold}" class="lazy" alt="Іконка">\n                </div>\n             </div>\n          </div>\n          <div class="items-product__info">\n            <h3 class="items-product__title">${title}</h3>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n             </div>\n            </div>\n      `;
-                    energyValue.forEach((value => {
-                        const productItemHideInfo = `<div class="items-product__hide-info info-hide">\n               <div class="info-hide__energy">\n                 <div class="info-hide__kkal">\n                   <h6 class="info-hide__title">${value.kkal}</h6>\n                    <div class="info-hide__text">колорії</div>\n                  </div>\n                     <div class="info-hide__protein">\n                      <h6 class="info-hide__title">${value.protein}</h6>\n                       <div class="info-hide__text">білки</div>\n                   </div>\n                    <div class="info-hide__fat">\n                     <h6 class="info-hide__title">${value.fat}</h6>\n                     <div class="info-hide__text">жири</div>\n                  </div>\n               </div>\n                <a href="${url}" class="info-hide__link-product product-link">\n                   <span class="product-link__text">Детальніше</span>\n                     <svg class="product-link__icon">\n                        <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n                    </svg>\n                  </a>\n              `;
-                        productTemplate += productItem;
-                        productTemplate += productItemHideInfo;
-                        productTemplate += `</article>`;
-                    }));
-                    productsBlock.insertAdjacentHTML("beforeend", productTemplate);
-                    lazyMedia.update();
-                }));
-                spanClear(productsBlock);
-                hideSmallImage(productsBlock);
-                productsAction(productsBlock);
-                filterCategoryProducts(productsBlock);
-            }
-        }
-        function spanClear(productsBlock) {
-            const spanFreez = productsBlock.querySelectorAll(".small-image__freez");
-            const spanCold = productsBlock.querySelectorAll(".small-image__cold");
-            spanFreez.forEach((freez => {
-                const parent = freez.closest(".small-image__item");
-                const image = parent.querySelector("img");
-                if ("" === freez.textContent) {
-                    freez.style.display = "none";
-                    image.style.opacity = "0.5";
-                }
-            }));
-            spanCold.forEach((cold => {
-                const parent = cold.closest(".small-image__item");
-                const image = parent.querySelector("img");
-                if ("" === cold.textContent) {
-                    cold.style.display = "none";
-                    image.style.opacity = "0.5";
-                }
-            }));
-        }
-        function hideSmallImage(productsBlock) {
-            const productsArray = productsBlock.querySelectorAll(".items-product__item");
-            productsArray.forEach((productType => {
-                const {type} = productType.dataset;
-                const smallImageBlock = productType.querySelectorAll(".small-image img");
-                const smallImageBlockSpan = productType.querySelectorAll(".small-image__item span");
-                smallImageBlock.forEach((img => {
-                    if ("souce" === type || "stew" === type) img.remove();
-                }));
-                smallImageBlockSpan.forEach((span => {
-                    if ("souce" === type || "stew" === type) span.remove();
-                }));
-            }));
-        }
-        function smallImageAction(target) {
-            const spanBlock = target.querySelector(".small-image");
-            const spanCold = spanBlock.querySelector(".small-image__cold");
-            if (target.closest(".items-product")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
-        }
-        function productsAction(productsBlock) {
-            const productArray = productsBlock.querySelectorAll(".items-product__item");
-            productArray.forEach((product => {
-                product.addEventListener("mouseenter", (e => {
-                    e.preventDefault();
-                    const targetElement = e.target;
-                    if (targetElement.closest(".items-product")) {
-                        const productHideInfo = targetElement.querySelector(".info-hide");
-                        if (productHideInfo.style.maxHeight) productHideInfo.style.maxHeight = null; else {
-                            productHideInfo.style.maxHeight = null;
-                            productHideInfo.style.maxHeight = productHideInfo.scrollHeight + "px";
-                            productHideInfo.classList.add("_show");
-                            targetElement.classList.add("_show");
-                            smallImageAction(targetElement);
-                        }
-                        targetElement.addEventListener("mouseleave", (e => {
-                            e.preventDefault();
-                            if (productHideInfo.style.maxHeight) {
-                                productHideInfo.style.maxHeight = null;
-                                productHideInfo.classList.remove("_show");
-                                targetElement.classList.remove("_show");
-                                smallImageAction(targetElement);
-                            }
-                        }));
-                    }
-                }));
-            }));
-        }
-        function filterCategoryProducts(productsBlock) {
-            const productArray = productsBlock.querySelectorAll(".items-product__item");
-            const filterProductsCategory = document.querySelector("#filterCategory");
-            const filterTabsCategory = filterProductsCategory.querySelectorAll(".tabs__title");
-            const filterTabsType = document.querySelector("#filterType");
-            const filterTypeBlock = filterTabsType.querySelectorAll(".tabs__nav>.tabs__button");
-            const filterButtonHasAllClass = filterTabsType.querySelectorAll(".tabs__button.all");
-            filterTypeBlock.forEach((button => {
-                button.addEventListener("click", (e => {
-                    e.preventDefault();
-                    const targetElement = e.target;
-                    const {product} = targetElement.dataset;
-                    const typeProductBlock = targetElement.closest("[data-type]").dataset.type;
-                    if (!targetElement.classList.contains("_active")) {
-                        remove_Class();
-                        targetElement.classList.add("_active");
-                        productArray.forEach((item => {
-                            const {type} = item.dataset;
-                            const categoryProduct = item.dataset.product;
-                            if (type === typeProductBlock) if (product && "all" !== product && !categoryProduct.includes(product)) {
-                                item.classList.add("_hide");
-                                setTimeout((() => {
-                                    item.style.display = "none";
-                                    item.hidden = true;
-                                }), 500);
-                            } else {
-                                item.classList.add("_hide");
-                                setTimeout((() => {
-                                    item.style.display = "";
-                                    item.classList.remove("_hide");
-                                    item.hidden = false;
-                                }), 500);
-                            }
-                        }));
-                    }
-                }));
-            }));
-            filterTabsCategory.forEach((button => {
-                const {category} = button.dataset;
-                const activeTab = button.classList.contains("_tab-active");
-                productsTabsAction(category, activeTab);
-                button.addEventListener("click", (e => {
-                    e.preventDefault;
-                    const targetElement = e.target;
-                    const iconTab = targetElement.closest(".tabs__title");
-                    if (targetElement.classList.contains("tabs__title") || iconTab && !targetElement.classList.contains("_tab-active")) {
-                        findActiveTab(targetElement);
-                        remove_Class();
-                        add_Class();
-                    }
-                }));
-            }));
-            function findActiveTab(el) {
-                const {category} = el.dataset;
-                const iconTabCategory = el.closest(".tabs__title").dataset.category;
-                const spanTabs = el.closest(".tabs__title").dataset.category;
-                productArray.forEach((product => {
-                    const {type} = product.dataset;
-                    if (el && category === type || iconTabCategory === type || spanTabs === type) {
-                        product.classList.remove("_hide");
-                        setTimeout((() => {
-                            product.style.display = "";
-                            product.hidden = false;
-                        }), 300);
-                    } else {
-                        product.classList.add("_hide");
-                        setTimeout((() => {
-                            product.style.display = "none";
-                            product.hidden = true;
-                        }), 300);
-                    }
-                }));
-            }
-            function productsTabsAction(productType, activeTab) {
-                productArray.forEach((product => {
-                    const {type} = product.dataset;
-                    if (activeTab) if (productType === type) {
-                        product.classList.remove("_hide");
-                        setTimeout((() => {
-                            product.style.display = "";
-                            product.hidden = false;
-                        }), 300);
-                    } else {
-                        product.classList.add("_hide");
-                        setTimeout((() => {
-                            product.style.display = "none";
-                            product.hidden = true;
-                        }), 300);
-                    }
-                }));
-            }
-            function remove_Class() {
-                filterTypeBlock.forEach((button => {
-                    button.classList.remove("_active");
-                }));
-            }
-            function add_Class() {
-                filterButtonHasAllClass.forEach((button => {
-                    button.classList.add("_active");
-                }));
-            }
-            function resizeTabs() {
-                const filterProductsCategory = document.querySelector("#filterCategory");
-                const filterTabsCategory = filterProductsCategory.querySelectorAll(".tabs__title");
-                filterTabsCategory.forEach((tab => {
-                    let spanText = tab.children[2].textContent;
-                    if (window.innerWidth <= 610) {
-                        tab.children[1].style.display = "none";
-                        tab.children[2].textContent = toUpperCase(spanText);
-                    } else {
-                        tab.children[1].style.display = "block";
-                        tab.children[2].textContent = toLoverCase(spanText);
-                    }
-                }));
-            }
-            window.addEventListener("resize", (e => {
-                resizeTabs();
-            }));
-        }
         window.addEventListener("load", (e => {
             const file = "json/recipes.json";
             getRecipes();
@@ -7624,12 +7764,12 @@
                         let recipesTemplate = "";
                         const recipesItem = `\n           <article id="${id}" class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}">\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <h3 class="items-recipes__title">${title}</h3>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
                         info.forEach((value => {
-                            const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n              <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                  <span>${value.time}</span>\n              </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                    <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                  <span>${value.complexity}</span>\n              </div>\n           </div>\n            `;
+                            const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n                   <div class="specification-recipes__item">\n                       <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                       <span>${value.time}</span>\n                  </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                         <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                       <span>${value.complexity}</span>\n                    </div>\n               </div>\n            `;
                             recipesTemplate += recipesItem;
                             recipesTemplate += specificationRecipes;
                         }));
                         energyValue.forEach((value => {
-                            const recipesItemHideInfo = `<div class="items-recipes__hide hide-recipes-items">\n            <div class="hide-recipes-items__info">${energyText}</div>\n               <div class="hide-recipes-items__energy">\n                 <div class="hide-recipes-items__kkal">\n                   <h6 class="hide-recipes-items__title">${value.kkal}</h6>\n                    <div class="hide-recipes-items__text">колорії</div>\n                  </div>\n                     <div class="hide-recipes-items__protein">\n                      <h6 class="hide-recipes-items__title">${value.protein}</h6>\n                       <div class="hide-recipes-items__text">білки</div>\n                   </div>\n                    <div class="hide-recipes-items__fat">\n                     <h6 class="hide-recipes-items__title">${value.fat}</h6>\n                     <div class="hide-recipes-items__text">жири</div>\n                  </div>\n               </div>\n            </div>\n               `;
+                            const recipesItemHideInfo = `\n         <div class="items-recipes__hide hide-recipes-items">\n            <div class="hide-recipes-items__info">${energyText}</div>\n               <div class="hide-recipes-items__energy">\n                 <div class="hide-recipes-items__kkal">\n                   <h6 class="hide-recipes-items__title">${value.kkal}</h6>\n                    <div class="hide-recipes-items__text">колорії</div>\n                  </div>\n                     <div class="hide-recipes-items__protein">\n                      <h6 class="hide-recipes-items__title">${value.protein}</h6>\n                       <div class="hide-recipes-items__text">білки</div>\n                   </div>\n                    <div class="hide-recipes-items__fat">\n                     <h6 class="hide-recipes-items__title">${value.fat}</h6>\n                     <div class="hide-recipes-items__text">жири</div>\n                  </div>\n               </div>\n               </div>\n               `;
                             recipesTemplate += recipesItemHideInfo;
                             recipesTemplate += `</article>`;
                         }));
@@ -7670,9 +7810,9 @@
             }
         }));
         window.addEventListener("load", (e => {
-            const file = "json/news_and_actions.json";
-            getNews();
-            async function getNews() {
+            const file = "json/recipes.json";
+            getRecipeData();
+            async function getRecipeData() {
                 try {
                     const response = await fetch(file, {
                         method: "GET"
@@ -7680,8 +7820,7 @@
                     const data = await response.json();
                     if (response.ok) {
                         console.log("Data:", data);
-                        loadNews(data);
-                        newsSlider();
+                        loadRamenRecipe(data);
                     }
                 } catch (err) {
                     console.error(err);
@@ -7689,19 +7828,87 @@
                     console.log("Finally");
                 }
             }
-            function loadNews(data) {
-                const newsBlock = document.querySelector("#newsHome");
-                if (newsBlock) data.news.forEach((item => {
-                    const id = item.id, url = item.url, image = item.image, logo = item.logo, title = item.title, date = item.date, type = item.type;
-                    let newsTemplate = "";
-                    const newsItem = `\n                <article id="${id}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo">\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}">\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <h3 class="items-news__title">${title}</h3>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type">${type}</div>\n              `;
-                    newsTemplate += newsItem;
-                    newsTemplate += `</article>`;
-                    newsBlock.insertAdjacentHTML("beforeend", newsTemplate);
-                    lazyMedia.update();
+            function loadRamenRecipe(data) {
+                const ramenInfoBlock = document.querySelector("#ramenInfo");
+                if (ramenInfoBlock) data.recipes.forEach((item => {
+                    const id = item.id, image = item.ramenPageImage, title = item.title, text = item.text, info = item.info, history = item.recipeHistory, timeIcon = item.timeIcon, groupIcon = item.groupIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon;
+                    let ramenInfoTemplate = "";
+                    const articleRamenStart = `\n               <article id="${id}" class="ramen__recipe">\n                   <div class="ramen__header">\n            `;
+                    const ramenRecipeLoad = `\n               <div id="loadRecipe" class="ramen__load load">\n                   <button class="load__button">\n                   Завантажити рецепт\n                     \t<svg class="load__icon">\n\t\t\t\t\t           <use xlink:href="img/icons/icons.svg#long-arrow-red"></use>\n\t\t\t\t            </svg>\n                   </button>\n               </div>\n                </div>\n            `;
+                    const ramenInfo = `\n                       <div class="ramen__top">\n                         <div class="ramen__info">\n                           <h3 class="ramen__title">${title}</h3>\n                            <div class="ramen__icon icon-recipes">\n                              <svg class="icon-recipes__icon">\n                               <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                            </svg>  \n                         </div>\n                       </div>\n                     <div class="ramen__text">${text}</div>\n                    <div class="ramen__history">\n                        <p>${history}</p>\n                    </div>\n                      <div class="ramen__image">\n                        <img data-src="img/recipes/page_recipes/${image}" class="lazy" alt="${title}">\n                     </div>\n            `;
+                    info.forEach((value => {
+                        const ramenIcons = `\n              <div class="ramen__specification specification-recipes">\n               <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${hardIcon}" class="lazy" alt="personIcon">\n                  <span>${value.recipeComplexity}</span>\n              </div>\n              <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                  <span>${value.time}</span>\n              </div>\n                <div class="specification-recipes__item">\n                    <img data-src="img/recipes/${groupIcon}" class="lazy" alt="hardIcon">\n                  <span>${value.inPortion}</span>\n              </div>\n           </div>\n              `;
+                        ramenInfoTemplate += articleRamenStart;
+                        ramenInfoTemplate += ramenIcons;
+                        ramenInfoTemplate += ramenRecipeLoad;
+                        ramenInfoTemplate += ramenInfo;
+                        ramenInfoTemplate += `</article>`;
+                        if ("1" == id) {
+                            ramenInfoBlock.insertAdjacentHTML("beforeend", ramenInfoTemplate);
+                            lazyMedia.update();
+                        }
+                    }));
                 }));
             }
         }));
+        const recipeNav = document.querySelector("#recipeNav");
+        window.addEventListener("resize", (e => {
+            resizeTabs(recipeNav);
+        }));
+        const news_file = "json/news_and_actions.json";
+        window.addEventListener("load", (e => {
+            getNews();
+        }));
+        async function getNews() {
+            try {
+                const response = await fetch(news_file, {
+                    method: "GET"
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    console.log("Data:", data);
+                    loadNews(data);
+                    newsSlider();
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                console.log("Finally");
+            }
+        }
+        function loadNews(data) {
+            const newsBlock = document.querySelector("#newsHome");
+            if (newsBlock) data.news.forEach((item => {
+                const id = item.id, url = item.url, image = item.image, logo = item.logo, title = item.title, date = item.date, type = item.type;
+                let newsTemplate = "";
+                const newsItem = `\n                <article id="${id}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo">\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}">\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <h3 class="items-news__title">${title}</h3>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
+                newsTemplate += newsItem;
+                newsTemplate += `</article>`;
+                newsBlock.insertAdjacentHTML("beforeend", newsTemplate);
+                lazyMedia.update();
+            }));
+            const newsDate = document.querySelector("#date");
+            const newsContent = document.querySelector("#content");
+            if (newsDate && newsContent) {
+                const htmlDate = [];
+                const htmlImage = [];
+                data.news.forEach((item => {
+                    item.id;
+                    const image = item.image, title = item.title, date = item.date, type = item.type;
+                    const newsActions_Date = `  \n                     <div class="news-actions__type news-type">${type}</div>\n                      <span>${date}</span>\n                   `;
+                    const newsActions_ImageTitle = `\n               <div class="news-actions__image">\n                        <img data-src="img/news_and_actions/${image}" class="lazy" alt="${title}">\n                </div>\n                 <h3 class="news-actions__title">${title}</h3>\n            `;
+                    htmlDate.push(newsActions_Date);
+                    htmlImage.push(newsActions_ImageTitle);
+                }));
+                const htmlDateArray = htmlDate.slice(3, 4);
+                const htmlDateTemplate = htmlDateArray.join("");
+                const htmlImageArray = htmlImage.slice(3, 4);
+                const htmlImageTemplate = htmlImageArray.join("");
+                newsDate.insertAdjacentHTML("beforeend", htmlDateTemplate);
+                newsContent.insertAdjacentHTML("beforeend", htmlImageTemplate);
+                lazyMedia.update();
+            }
+        }
         __webpack_require__(125);
         const inputMasks = document.querySelectorAll('input[type="tel"]');
         if (inputMasks.length) inputMasks.forEach((input => {
@@ -7747,7 +7954,7 @@
                                     const popup = form.dataset.popupError;
                                     popup ? projectModules.popup.open(popup) : null;
                                 }
-                            }), 0);
+                            }), 100);
                         }
                     } else if (form.hasAttribute("data-dev")) {
                         e.preventDefault();
@@ -7772,7 +7979,7 @@
                         const popup = form.dataset.popupMessage;
                         popup ? projectModules.popup.open(popup) : null;
                     }
-                }), 10);
+                }), 300);
                 formValidate.formClean(form);
                 formLogging(`Форму відправлено!`);
             }
@@ -8292,5 +8499,6 @@
         formSubmit();
         placeholderAction();
         pageNavigation();
+        cirlceActions();
     })();
 })();

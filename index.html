@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk-UA">
 
 <head>
 	<title>Home</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230319150600" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.min.css?_v=20230319150600">
+	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230330012243" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.min.css?_v=20230330012243">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
+<body data-simplebar>
 	<div class="wrapper">
 		<!---HEADER-->
 		<header class="header">
@@ -26,9 +26,9 @@
 								<ul class="menu__list">
 									<li class="menu__item"><a href="#" class="menu__link">Продукція</a></li>
 									<li class="menu__item"><a href="#" class="menu__link">Рецепти</a></li>
-									<li class="menu__item"><a href="#" class="menu__link">Про компанію</a></li>
+									<li class="menu__item"><a href="about.html" class="menu__link">Про компанію</a></li>
 									<li class="menu__item"><a href="#" class="menu__link">Новини та Акції</a></li>
-									<li class="menu__item"><a href="#" class="menu__link">Контакти</a></li>
+									<li class="menu__item"><a href="contacts.html" class="menu__link">Контакти</a></li>
 								</ul>
 							</nav>
 						</div>
@@ -65,9 +65,9 @@
 				</div>
 			</div>
 		</header>
-		<main class="home">
+		<main class="page">
 			<!---SMALL BANNERS-->
-			<section class="home__banner banner">
+			<section class="page__banner banner">
 				<div class="banner__container">
 					<article class="banner__recipe item-banner">
 						<div class="item-banner__body">
@@ -110,7 +110,7 @@
 				</div>
 			</section>
 			<!---BIG BANNER-->
-			<section class="home__banner-big big-banner">
+			<section class="page__banner-big big-banner">
 				<div class="big-banner__container">
 					<div class="big-banner__slider">
 						<div class="big-banner__banner-swiper">
@@ -355,7 +355,7 @@
 				</div>
 			</section>
 			<!---PRODUCTS-->
-			<section class="home__products poducts">
+			<section class="page__products poducts">
 				<div class="poducts__container">
 					<div class="poducts__header header-section">
 						<h2 class="products__title title">Наша продукція</h2>
@@ -368,12 +368,12 @@
 					</div>
 					<div data-tabs class="tabs">
 						<nav id="filterCategory" data-tabs-titles class="tabs__navigation">
-							<button data-category="chicken" type="button" class="tabs__title _tab-active">
+							<button data-category="chicken" type="button" class="tabs__title ">
 								<svg class="tabs__icon">
 									<use xlink:href="img/icons/icons.svg#chicken-leg"></use>
 								</svg>
 								<span>Знатна</span><span>курка</span></button>
-							<button data-category="souce" type="button" class="tabs__title">
+							<button data-category="souce" type="button" class="tabs__title ">
 								<svg svg class="tabs__icon">
 									<use xlink:href="img/icons/icons.svg#sauce"></use>
 								</svg>
@@ -399,7 +399,7 @@
 							</div>
 							<div class="tabs__body tabs__slider">
 								<nav data-type="souce" class="tabs__nav souce tabs__tab-swiper">
-									<button data-product="all" class="tabs__button all" type="button">Все</button>
+									<button data-product="all" class="tabs__button all " type="button">Все</button>
 									<button data-product="souce-1" class="tabs__button" type="button">Маринад 1</button>
 									<button data-product="souce-2" class="tabs__button" type="button">Маринад 2</button>
 									<button data-product="souce-3" class="tabs__button" type="button">Маринад 3</button>
@@ -422,7 +422,7 @@
 				</div>
 			</section>
 			<!---RECIPES-->
-			<section class="home__recipes recipes">
+			<section class="page__recipes recipes">
 				<div class="recipes__container">
 					<div class="recipes__header header-section">
 						<div class="recipes__info">
@@ -444,7 +444,7 @@
 				</div>
 			</section>
 			<!---NEWS AND ACTION-->
-			<section class="home__news news">
+			<section class="page__news news">
 				<div class="news__container">
 					<div class="news__header header-section">
 						<div class="news__info">
@@ -466,7 +466,7 @@
 				</div>
 			</section>
 			<!--BECAUSE-->
-			<section class="home__because because">
+			<section class="page__because because">
 				<div class="because__container">
 					<div class="because__body">
 						<div class="because__info">
@@ -479,14 +479,14 @@
 								</p>
 							</div>
 							<div class="because__links links-because">
-								<a href="#" class="links-because__link link">
-									Всі рецепти
+								<a href="about.html" class="links-because__link link">
+									Все про компанію
 									<svg class="link__icon">
 										<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
 									</svg>
 								</a>
 								<a href="#" class="links-because__link link">
-									Всі рецепти
+									Гарантії якості
 									<svg class="link__icon">
 										<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
 									</svg>
@@ -499,7 +499,7 @@
 					</div>
 				</div>
 			</section>
-			<section class="home__quality quality">
+			<section class="page__quality quality">
 				<div class="quality__container">
 					<div class="quality__items items-quality">
 						<div class="items-quality__item">
@@ -542,7 +542,7 @@
 				</div>
 			</section>
 			<!---BRANDS-->
-			<section class="home__brands brands">
+			<section class="page__brands brands">
 				<div class="brands__container">
 					<div class="brands__body">
 						<div class="brands__image">
@@ -567,7 +567,7 @@
 				</div>
 			</section>
 			<!---LOOK-->
-			<section class="home__look look">
+			<section class="page__look look">
 				<div class="look__container">
 					<div class="look__body">
 						<h2 class="look__title">Шукай в своїх улюблених магазинах по всій Україні</h2>
@@ -578,7 +578,7 @@
 				</div>
 			</section>
 			<!--CALLBACK-->
-			<section class="home__callback callback">
+			<section class="page__callback callback">
 				<div class="callback__container">
 					<div class="callback__body">
 						<h3 class="callback__title">Виникли питання?</h3>
@@ -645,25 +645,25 @@
 								<a href="mailto:chicken@mail.com" aria-label="Email">chicken@mail.com</a>
 							</div>
 						</div>
-						<div class="contact-top-footer__social">
+						<div class="contact-top-footer__social social">
 							<h6 class="contact-top-footer__title title-footer">Відстежуйте</h6>
-							<a href="#" class="contact-top-footer__link" aria-label="Facebook">
-								<svg class="contact-top-footer__icon facebook">
+							<a href="#" class="social__link" aria-label="Facebook">
+								<svg class="social__icon facebook">
 									<use xlink:href="img/icons/icons.svg#facebook"></use>
 								</svg>
 							</a>
-							<a href="#" class="contact-top-footer__link" aria-label="Instagram">
-								<svg class="contact-top-footer__icon instagram">
+							<a href="#" class="social__link" aria-label="Instagram">
+								<svg class="social__icon instagram">
 									<use xlink:href="img/icons/icons.svg#instagram"></use>
 								</svg>
 							</a>
-							<a href="#" class="contact-top-footer__link" aria-label="Twitter">
-								<svg class="contact-top-footer__icon twitter">
+							<a href="#" class="social__link" aria-label="Twitter">
+								<svg class="social__icon twitter">
 									<use xlink:href="img/icons/icons.svg#twitter"></use>
 								</svg>
 							</a>
-							<a href="#" class="contact-top-footer__link" aria-label="Linkedin">
-								<svg class="contact-top-footer__icon linkedin">
+							<a href="#" class="social__link" aria-label="Linkedin">
+								<svg class="social__icon linkedin">
 									<use xlink:href="img/icons/icons.svg#linkedin"></use>
 								</svg>
 							</a>
@@ -672,12 +672,12 @@
 					<div class="top-footer__adress adress-top-footer">
 						<h6 class="adress-top-footer__title title-footer">Наша адреса</h6>
 						<div class="adress-top-footer__map footer-contact">
-							<a href="https://goo.gl/maps/7oenX4xPABvLW3Ga6" aria-label="Україна">Україна, 12345, місто Київ
+							<a href="https://goo.gl/maps/7oenX4xPABvLW3Ga6" target="_blank" aria-label="Україна">Україна, 12345, місто Київ
 							</a>
 						</div>
 						<div class="adress-top-footer__company">
 							<h6 class="adress-top-footer__title title-footer">Група компаній «Company»</h6>
-							<a href="https://www.google.com.ua" aria-label="Company" class="adress-top-footer__link footer-contact">company.com</a>
+							<a href="https://www.google.com.ua" target="_blank" aria-label="Company" class="adress-top-footer__link footer-contact">company.com</a>
 						</div>
 						<div class="adress-top-footer__graphic">
 							<h6 class="adress-top-footer__title title-footer">Графік роботи офісу</h6>
@@ -687,14 +687,15 @@
 				</div>
 				<div class="footer__down down-footer">
 					<div class="down-footer__copy title-footer">© ТМ Курка</div>
-					<button data-goto-speed="1200" data-goto-header data-goto=".top-header" class="down-footer__arrow arrow-up">
+					<button data-goto-speed="1000" data-goto-header data-goto=".top-header" class="down-footer__arrow arrow-up">
 						<svg class="arrow-up__icon">
 							<use xlink:href="img/icons/icons.svg#long-arrow-red"></use>
 						</svg>
 					</button>
 				</div>
 			</div>
-		</footer>
+	</div>
+	</footer>
 	</div>
 	<!--CALLBACK POPUP -->
 	<div id="callback" aria-hidden="true" class="popup">
@@ -712,12 +713,12 @@
 					</div>
 					<form action="#" data-popup-message="#form-complete" data-popup-error="#form-error" data-dev class="callback__form form">
 						<div class="form__item">
-							<input id="popupFirstname" autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
-							<label class="form__label" for="popupFirstname">Ваше ім’я</label>
+							<input id="firstname" autocomplete="off" type="text" name="form[]" data-required="name" data-validate data-error="Введіть Ваше ім’я" placeholder="" class="form__input">
+							<label class="form__label" for="firstname">Ваше ім’я</label>
 						</div>
 						<div class="form__item">
-							<input id="popupPhone" autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
-							<label class="form__label" for="popupPhone">Номер телефону</label>
+							<input id="phone" autocomplete="off" type="tel" name="form[]" data-required="phone" data-validate data-error="Введіть Ваш номер телефону" placeholder="" class="form__input">
+							<label class="form__label" for="phone">Номер телефону</label>
 						</div>
 						<div class="input__item">
 							<button type="submit" class="form__button">
@@ -948,7 +949,7 @@
 			preloader();
 		</script>
 	</div>
-	<script src="js/app.min.js?_v=20230319150600"></script>
+	<script src="js/app.min.js?_v=20230330012243"></script>
 </body>
 
 </html>

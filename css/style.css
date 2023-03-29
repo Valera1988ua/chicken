@@ -2113,12 +2113,10 @@ body::after {
      object-fit: cover;
 }
 
-.no-webp .about__photo-company {
-  background: url("../img/about/bg_company.png") 0 0/100% no-repeat; }
-
 .about__photo-company {
   position: relative;
   padding: 0% 0% 12% 0%;
+  background: url("../img/about/bg_company.png") 0 0/100% no-repeat;
 }
 
 .about__title {
@@ -7450,5 +7448,3 @@ button.swiper-pagination-bullet {
     color: #232323;
   }
 }
-
-.webp .about__photo-company { background: url(../img/about/bg_company.webp) 0 0/100% no-repeat; }

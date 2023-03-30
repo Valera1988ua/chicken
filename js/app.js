@@ -7236,13 +7236,13 @@
         }
         window.addEventListener("load", (function(e) {
             initSliders();
-        }));
-        window.addEventListener("resize", (e => {
-            bigBannerSlider();
-            productSlider();
-            tabsSlider();
-            recipesSlider();
-            newsSlider();
+            window.addEventListener("resize", (e => {
+                bigBannerSlider();
+                productSlider();
+                tabsSlider();
+                recipesSlider();
+                newsSlider();
+            }));
         }));
         function aboutSlider() {
             if (document.querySelector(".cycle__slider")) aboutSwiper = new core(".cycle__slider", {
@@ -7545,6 +7545,7 @@
                                 if (swiperClass) swiperClass.style.display = "none";
                             } else if (swiperClass) swiperClass.style.display = "";
                             if (null !== productSwiper) productSwiper.slideTo(0);
+                            if (null !== tabsSwiper[0]) tabsSwiper[0].slideTo(0); else if (null !== tabsSwiper[1]) tabsSwiper[1].slideTo(0); else if (null !== tabsSwiper[2]) tabsSwiper[2].slideTo(0);
                         }));
                     }));
                 }));

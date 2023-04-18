@@ -2,7 +2,7 @@
 <html lang="uk-UA">
 
 <head>
-	<title>Смачна курка: Новина</title>
+	<title>Смачна курка: Каталог продукції</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
@@ -47,70 +47,209 @@
 				</div>
 		</header>
 		<main class="page">
-			<div class="page__news-actions news-actions">
-				<div class="news-actions__small-container">
-					<div class="news-actions__header">
-						<div class="news-actions__links text">
-							<a href="index.html" class="news-actions__link">Головна / </a>
-							<a href="news-and-actions.html" class="news__link">Новини та Акції /</a>
+			<div class="page__catalog-products products-catalog">
+				<div class="header-color">
+					<div class="header-color__container">
+						<div class="header-color__links">
+							<a href="index.html" aria-labelledby=" Головна" class="header-color__link">
+								Головна
+							</a>
+							<span>/</span>
+							<a href="recipes.html" aria-labelledby="Продукція" class="header-color__link">
+								Продукція
+							</a>
 						</div>
-						<div id="date" class="news-actions__date">
-						</div>
+						<h1 class="header-color__title">
+							Продукція
+						</h1>
 					</div>
-					<div id="content" class="news-actions__content"></div>
-					<div class="news-actions__text">
-						<p>Але щоб ви зрозуміли, звідки виникає це хибне уявлення людей, цуратись насолоди і вихваляти
-							страждання, я розкрию перед
-							вами всю картину і роз’ясню, що саме говорив цей чоловік, який відкрив істину, якого я б назвав
-							зодчим щасливого життя.
-							Дійсно, ніхто не відкидає, не зневажає, не уникає насолод тільки через те, що це насолоди, але лише
-							через те, що тих,
-							хто не вміє розумно вдаватися насолоді, осягають великі страждання.
-							Так само як немає нікого, хто полюбивши, вважав за краще і зажадав би саме страждання тільки за те,
-							що це страждання, а
-							не тому, що інший раз виникають такі обставини, коли страждання і біль приносять якесь і чималу
-							насолоду.</p>
-					</div>
-					<div class="news-actions__contact">
-						<div class="news-actions__social social">
-							<a href="#" class="social__link" aria-label="Facebook">
-								<svg class="social__icon facebook">
-									<use xlink:href="img/icons/icons.svg#facebook"></use>
-								</svg>
-							</a>
-							<a href="#" class="social__link" aria-label="Instagram">
-								<svg class="social__icon instagram">
-									<use xlink:href="img/icons/icons.svg#instagram"></use>
-								</svg>
-							</a>
-							<a href="#" class="social__link" aria-label="Twitter">
-								<svg class="social__icon twitter">
-									<use xlink:href="img/icons/icons.svg#twitter"></use>
-								</svg>
-							</a>
-							<a href="#" class="social__link" aria-label="Linkedin">
-								<svg class="social__icon linkedin">
-									<use xlink:href="img/icons/icons.svg#linkedin"></use>
-								</svg>
-							</a>
-						</div>
-						<div class="news__all-news">
-							<a href="#" class="news__link link">
-								Всі новини
-								<svg class="link__icon">
-									<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
-								</svg>
-							</a>
-						</div>
-					</div>
-					<div class="news-actions__more more-news">
-						<h3 class="more-news__title">Вас також може зацікавити</h3>
-						<div class="news__slider">
-							<div id="newsHome" class="news__items items-news news__news-swiper">
+				</div>
+				<div class="products-catalog__container">
+					<div class="products-catalog__tabs">
+						<div data-tabs class="tabs">
+							<nav id="allProducts" data-tabs-titles class="tabs__navigation">
+								<button data-category="chicken" type="button" class="tabs__title ">
+									<svg class="tabs__icon">
+										<use xlink:href="img/icons/icons.svg#chicken-leg"></use>
+									</svg>
+									<span>Знатна</span><span>курка</span></button>
+								<button data-category="souce" type="button" class="tabs__title ">
+									<svg svg class="tabs__icon">
+										<use xlink:href="img/icons/icons.svg#sauce"></use>
+									</svg>
+									<span>Знатний</span><span>маринад</span></button>
+								<button data-category="stew" type="button" class="tabs__title">
+									<svg svg class="tabs__icon">
+										<use xlink:href="img/icons/icons.svg#conserved"></use>
+									</svg>
+									<span>Знатна</span><span>тушонка</span></button>
+							</nav>
+							<div data-tabs-body id="catalogProducts" class="tabs__content">
+								<div class="tabs__body products-catalog__body">
+									<div class="filter-spollers">
+										<div data-spollers data-spollers-init="true" class="filter-spollers__items">
+											<div class="filter-spollers__item">
+												<button type="button" data-spoller class="filter-spollers__title">
+													Тип продукту
+													<svg class="filter-spollers__icon">
+														<use xlink:href="img/icons/icons.svg#arrow-spollers"></use>
+													</svg>
+												</button>
+												<div class="filter-spollers__dropdown chicken-catalog">
+													<div data-filter-checkbox="chicken" class="filter-spollers__input input-filter">
+														<div data-filter="fillet" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Філе</label>
+														</div>
+														<div data-filter="meat" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Бедро</label>
+														</div>
+														<div data-filter="carcass" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Філе бедра</label>
+														</div>
+														<div data-filter="wings" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Крило</label>
+														</div>
+														<div data-filter="lump" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Гомілки</label>
+														</div>
+														<div data-filter="thigh" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Печінка</label>
+														</div>
+													</div>
+													<div class="filter-spollers__button button-spollers">
+														<button type="button" class="button-spollers__enter">Застосувати</button>
+														<button type="button" class="button-spollers__clear">Очистити</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div data-products="chicken" class="products-catalog__item"></div>
+								</div>
+								<div class="tabs__body products-catalog__body">
+									<div class="filter-spollers">
+										<div data-spollers class="filter-spollers__items">
+											<div class="filter-spollers__item">
+												<button type="button" data-spoller class="filter-spollers__title">Тип
+													продукту
+													<svg class="filter-spollers__icon">
+														<use xlink:href="img/icons/icons.svg#arrow-spollers"></use>
+													</svg>
+												</button>
+												<div class="filter-spollers__dropdown souce-catalog">
+													<div data-filter-checkbox="stew" class="filter-spollers__input input-filter">
+														<div data-filter="souce-1" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Соус</label>
+														</div>
+														<div data-filter="souce-2" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Соус-2</label>
+														</div>
+														<div data-filter="souce-3" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Соус-3</label>
+														</div>
+													</div>
+													<div class="filter-spollers__button button-spollers">
+														<button type="button" class="button-spollers__enter">Застосувати</button>
+														<button type="button" class="button-spollers__clear">Очистити</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div data-products="souce" class="products-catalog__item"></div>
+								</div>
+								<div class="tabs__body products-catalog__body">
+									<div class="filter-spollers">
+										<div data-spollers class="filter-spollers__items">
+											<div class="filter-spollers__item">
+												<button type="button" data-spoller class="filter-spollers__title">
+													Тип продукту
+													<svg class="filter-spollers__icon">
+														<use xlink:href="img/icons/icons.svg#arrow-spollers"></use>
+													</svg>
+												</button>
+												<div class="filter-spollers__dropdown stew-catalog">
+													<div data-filter-checkbox="souce" class="filter-spollers__input input-filter">
+														<div data-filter="stew-1" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Тушонка</label>
+														</div>
+														<div data-filter="stew-2" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Тушонка-2</label>
+														</div>
+														<div data-filter="stew-2" class="input-filter__item">
+															<input type="checkbox" class="input-filter__checkbox">
+															<label class="input-filter__label" for="checkbox">Тушонка-3</label>
+														</div>
+													</div>
+													<div class="filter-spollers__button button-spollers">
+														<button type="button" class="button-spollers__enter">Застосувати</button>
+														<button type="button" class="button-spollers__clear">Очистити</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div data-products="stew" class="products-catalog__item"></div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div class="products-catalog__pagination pagination"></div>
 				</div>
+				<!---SMALL BANNERS-->
+				<section class="page__banner banner">
+					<div class="banner__container">
+						<article class="banner__recipe item-banner">
+							<div class="item-banner__body">
+								<div class="item-banner__image">
+									<img data-src="img/small_banner/dish_1.png" class="lazy" alt="Нові рецепти від Знатної Курки">
+								</div>
+								<div class="item-banner__info">
+									<h2 class="item-banner__title banner-title">Нові рецепти від Смачної Курки</h2>
+									<div class="item-banner__text banner-text">
+										<p>порадуй себе та здивуй рідних</p>
+									</div>
+									<a href="recipes.html" class="item-banner__link link-banner" aria-label="До розділу">
+										<button class="link-banner__button">До розділу</button>
+										<svg class="link-banner__icon">
+											<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</article>
+						<article class="banner__meatballs  item-banner">
+							<div class="item-banner__body">
+								<div class="item-banner__image">
+									<img data-src="img/small_banner/dish_1.png" class="lazy" alt="Мітболи з філе">
+								</div>
+								<div class="item-banner__info">
+									<h2 class="item-banner__title banner-title">Нові рецепти від Смачної Курки</h2>
+									<div class="item-banner__text banner-text">
+										<p>порадуй себе та здивуй рідних</p>
+									</div>
+									<a href="recipes.html" class="item-banner__link link-banner" aria-label="До розділу">
+										<button class="link-banner__button">До розділу</button>
+										<svg class="link-banner__icon">
+											<use xlink:href="img/icons/icons.svg#arrow-btn"></use>
+										</svg>
+									</a>
+								</div>
+							</div>
+						</article>
+					</div>
+				</section>
 			</div>
 		</main>
 		<!--FOOTER-->

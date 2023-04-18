@@ -6956,11 +6956,11 @@
         }
         function productsAction(productsBlock) {
             const productArray = productsBlock.querySelectorAll(".items-product__item");
-            productArray.forEach((product => {
+            if (productArray) productArray.forEach((product => {
                 product.addEventListener("mouseenter", (e => {
                     e.preventDefault();
                     const targetElement = e.target;
-                    if (targetElement.closest(".items-product")) {
+                    if (targetElement.closest(".items-product") || targetElement.closest(".products-catalog__item") || targetElement.closest(".more-products__items")) {
                         const productHideInfo = targetElement.querySelector(".info-hide");
                         if (productHideInfo.style.maxHeight) productHideInfo.style.maxHeight = null; else {
                             productHideInfo.style.maxHeight = null;
@@ -6985,25 +6985,547 @@
         function smallImageAction(target) {
             const spanBlock = target.querySelector(".small-image");
             const spanCold = spanBlock.querySelector(".small-image__cold");
-            if (target.closest(".items-product")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
+            if (target.closest(".items-product") || target.closest(".products-catalog__item") || target.closest(".more-products__items")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
         }
-        function createHTML(products, productsBlock) {
+        let array = [];
+        const file = "json/recipes.json";
+        const recipesBlock = document.querySelector("#recipesHome");
+        const recipesPageBlock = document.querySelector("#all-recipes");
+        window.addEventListener("load", (e => {
+            if (recipesBlock || recipesPageBlock) getRecipes();
+        }));
+        async function getRecipes() {
+            try {
+                const response = await fetch(file, {
+                    method: "GET"
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    array = [];
+                    array = data;
+                    console.log("Data:", data);
+                    await loadRecipes(array);
+                    recipesSlider();
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                console.log("Finally");
+            }
+        }
+        const recipesArray = [];
+        async function loadRecipes(data) {
+            data.recipes.forEach((item => {
+                const id = item.id, way = item.way, type = item.type, meat = item.meat, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
+                let recipesTemplate = "";
+                const recipesItem = `\n           <article id="${id}" data-way=${way} data-type="${type}" data-meat=${meat} class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}">\n                  <div class="swiper-lazy-preloader"></div>\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <h3 class="items-recipes__title">${title}</h3>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
+                info.forEach((value => {
+                    const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n                   <div class="specification-recipes__item">\n                       <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                       <span>${value.time}</span>\n                  </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                         <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                       <span>${value.complexity}</span>\n                    </div>\n               </div>\n            `;
+                    recipesTemplate += recipesItem;
+                    recipesTemplate += specificationRecipes;
+                }));
+                energyValue.forEach((value => {
+                    const recipesItemHideInfo = `\n         <div class="items-recipes__hide hide-recipes-items">\n            <div class="hide-recipes-items__info">${energyText}</div>\n               <div class="hide-recipes-items__energy">\n                 <div class="hide-recipes-items__kkal">\n                   <h6 class="hide-recipes-items__title">${value.kkal}</h6>\n                    <div class="hide-recipes-items__text">колорії</div>\n                  </div>\n                     <div class="hide-recipes-items__protein">\n                      <h6 class="hide-recipes-items__title">${value.protein}</h6>\n                       <div class="hide-recipes-items__text">білки</div>\n                   </div>\n                    <div class="hide-recipes-items__fat">\n                     <h6 class="hide-recipes-items__title">${value.fat}</h6>\n                     <div class="hide-recipes-items__text">жири</div>\n                  </div>\n               </div>\n               </div>\n               `;
+                    recipesTemplate += recipesItemHideInfo;
+                    recipesTemplate += `</article>`;
+                }));
+                recipesArray.push(recipesTemplate);
+            }));
+            if (recipesBlock) {
+                await homeBlockRecipes(recipesArray, recipesBlock);
+                lazyMedia.update();
+                recipesAction(recipesBlock);
+            }
+            if (recipesPageBlock) pageBlockRecipes(recipesArray);
+        }
+        async function pageBlockRecipes(arr) {
+            let numCards = 4;
+            async function updateCards() {
+                let newArray = [];
+                if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                newArray = updateArray(arr);
+                pagination(newArray, recipesPageBlock, numCards, 1);
+                _slideDown(recipesPageBlock, 800);
+                lazyMedia.update();
+            }
+            await updateCards();
+            window.addEventListener("resize", updateCards);
+        }
+        async function homeBlockRecipes(arr, block) {
+            const htmlRecipes = arr.slice(0, 4);
+            const htmlRecipesTemplate = htmlRecipes.join("");
+            block.insertAdjacentHTML("beforeend", htmlRecipesTemplate);
+        }
+        function recipesAction(recipesBlock) {
+            const recipesArray = recipesBlock.querySelectorAll(".items-recipes__item");
+            if (recipesArray) recipesArray.forEach((recipes => {
+                recipes.addEventListener("mouseenter", (e => {
+                    e.preventDefault();
+                    const targetElement = e.target;
+                    const recipesHideInfo = targetElement.querySelector(".hide-recipes-items");
+                    const recipesInfo = targetElement.querySelector(".items-recipes__info");
+                    if (targetElement.closest(".items-recipes") || targetElement.closest(".all-recipes__recipes")) {
+                        if (recipesHideInfo.style.maxHeight) recipesHideInfo.style.maxHeight = null; else {
+                            recipesHideInfo.style.maxHeight = null;
+                            recipesHideInfo.style.maxHeight = recipesHideInfo.scrollHeight + 20 + "px";
+                            recipesHideInfo.classList.add("_show");
+                            recipesInfo.classList.add("_show");
+                            targetElement.classList.add("_show");
+                        }
+                        targetElement.addEventListener("mouseleave", (e => {
+                            e.preventDefault();
+                            if (recipesHideInfo.style.maxHeight && recipesInfo.classList.contains("_show")) {
+                                recipesHideInfo.classList.remove("_show");
+                                recipesInfo.classList.remove("_show");
+                                targetElement.classList.remove("_show");
+                                recipesHideInfo.style.maxHeight = null;
+                            }
+                        }));
+                    }
+                }));
+            }));
+        }
+        function updateArray(arr) {
+            return arr;
+        }
+        checkBoxAction();
+        function checkBoxAction() {
+            const checkBox = document.querySelectorAll(".input-filter__item");
+            checkBox.forEach((el => {
+                el.addEventListener("click", checkBoxToggle);
+            }));
+        }
+        function removeActive(arr) {
+            Array.from(arr).forEach((checkBox => {
+                if (checkBox.classList.contains("_active")) checkBox.classList.remove("_active");
+            }));
+        }
+        function removeActiveCheckbox(target) {
+            const checkBox = document.querySelectorAll(".input-filter__item");
+            checkBox.forEach((el => {
+                if (target.classList.contains("meat") && el.closest(".meat")) el.classList.remove("_active");
+                if (target.classList.contains("dish") && el.closest(".dish")) el.classList.remove("_active");
+                if (target.classList.contains("way") && el.closest(".way")) el.classList.remove("_active");
+            }));
+        }
+        function clearCheckbox() {
+            const buttonsClear = document.querySelectorAll(".button-spollers__clear");
+            buttonsClear.forEach((button => {
+                button.addEventListener("click", (e => {
+                    const targetElement = e.target;
+                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                    if (parentTarget) {
+                        removeActiveCheckbox(parentTarget);
+                        updateRecipes();
+                    }
+                }));
+            }));
+        }
+        clearCheckbox();
+        function enterCheckbox() {
+            const buttonsEnter = document.querySelectorAll(".button-spollers__enter");
+            buttonsEnter.forEach((button => {
+                button.addEventListener("click", (e => {
+                    const targetElement = e.target;
+                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                    if (parentTarget) updateRecipes();
+                }));
+            }));
+        }
+        enterCheckbox();
+        function checkBoxFilterItems() {
+            const checkBoxItems = document.querySelectorAll(".input-filter__item");
+            const filterItems = [ ...checkBoxItems ];
+            const updateItems = filterItems.filter((item => {
+                if (!item.classList.contains("_active")) return;
+                return item.dataset.filter;
+            })).map((item => item.dataset.filter));
+            return updateItems;
+        }
+        function updateRecipes() {
+            const arr = recipesArray;
+            const div = document.createElement("div");
+            div.innerHTML = arr.join("");
+            const recipeItems = div.querySelectorAll(".items-recipes__item");
+            const itemsToFilter = [ ...recipeItems ];
+            if (0 === itemsToFilter.length) return;
+            const updateArray = [];
+            const filter = checkBoxFilterItems();
+            itemsToFilter.forEach((item => {
+                const {way} = item.dataset;
+                const {type} = item.dataset;
+                const {meat} = item.dataset;
+                let count = 0;
+                if (filter.includes(way)) count++;
+                if (filter.includes(type)) count++;
+                if (filter.includes(meat)) count++;
+                if (count === filter.length) updateArray.push(item.outerHTML);
+            }));
+            pageBlockRecipes(updateArray);
+        }
+        function checkBoxToggle() {
+            const parent = this.closest(".input-filter");
+            const activeCheckbox = parent.children;
+            const parentFilterAttribute = parent.getAttribute("data-filter-checkbox");
+            if (!this.classList.contains("_active")) {
+                if ("meat" === parentFilterAttribute) {
+                    removeActive(activeCheckbox);
+                    this.classList.add("_active");
+                }
+                if ("dish" === parentFilterAttribute) {
+                    removeActive(activeCheckbox);
+                    this.classList.add("_active");
+                }
+                if ("way" === parentFilterAttribute) {
+                    removeActive(activeCheckbox);
+                    this.classList.add("_active");
+                }
+            }
+        }
+        function pagination(arr, body, rows, currentPage) {
+            function displayElements(arr, rowPerPage, page) {
+                body.innerHTML = "";
+                if (0 === arr.length) createMessage(body);
+                page--;
+                const start = rowPerPage * page;
+                const end = start + rowPerPage;
+                const paginatedData = arr.slice(start, end);
+                addElements(paginatedData, body);
+            }
+            function addElements(data, body) {
+                data.forEach((el => {
+                    body.insertAdjacentHTML("beforeend", el);
+                    lazyMedia.update();
+                }));
+                const bodyElements = body;
+                recipesAction(bodyElements);
+                spanClear(bodyElements);
+                hideSmallImage(bodyElements);
+                productsAction(bodyElements);
+            }
+            function createMessage(body) {
+                const recipesPageBlock = document.querySelector("#all-recipes");
+                const productsPageBlock = document.querySelector("#catalogProducts");
+                if (recipesPageBlock || productsPageBlock) {
+                    const html = `<div class="all-recipes__message">Вибачте, нічого не знайдено!</div>`;
+                    body.insertAdjacentHTML("beforeend", html);
+                }
+            }
+            function createPagination(arr, page) {
+                const pagination = document.querySelector(".pagination");
+                pagination.innerHTML = "";
+                const paginationList = document.createElement("ul");
+                paginationList.classList.add("pagination__list");
+                pagination.appendChild(paginationList);
+                let liTemplate = "";
+                let beforePages = page - 1;
+                let afterPages = page + 1;
+                let liActive;
+                const pagesCount = Math.ceil(arr.length / rows);
+                if (page > 1) liTemplate += ` <li class="pagination__item first red-pagination">\n                               <svg svg class="red-pagination__icon">\n                                <use xlink:href="img/icons/icons.svg#arrow-pagination"></use>\n                              </svg>\n                         </li>\n                         `;
+                if (page > 2) {
+                    liTemplate += `<li class="pagination__item">1</li>`;
+                    if (page > 3) liTemplate += `<li class="pagination__item dots">...</li>`;
+                }
+                for (let pageLength = beforePages; pageLength <= afterPages; pageLength++) {
+                    if (pageLength > pagesCount) continue;
+                    if (0 == pageLength) pageLength += 1;
+                    if (page == pageLength) liActive = "_active"; else liActive = "";
+                    liTemplate += `<li class="pagination__item ${liActive}">${pageLength}</li>`;
+                }
+                if (page < pagesCount - 1) {
+                    if (page < pagesCount - 2) liTemplate += `<li class="pagination__item dots">...</li>`;
+                    liTemplate += `<li class="pagination__item">${pagesCount}</li>`;
+                }
+                if (page < pagesCount) liTemplate += ` <li class="pagination__item last red-pagination">\n                               <svg svg class="red-pagination__icon">\n                                <use xlink:href="img/icons/icons.svg#arrow-pagination"></use>\n                              </svg>\n                         </li>\n                         `;
+                paginationList.innerHTML = liTemplate;
+                const paginationItem = paginationList.querySelectorAll(".pagination__item");
+                paginationItem.forEach((item => {
+                    item.addEventListener("click", paginationAction);
+                }));
+                function paginationAction(e) {
+                    const firstLi = this.classList.contains("first");
+                    const lastLi = this.classList.contains("last");
+                    const targetLi = e.target;
+                    let currentItemLi = document.querySelector(".pagination__item._active");
+                    if (this.classList.contains("dots")) return;
+                    if (firstLi) {
+                        page--;
+                        displayElements(arr, rows, page);
+                        createPagination(arr, page);
+                    }
+                    if (!firstLi && !lastLi) {
+                        let pageNum = targetLi.textContent;
+                        if (pageNum == page) return;
+                        currentPage = parseInt(pageNum);
+                        displayElements(arr, rows, currentPage);
+                        createPagination(arr, currentPage);
+                        currentItemLi.classList.remove("_active");
+                        targetLi.classList.add("_active");
+                    }
+                    if (lastLi) {
+                        page++;
+                        displayElements(arr, rows, page);
+                        createPagination(arr, page);
+                    }
+                }
+            }
+            displayElements(arr, rows, currentPage);
+            createPagination(arr, currentPage);
+        }
+        function toUpperCase(text) {
+            const splitted = text.split("");
+            const first = splitted[0].toUpperCase();
+            const rest = [ ...splitted ];
+            rest.splice(0, 1);
+            return text = [ first, ...rest ].join("");
+        }
+        function toLoverCase(text) {
+            const splitted = text.split("");
+            const first = splitted[0].toLowerCase();
+            const rest = [ ...splitted ];
+            rest.splice(0, 1);
+            return text = [ first, ...rest ].join("");
+        }
+        function resizeTabs(selector) {
+            if (selector) {
+                const tabs = selector.querySelectorAll(".tabs__title");
+                tabs.forEach((tab => {
+                    let spanText = tab.children[2].textContent;
+                    if (window.innerWidth <= 610) {
+                        tab.children[1].style.display = "none";
+                        tab.children[2].textContent = toUpperCase(spanText);
+                    } else {
+                        tab.children[1].style.display = "block";
+                        tab.children[2].textContent = toLoverCase(spanText);
+                    }
+                }));
+            }
+        }
+        const productsHome = document.querySelector("#products");
+        const catalogProducts = document.querySelector("#catalogProducts");
+        const moreProduct = document.querySelector(".more-products__items");
+        let catalogProductsChicken = [];
+        let catalogProductsSouce = [];
+        let catalogProductsStew = [];
+        function createHTML(products) {
+            const homeProducts = [];
+            catalogProductsChicken = [];
+            catalogProductsSouce = [];
+            catalogProductsStew = [];
             products.forEach((item => {
                 const id = item.id, url = item.url, type = item.type, product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
                 let productTemplate = "";
-                const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product}">\n        <div class="items-product__image">\n          <div class="items-product__big-image">\n            <img data-src="img/products/${image}" class="lazy" alt="${title}">\n          </div>\n            <div class="items-product__small-image small-image">\n              <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                    <img data-src="img/products/${freez}" class="lazy" alt="Іконка">\n                 </div>\n               <div class="small-image__item">\n                <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                  <img data-src="img/products/${cold}" class="lazy" alt="Іконка">\n                </div>\n             </div>\n          </div>\n          <div class="items-product__info">\n            <h3 class="items-product__title">${title}</h3>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n             </div>\n            </div>\n      `;
+                const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product}">\n           <div class="items-product__image">\n             <div class="items-product__big-image">\n              <img data-src="img/products/${image}" class="lazy" alt="${title}">\n              <div class="swiper-lazy-preloader"></div>\n            </div>\n          <div class="items-product__small-image small-image">\n            <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                  <img data-src="img/products/${freez}" class="lazy" alt="${info ? info : "Іконка"}">\n              </div>\n            <div class="small-image__item">\n              <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                <img data-src="img/products/${cold}" class="lazy" alt="${info ? info : "Іконка"}">\n            </div>\n          </div>\n        </div>\n          <div class="items-product__info">\n            <h3 class="items-product__title">${title}</h3>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n          </div>\n      `;
                 energyValue.forEach((value => {
                     const productItemHideInfo = `<div class="items-product__hide-info info-hide">\n               <div class="info-hide__energy">\n                 <div class="info-hide__kkal">\n                   <h6 class="info-hide__title">${value.kkal}</h6>\n                    <div class="info-hide__text">колорії</div>\n                  </div>\n                     <div class="info-hide__protein">\n                      <h6 class="info-hide__title">${value.protein}</h6>\n                       <div class="info-hide__text">білки</div>\n                   </div>\n                    <div class="info-hide__fat">\n                     <h6 class="info-hide__title">${value.fat}</h6>\n                     <div class="info-hide__text">жири</div>\n                  </div>\n               </div>\n                <a href="${url}" class="info-hide__link-product product-link">\n                   <span class="product-link__text">Детальніше</span>\n                     <svg class="product-link__icon">\n                        <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n                    </svg>\n                  </a>\n              `;
                     productTemplate += productItem;
                     productTemplate += productItemHideInfo;
                     productTemplate += `</article>`;
+                    homeProducts.push(productTemplate);
+                    if ("chicken" === type) catalogProductsChicken.push(productTemplate);
+                    if ("souce" === type) catalogProductsSouce.push(productTemplate);
+                    if ("stew" === type) catalogProductsStew.push(productTemplate);
                 }));
-                productsBlock.insertAdjacentHTML("beforeend", productTemplate);
-                lazyMedia.update();
             }));
-            spanClear(productsBlock);
-            hideSmallImage(productsBlock);
-            productsAction(productsBlock);
+            if (productsHome) homeProductsAdd(homeProducts, productsHome);
+            if (catalogProducts) {
+                catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
+                const allProductsCategory = document.querySelector("#allProducts");
+                window.addEventListener("resize", (e => {
+                    resizeTabs(allProductsCategory);
+                }));
+            }
+            if (moreProduct) moreProductAdd(homeProducts, moreProduct, length);
+        }
+        function getRandomIndex(maxIndex, length) {
+            return Math.floor(Math.random() * (maxIndex - length + 1));
+        }
+        function moreProductAdd(arr, block) {
+            const length = 3;
+            const startIndex = getRandomIndex(arr.length, length);
+            const moreProducts = arr.slice(startIndex, startIndex + length);
+            const htmlMoreProducts = moreProducts.join("");
+            block.insertAdjacentHTML("beforeend", htmlMoreProducts);
+            lazyMedia.update();
+            spanClear(block);
+            hideSmallImage(block);
+            productsAction(block);
+        }
+        function homeProductsAdd(arr, block) {
+            const htmlProductsTemplate = arr.join("");
+            block.insertAdjacentHTML("beforeend", htmlProductsTemplate);
+            lazyMedia.update();
+            spanClear(block);
+            hideSmallImage(block);
+            productsAction(block);
+            setTimeout((() => {
+                _slideDown(block, 1e3);
+            }), 0);
+        }
+        let newArrayChicken = [];
+        let newArraySouce = [];
+        let newArrayStew = [];
+        function catalogProductsAdd(arrChicken, arrSouce, arrStew) {
+            const newsPageBlock = document.querySelector("#catalogProducts");
+            const tabsBody = newsPageBlock.querySelectorAll(".tabs__body");
+            const tabsTitle = document.querySelectorAll(".tabs__title");
+            newArrayChicken = [];
+            newArraySouce = [];
+            newArrayStew = [];
+            let indexTitle = 0;
+            tabsTitle.forEach(((el, index) => {
+                const activeTitle = el.classList.contains("_tab-active");
+                indexTitle = index;
+                tabsBody.forEach(((tab, index) => {
+                    const tabItem = tab.querySelector(".products-catalog__item");
+                    const {products} = tabItem.dataset;
+                    if ("chicken" === products && activeTitle && index == indexTitle) {
+                        let numCards = 4;
+                        function updateCardsAll() {
+                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            newArrayChicken = returnArray(arrChicken);
+                            pagination(newArrayChicken, tabItem, numCards, 1);
+                            _slideDown(tabItem, 800);
+                        }
+                        updateCardsAll();
+                        window.addEventListener("resize", updateCardsAll);
+                    }
+                    if ("souce" === products && activeTitle && index == indexTitle) {
+                        let numCards = 4;
+                        function updateCardsAll() {
+                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            newArraySouce = returnArray(arrSouce);
+                            pagination(newArraySouce, tabItem, numCards, 1);
+                            _slideDown(tabItem, 800);
+                        }
+                        updateCardsAll();
+                        window.addEventListener("resize", updateCardsAll);
+                    }
+                    if ("stew" === products && activeTitle && index == indexTitle) {
+                        let numCards = 4;
+                        function updateCardsAll() {
+                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            newArrayStew = returnArray(arrStew);
+                            pagination(newArrayStew, tabItem, numCards, 1);
+                            _slideDown(tabItem, 800);
+                        }
+                        updateCardsAll();
+                        window.addEventListener("resize", updateCardsAll);
+                    }
+                }));
+            }));
+        }
+        function returnArray(arr) {
+            return arr;
+        }
+        toHTML_checkBoxAction();
+        function toHTML_checkBoxAction() {
+            const checkBox = document.querySelectorAll(".input-filter__item");
+            checkBox.forEach((el => {
+                el.addEventListener("click", toHTML_checkBoxToggle);
+            }));
+        }
+        function toHTML_checkBoxToggle() {
+            const parent = this.closest(".input-filter");
+            const activeCheckbox = parent.children;
+            const parentFilterAttribute = parent.getAttribute("data-filter-checkbox");
+            if (!this.classList.contains("_active")) {
+                if ("chicken" === parentFilterAttribute) {
+                    toHTML_removeActive(activeCheckbox);
+                    this.classList.add("_active");
+                }
+                if ("stew" === parentFilterAttribute) {
+                    toHTML_removeActive(activeCheckbox);
+                    this.classList.add("_active");
+                }
+                if ("souce" === parentFilterAttribute) {
+                    toHTML_removeActive(activeCheckbox);
+                    this.classList.add("_active");
+                }
+            }
+        }
+        function toHTML_removeActive(arr) {
+            Array.from(arr).forEach((checkBox => {
+                if (checkBox.classList.contains("_active")) checkBox.classList.remove("_active");
+            }));
+        }
+        function toHTML_removeActiveCheckbox(target) {
+            const checkBox = document.querySelectorAll(".input-filter__item");
+            checkBox.forEach((el => {
+                if (target.classList.contains("chicken-catalog") && el.closest(".chicken-catalog")) el.classList.remove("_active");
+                if (target.classList.contains("souce-catalog") && el.closest(".souce-catalog")) el.classList.remove("_active");
+                if (target.classList.contains("stew-catalog") && el.closest(".stew-catalog")) el.classList.remove("_active");
+            }));
+        }
+        function toHTML_clearCheckbox() {
+            const buttonsClear = document.querySelectorAll(".button-spollers__clear");
+            buttonsClear.forEach((button => {
+                button.addEventListener("click", (e => {
+                    const targetElement = e.target;
+                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                    if (parentTarget) {
+                        toHTML_removeActiveCheckbox(parentTarget);
+                        catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
+                    }
+                }));
+            }));
+        }
+        toHTML_clearCheckbox();
+        function toHTML_enterCheckbox() {
+            const buttonsEnter = document.querySelectorAll(".button-spollers__enter");
+            buttonsEnter.forEach((button => {
+                button.addEventListener("click", (e => {
+                    const targetElement = e.target;
+                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                    if (parentTarget) updateProducts();
+                }));
+            }));
+        }
+        toHTML_enterCheckbox();
+        function toHTML_checkBoxFilterItems() {
+            const checkBoxItems = document.querySelectorAll(".input-filter__item");
+            const filterItems = [ ...checkBoxItems ];
+            const updateItems = filterItems.filter((item => {
+                if (!item.classList.contains("_active")) return;
+                return item.dataset.filter;
+            })).map((item => item.dataset.filter));
+            return updateItems;
+        }
+        function updateProducts() {
+            const arrChicken = catalogProductsChicken;
+            const arrSouce = catalogProductsSouce;
+            const arrStew = catalogProductsStew;
+            const divChicken = document.createElement("div");
+            const divSouce = document.createElement("div");
+            const divStew = document.createElement("div");
+            divChicken.innerHTML = arrChicken.join("");
+            divSouce.innerHTML = arrSouce.join("");
+            divStew.innerHTML = arrStew.join("");
+            const chickenItems = divChicken.querySelectorAll(".items-product__item");
+            const souceItems = divSouce.querySelectorAll(".items-product__item");
+            const stewItems = divStew.querySelectorAll(".items-product__item");
+            const itemsToFilterChicken = [ ...chickenItems ];
+            const itemsToFilterSouce = [ ...souceItems ];
+            const itemsToFilterStew = [ ...stewItems ];
+            if (0 === itemsToFilterChicken.length || 0 === itemsToFilterSouce.length || 0 === itemsToFilterStew.length) return;
+            const updateArrayChicken = [];
+            const updateArraySouce = [];
+            const updateArrayStew = [];
+            const filter = toHTML_checkBoxFilterItems();
+            itemsToFilterChicken.forEach((item => {
+                const {product} = item.dataset;
+                if (filter.includes(product)) updateArrayChicken.push(item.outerHTML);
+            }));
+            itemsToFilterSouce.forEach((item => {
+                const {product} = item.dataset;
+                if (filter.includes(product)) updateArraySouce.push(item.outerHTML);
+            }));
+            itemsToFilterStew.forEach((item => {
+                const {product} = item.dataset;
+                if (filter.includes(product)) updateArrayStew.push(item.outerHTML);
+            }));
+            catalogProductsAdd(updateArrayChicken, updateArraySouce, updateArrayStew);
         }
         function spanClear(productsBlock) {
             const spanFreez = productsBlock.querySelectorAll(".small-image__freez");
@@ -7039,44 +7561,91 @@
                 }));
             }));
         }
-        function toUpperCase(text) {
-            const splitted = text.split("");
-            const first = splitted[0].toUpperCase();
-            const rest = [ ...splitted ];
-            rest.splice(0, 1);
-            return text = [ first, ...rest ].join("");
-        }
-        function toLoverCase(text) {
-            const splitted = text.split("");
-            const first = splitted[0].toLowerCase();
-            const rest = [ ...splitted ];
-            rest.splice(0, 1);
-            return text = [ first, ...rest ].join("");
-        }
-        function resizeTabs(selector) {
-            if (selector) {
-                const tabs = selector.querySelectorAll(".tabs__title");
-                tabs.forEach((tab => {
-                    let spanText = tab.children[2].textContent;
-                    if (window.innerWidth <= 610) {
-                        tab.children[1].style.display = "none";
-                        tab.children[2].textContent = toUpperCase(spanText);
-                    } else {
-                        tab.children[1].style.display = "block";
-                        tab.children[2].textContent = toLoverCase(spanText);
+        class Spoller {
+            constructor(selector, options) {
+                let config = {
+                    speed: 500,
+                    allActive: false,
+                    oneOpen: true,
+                    spollerActive: "1",
+                    closeOutside: false,
+                    control: {
+                        spollerControlAttribute: "[data-spoller]"
                     }
+                };
+                this.options = Object.assign(config, options);
+                if ("string" === typeof selector) this.el = document.querySelector(selector); else this.el = selector;
+                this.control = this.el.querySelectorAll(this.options.control.spollerControlAttribute);
+                this.initSpollers();
+                this.eventSpollers();
+                this.closeOutside();
+            }
+            initSpollers() {
+                if (this.el) {
+                    this.el.classList.add("_spoller-init");
+                    this.control.forEach(((item, index) => {
+                        if (!item.classList.contains("_spoller-active")) {
+                            item.removeAttribute("tabindex");
+                            item.nextElementSibling.hidden = true;
+                        } else {
+                            item.setAttribute("tabindex", "-1");
+                            item.nextElementSibling.hidden = false;
+                        }
+                        if (this.options.allActive) this.open(item);
+                        if (index + 1 == this.options.spollerActive) this.open(item);
+                    }));
+                }
+            }
+            eventSpollers() {
+                if (this.el) this.control.forEach((spoller => {
+                    spoller.addEventListener("click", (e => {
+                        e.preventDefault();
+                        const el = e.target.closest("[data-spoller]");
+                        const spollerBlock = el.closest("[data-spollers]");
+                        if (!el.querySelectorAll("._slide").length) {
+                            if (this.options.oneOpen && !el.classList.contains("_spoller-active")) this.closeOtherSpollers(spollerBlock);
+                            this.toggle(el);
+                        }
+                    }));
                 }));
+            }
+            closeOutside() {
+                if (this.options.closeOutside) document.addEventListener("click", (e => {
+                    const el = e.target;
+                    if (!el.closest("[data-spollers]")) this.control.forEach((spollerClose => {
+                        const spollersBlock = spollerClose.closest("[data-spollers]");
+                        if (spollersBlock.classList.contains("_spoller-init")) this.close(spollerClose);
+                    }));
+                }));
+            }
+            toggle(el) {
+                el.classList.contains("_spoller-active") ? this.close(el) : this.open(el);
+            }
+            open(el) {
+                el.classList.add("_spoller-active");
+                _slideDown(el.nextElementSibling, this.options.speed);
+            }
+            close(el) {
+                el.classList.remove("_spoller-active");
+                _slideUp(el.nextElementSibling, this.options.speed);
+            }
+            closeOtherSpollers(spollerBlock) {
+                const activeSpoller = spollerBlock.querySelector("[data-spoller]._spoller-active");
+                if (activeSpoller) this.close(activeSpoller);
             }
         }
         let productsLoaded = false;
         let sliderLoad = false;
         let products = [];
-        const file = "json/products.json";
+        const productsBlock = document.querySelector("#products");
+        const products_catalogProducts = document.querySelector("#catalogProducts");
+        const products_moreProduct = document.querySelector(".more-products__items");
         window.addEventListener("load", (e => {
-            getProducts(file);
+            if (productsBlock || products_catalogProducts || products_moreProduct) getProducts();
         }));
-        async function getProducts(file) {
+        async function getProducts() {
             if (productsLoaded) return;
+            const file = "json/products.json";
             try {
                 const response = await fetch(file, {
                     method: "GET"
@@ -7085,7 +7654,7 @@
                 if (response.ok) {
                     products = [];
                     products.push(...data.products);
-                    loadProducts(products);
+                    await loadProducts(products);
                     if (sliderLoad = true && window.innerWidth < 991.98) {
                         productSlider();
                         sliderLoad = false;
@@ -7101,97 +7670,135 @@
             }
         }
         function clearBlock(block) {
-            while (block.firstChild) block.removeChild(block.firstChild);
+            Array.from(block.children).forEach((item => {
+                item.classList.add("_hide");
+                setTimeout((() => {
+                    block.innerHTML = "";
+                }), 500);
+            }));
         }
-        const productsBlock = document.querySelector("#products");
-        function loadProducts(data) {
+        async function loadProducts(data) {
             if (productsBlock) {
-                createHTML(data, productsBlock);
+                createHTML(data);
                 productsFilter();
             }
-        }
-        function productsFilter() {
-            const filterTabsCategory = document.querySelectorAll(".tabs__title");
-            const filterTypeBlock = document.querySelectorAll(".tabs__nav>.tabs__button");
-            const filterTabsType = document.querySelector("#filterType");
-            const filterButtonHasAllClass = filterTabsType.querySelectorAll(".tabs__button.all");
-            filterTabsCategory.forEach((tab => {
-                const {category} = tab.dataset;
-                productsActiveTabs(category, tab);
-                tab.addEventListener("click", productsTabClick);
-            }));
-            function productsTabClick(e) {
-                e.preventDefault();
-                const targetElement = e.target;
-                const tabElements = targetElement.closest(".tabs__title");
-                const activeClass = tabElements.classList.contains("_tab-active");
-                if (targetElement && tabElements && !activeClass) {
-                    if (!productsLoaded) return;
-                    productsLoaded = false;
-                    if (null !== productSwiper && window.innerWidth < 991.98) {
-                        sliderLoad = true;
-                        destroyProductSwiper();
-                    }
-                    clearBlock(productsBlock);
-                    getProducts(file);
-                    remove_Class();
-                    add_Class();
-                }
+            if (products_catalogProducts) createHTML(data);
+            if (products_moreProduct) {
+                createHTML(data);
+                moreProductSlider();
             }
-            function productsActiveTabs(category, tab) {
-                const productArray = document.querySelectorAll(".items-product__item");
-                const activeTab = tab.classList.contains("_tab-active");
-                productArray.forEach((product => {
-                    const {type} = product.dataset;
-                    if (activeTab) if (category !== type) product.remove();
+        }
+        function tabsClick() {
+            if (products_catalogProducts) {
+                const tabsTitle = document.querySelectorAll(".tabs__title");
+                tabsTitle.forEach((title => {
+                    title.addEventListener("click", (e => {
+                        const tabsElement = e.target.closest(".tabs__title");
+                        if (title.classList.contains("_tab-active") || tabsElement.classList.contains("_tab-active")) return;
+                        productsLoaded = false;
+                        getProducts();
+                        const spollers = title.closest("[data-tabs]").querySelectorAll("[data-spollers]");
+                        spollers.forEach((spoller => {
+                            if (!spoller.hasAttribute("data-spollers-init")) {
+                                new Spoller(spoller, {
+                                    speed: 300,
+                                    oneOpen: true,
+                                    allActive: false,
+                                    spollerActive: "0",
+                                    closeOutside: true
+                                });
+                                spoller.setAttribute("data-spollers-init", true);
+                            }
+                        }));
+                    }));
                 }));
             }
-            filterTypeBlock.forEach((button => {
-                button.addEventListener("click", productsButtonClick);
-            }));
-            function productsButtonClick(e) {
-                e.preventDefault();
-                const productsArray = document.querySelectorAll(".items-product__item");
-                const targetElement = e.target;
-                const {product} = targetElement.dataset;
-                const typeProductBlock = targetElement.closest("[data-type]").dataset.type;
-                if (!targetElement.classList.contains("_active")) {
-                    remove_Class();
-                    targetElement.classList.add("_active");
-                    productsArray.forEach((item => {
-                        const {type} = item.dataset;
-                        const categoryProduct = item.dataset.product;
-                        if (type === typeProductBlock) if (product && "all" !== product && !categoryProduct.includes(product)) {
-                            item.classList.add("_hide");
-                            setTimeout((() => {
-                                item.style.display = "none";
-                                item.hidden = true;
-                            }), 500);
-                        } else {
-                            item.classList.add("_hide");
-                            setTimeout((() => {
-                                item.style.display = "";
-                                item.classList.remove("_hide");
-                                item.hidden = false;
-                            }), 500);
+        }
+        tabsClick();
+        function productsFilter() {
+            if (productsBlock) {
+                const filterTabsCategory = document.querySelectorAll(".tabs__title");
+                const filterTypeBlock = document.querySelectorAll(".tabs__nav>.tabs__button");
+                const filterTabsType = document.querySelector("#filterType");
+                const filterButtonHasAllClass = filterTabsType.querySelectorAll(".tabs__button.all");
+                filterTabsCategory.forEach((tab => {
+                    const {category} = tab.dataset;
+                    productsActiveTabs(category, tab);
+                    tab.addEventListener("click", productsTabClick);
+                }));
+                function productsTabClick(e) {
+                    e.preventDefault();
+                    const targetElement = e.target;
+                    const tabElements = targetElement.closest(".tabs__title");
+                    const activeClass = tabElements.classList.contains("_tab-active");
+                    if (targetElement && tabElements && !activeClass) {
+                        if (!productsLoaded) return;
+                        productsLoaded = false;
+                        if (null !== productSwiper && window.innerWidth < 991.98) {
+                            sliderLoad = true;
+                            destroyProductSwiper();
                         }
+                        clearBlock(productsBlock);
+                        setTimeout((() => {
+                            getProducts();
+                        }), 500);
+                        remove_Class();
+                        add_Class();
+                    }
+                }
+                function productsActiveTabs(category, tab) {
+                    const productArray = document.querySelectorAll(".items-product__item");
+                    const activeTab = tab.classList.contains("_tab-active");
+                    productArray.forEach((product => {
+                        const {type} = product.dataset;
+                        if (activeTab) if (category !== type) product.remove();
                     }));
                 }
-            }
-            function remove_Class() {
                 filterTypeBlock.forEach((button => {
-                    button.classList.remove("_active");
+                    button.addEventListener("click", productsButtonClick);
+                }));
+                function productsButtonClick(e) {
+                    e.preventDefault();
+                    const productsArray = document.querySelectorAll(".items-product__item");
+                    const targetElement = e.target;
+                    const {product} = targetElement.dataset;
+                    const typeProductBlock = targetElement.closest("[data-type]").dataset.type;
+                    if (!targetElement.classList.contains("_active")) {
+                        remove_Class();
+                        targetElement.classList.add("_active");
+                        productsArray.forEach((item => {
+                            const {type} = item.dataset;
+                            const categoryProduct = item.dataset.product;
+                            if (type === typeProductBlock) if (product && "all" !== product && !categoryProduct.includes(product)) {
+                                item.classList.add("_hide");
+                                setTimeout((() => {
+                                    item.style.display = "none";
+                                }), 500);
+                            } else {
+                                item.classList.add("_hide");
+                                setTimeout((() => {
+                                    item.style.display = "";
+                                    item.classList.remove("_hide");
+                                }), 500);
+                            }
+                        }));
+                    }
+                }
+                function remove_Class() {
+                    filterTypeBlock.forEach((button => {
+                        button.classList.remove("_active");
+                    }));
+                }
+                function add_Class() {
+                    filterButtonHasAllClass.forEach((button => {
+                        button.classList.add("_active");
+                    }));
+                }
+                const filterProductsCategory = document.querySelector("#filterCategory");
+                window.addEventListener("resize", (e => {
+                    resizeTabs(filterProductsCategory);
                 }));
             }
-            function add_Class() {
-                filterButtonHasAllClass.forEach((button => {
-                    button.classList.add("_active");
-                }));
-            }
-            const filterProductsCategory = document.querySelector("#filterCategory");
-            window.addEventListener("resize", (e => {
-                resizeTabs(filterProductsCategory);
-            }));
         }
         function cirlceActions(slider, index) {
             const circleBlock = document.querySelector("#circle-menu");
@@ -7224,6 +7831,7 @@
         let tabsSwiper = null;
         let recipesSwiper = null;
         let newsSwiper = null;
+        let productMoreSlider = null;
         let aboutSwiper = null;
         function initSliders() {
             bigBannerSlider();
@@ -7242,6 +7850,7 @@
                 tabsSlider();
                 recipesSlider();
                 newsSlider();
+                moreProductSlider();
             }));
         }));
         function aboutSlider() {
@@ -7255,6 +7864,11 @@
                 autoHeight: true,
                 speed: 800,
                 direction: "vertical",
+                breakpoints: {
+                    1025: {
+                        allowTouchMove: false
+                    }
+                },
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
@@ -7335,6 +7949,14 @@
                 for (const slide of slider.children) slide.classList.add("swiper-slide");
             }));
         }
+        function buildMoreProductSlider() {
+            let sliders = document.querySelectorAll('[class*="__more-swiper"]:not(.swiper-wrapper)');
+            if (sliders) sliders.forEach((slider => {
+                slider.parentElement.classList.add("swiper");
+                slider.classList.add("swiper-wrapper");
+                for (const slide of slider.children) slide.classList.add("swiper-slide");
+            }));
+        }
         function buildProductSlider() {
             let sliders = document.querySelectorAll('[class*="__product-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
@@ -7404,6 +8026,30 @@
                     });
                 }
             } else destroyRecipesSlider();
+        }
+        function moreProductSlider() {
+            if (window.innerWidth <= 992 && null === productMoreSlider) {
+                if (document.querySelector(".more-products__slider")) {
+                    buildMoreProductSlider();
+                    productMoreSlider = new core(".more-products__slider", {
+                        observer: true,
+                        observeParents: true,
+                        spaceBetween: 10,
+                        autoHeight: true,
+                        speed: 800,
+                        preloadImages: true,
+                        lazy: true,
+                        breakpoints: {
+                            320: {
+                                slidesPerView: 1.2
+                            },
+                            650: {
+                                slidesPerView: 2.2
+                            }
+                        }
+                    });
+                }
+            } else destroyMoreProductSlider();
         }
         function tabsSlider() {
             if (window.innerWidth < 860.98 && null === tabsSwiper && isMobile.any() && null !== productSwiper) {
@@ -7545,7 +8191,7 @@
                                 if (swiperClass) swiperClass.style.display = "none";
                             } else if (swiperClass) swiperClass.style.display = "";
                             if (null !== productSwiper) productSwiper.slideTo(0);
-                            if (null !== tabsSwiper[0]) tabsSwiper[0].slideTo(0); else if (null !== tabsSwiper[1]) tabsSwiper[1].slideTo(0); else if (null !== tabsSwiper[2]) tabsSwiper[2].slideTo(0);
+                            if (null !== tabsSwiper) if (null !== tabsSwiper[0]) tabsSwiper[0].slideTo(0); else if (null !== tabsSwiper[1]) tabsSwiper[1].slideTo(0); else if (null !== tabsSwiper[2]) tabsSwiper[2].slideTo(0);
                         }));
                     }));
                 }));
@@ -7556,6 +8202,18 @@
                 recipesSwiper.destroy(true, true);
                 recipesSwiper = null;
                 let sliders = document.querySelectorAll('[class*="__recipes-swiper"]');
+                if (sliders) sliders.forEach((slider => {
+                    slider.parentElement.classList.remove("swiper");
+                    slider.classList.remove("swiper-wrapper");
+                    for (const slide of slider.children) slide.classList.remove("swiper-slide");
+                }));
+            }
+        }
+        function destroyMoreProductSlider() {
+            if (window.innerWidth > 992 && null !== productMoreSlider) {
+                productMoreSlider.destroy(true, true);
+                productMoreSlider = null;
+                let sliders = document.querySelectorAll('[class*="__more-swiper"]');
                 if (sliders) sliders.forEach((slider => {
                     slider.parentElement.classList.remove("swiper");
                     slider.classList.remove("swiper-wrapper");
@@ -7620,7 +8278,8 @@
                     speed: 300,
                     tabInSpoller: false,
                     hash: false,
-                    activeTab: 1
+                    activeTab: 1,
+                    isInit: () => {}
                 };
                 this.options = Object.assign(config, options);
                 this.el = document.querySelectorAll(selector);
@@ -7634,6 +8293,7 @@
                     this.el.forEach(((tabsBlock, index) => {
                         tabsBlock.classList.add("_tab-init");
                         tabsBlock.setAttribute("data-tabs-index", index);
+                        this.options.isInit();
                         this.activeTab(tabsBlock);
                         this.contentTabs(tabsBlock, tabsActiveHash);
                         this.eventTabs(tabsBlock);
@@ -7731,134 +8391,177 @@
             }
         }
         projectModules.tabs = new Tabs("[data-tabs]", {
-            speed: 500,
+            speed: 300,
             animated: false,
             tabInSpoller: false,
             hash: false,
-            activeTab: "1"
+            activeTab: "1",
+            isInit: () => {
+                console.log("Tabs init");
+            }
         });
+        const spollers = document.querySelectorAll("[data-spollers]");
+        if (spollers.length) projectModules.spoller = new Spoller("[data-spollers]", {
+            speed: 300,
+            oneOpen: true,
+            allActive: false,
+            spollerActive: "0",
+            closeOutside: true
+        });
+        const product_file = "json/products.json";
+        const productPage = document.querySelector(".product-page__content");
+        let productsArray = [];
         window.addEventListener("load", (e => {
-            const file = "json/recipes.json";
-            getRecipes();
-            async function getRecipes() {
-                try {
-                    const response = await fetch(file, {
-                        method: "GET"
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        console.log("Data:", data);
-                        loadRecipes(data);
-                        recipesSlider();
-                    }
-                } catch (err) {
-                    console.error(err);
-                } finally {
-                    console.log("Finally");
+            if (productPage) getProductPageData();
+        }));
+        async function getProductPageData() {
+            try {
+                const response = await fetch(product_file, {
+                    method: "GET"
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    productsArray = [];
+                    productsArray.push(...data.products);
+                    console.log("Data:", data);
+                    await loadProductPage(productsArray);
                 }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                console.log("Finally");
             }
-            function loadRecipes(data) {
-                const recipesBlock = document.querySelector("#recipesHome");
-                if (recipesBlock) {
-                    data.recipes.forEach((item => {
-                        const id = item.id, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
-                        let recipesTemplate = "";
-                        const recipesItem = `\n           <article id="${id}" class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}">\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <h3 class="items-recipes__title">${title}</h3>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
-                        info.forEach((value => {
-                            const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n                   <div class="specification-recipes__item">\n                       <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                       <span>${value.time}</span>\n                  </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                         <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                       <span>${value.complexity}</span>\n                    </div>\n               </div>\n            `;
-                            recipesTemplate += recipesItem;
-                            recipesTemplate += specificationRecipes;
-                        }));
-                        energyValue.forEach((value => {
-                            const recipesItemHideInfo = `\n         <div class="items-recipes__hide hide-recipes-items">\n            <div class="hide-recipes-items__info">${energyText}</div>\n               <div class="hide-recipes-items__energy">\n                 <div class="hide-recipes-items__kkal">\n                   <h6 class="hide-recipes-items__title">${value.kkal}</h6>\n                    <div class="hide-recipes-items__text">колорії</div>\n                  </div>\n                     <div class="hide-recipes-items__protein">\n                      <h6 class="hide-recipes-items__title">${value.protein}</h6>\n                       <div class="hide-recipes-items__text">білки</div>\n                   </div>\n                    <div class="hide-recipes-items__fat">\n                     <h6 class="hide-recipes-items__title">${value.fat}</h6>\n                     <div class="hide-recipes-items__text">жири</div>\n                  </div>\n               </div>\n               </div>\n               `;
-                            recipesTemplate += recipesItemHideInfo;
-                            recipesTemplate += `</article>`;
-                        }));
-                        recipesBlock.insertAdjacentHTML("beforeend", recipesTemplate);
+        }
+        async function loadProductPage(data) {
+            const arrayProducts = [];
+            data.forEach((item => {
+                const id = item.id, type = (item.url, item.type), product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
+                let productPageTemplate = "";
+                const productItem = `\n            <article id="${id}" data-type=${type} data-product=${product} class="content-product-page__item ${product}">\n              <div class="content-product-page__image">\n                  <img data-src="img/products/${image}" class="lazy" alt="${title}">\n              </div>\n               <div class="content-product-page__info">\n                   <div class="content-product-page__small-image small-image-product">\n                     <div class="small-image-product__item">\n                       <span class="small-image-product__freez">${freezInfo ? info : ""}</span>\n                         <img data-src="img/products/${freez}" class="lazy" alt="${info ? info : "Іконка"}">\n                       </div>\n                      <div class="small-image-product__item">\n                        <span class="small-image-product__cold">${coldInfo ? info : ""}</span>\n                          <img data-src="img/products/${cold}" class="lazy" alt="${info ? info : "Іконка"}">\n                      </div>\n                    </div>\n                  <h2 class="content-product-page__title">${title}</h2> \n                    <div class="content-product-page__savings">\n                         <h3 class="content-product-page__savings-title">Умови зберігання</h3>\n                         <div class="content-product-page__savings-info">Термін зберігання:<span>${bestBefore}</span>\n                         <div class="content-product-page__savings-info">При температурі:<span>${storageFrom} ${storageTo ? storageTo : ""}</span>\n                   </div>\n                  </div>\n                   </div>\n                `;
+                energyValue.forEach((value => {
+                    const energyItem = ` \n                      <div class="content-product-page__nutritional">\n                        <h3 class="content-product-page__nutritional-title">Харчова цінність на 100 г продукту</h3>\n                           <div class="content-product-page__nutritional-info">Білки:<span>${value.protein}г;</span>\n                           <div class="content-product-page__nutritional-info">Жири:<span>${value.fat}г;</span>\n                           <div class="content-product-page__nutritional-info">Калорії:<span>${kkalCalc(value.kkal)}кДж/${value.kkal}ккал.</span>\n                      </div>\n                  </div >\n                  `;
+                    productPageTemplate += productItem;
+                    productPageTemplate += energyItem;
+                    productPageTemplate += `</article>`;
+                    arrayProducts.push(productPageTemplate);
+                }));
+            }));
+            if (productPage) await onePageProduct(arrayProducts, productPage);
+        }
+        async function onePageProduct(arr, block) {
+            const oneProduct = arr.slice(0, 1);
+            const oneHtmlProduct = oneProduct.join("");
+            block.insertAdjacentHTML("beforeend", oneHtmlProduct);
+            lazyMedia.update();
+            spanClearOneProduct(block);
+            hideSmallOneImage(block);
+        }
+        function kkalCalc(kkal) {
+            let power = 4.1868 * kkal;
+            return power.toFixed(1);
+        }
+        function spanClearOneProduct(productsBlock) {
+            const spanFreez = productsBlock.querySelector(".small-image-product__freez");
+            const spanCold = productsBlock.querySelector(".small-image-product__cold");
+            const parentFreez = spanFreez.closest(".small-image-product__item");
+            const imageFreez = parentFreez.querySelector("img");
+            if ("" === spanFreez.textContent) {
+                spanFreez.style.display = "none";
+                imageFreez.style.opacity = "0.5";
+            }
+            const parentCold = spanCold.closest(".small-image-product__item");
+            const imageCold = parentCold.querySelector("img");
+            if ("" === spanCold.textContent) {
+                spanCold.style.display = "none";
+                imageCold.style.opacity = "0.5";
+            }
+        }
+        function hideSmallOneImage(productsBlock) {
+            const product = productsBlock.querySelector(".content-product-page__item");
+            const {type} = product.dataset;
+            const smallImageBlock = product.querySelectorAll(".small-image-product img");
+            const smallImageBlockSpan = product.querySelectorAll(".small-image-product__item span");
+            smallImageBlock.forEach((img => {
+                if ("souce" === type || "stew" === type) img.remove();
+            }));
+            smallImageBlockSpan.forEach((span => {
+                if ("souce" === type || "stew" === type) span.remove();
+            }));
+        }
+        const ramen_file = "json/recipes.json";
+        const ramenInfoBlock = document.querySelector("#ramenInfo");
+        window.addEventListener("load", (e => {
+            if (ramenInfoBlock) getRecipeData();
+        }));
+        async function getRecipeData() {
+            try {
+                const response = await fetch(ramen_file, {
+                    method: "GET"
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    console.log("Data:", data);
+                    await loadRamenRecipe(data);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                console.log("Finally");
+            }
+        }
+        async function loadRamenRecipe(data) {
+            data.recipes.forEach((item => {
+                const id = item.id, image = item.ramenPageImage, title = item.title, text = item.text, info = item.info, history = item.recipeHistory, timeIcon = item.timeIcon, groupIcon = item.groupIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon;
+                let ramenInfoTemplate = "";
+                const articleRamenStart = `\n               <article id="${id}" class="ramen__recipe">\n                   <div class="ramen__header">\n            `;
+                const ramenRecipeLoad = `\n               <div id="loadRecipe" class="ramen__load load">\n                   <button data-load class="load__button">\n                   Завантажити рецепт\n                     \t<svg class="load__icon">\n\t\t\t\t\t           <use xlink:href="img/icons/icons.svg#long-arrow-red"></use>\n\t\t\t\t            </svg>\n                   </button>\n               </div>\n                </div>\n            `;
+                const ramenInfo = `\n                       <div class="ramen__top">\n                         <div class="ramen__info">\n                           <h3 class="ramen__title">${title}</h3>\n                            <div class="ramen__icon icon-recipes">\n                              <svg class="icon-recipes__icon">\n                               <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                            </svg>  \n                         </div>\n                       </div>\n                     <div class="ramen__text">${text}</div>\n                    <div class="ramen__history">\n                        <p>${history}</p>\n                    </div>\n                      <div class="ramen__image">\n                        <img data-src="img/recipes/page_recipes/${image}" class="lazy" alt="${title}">\n                     </div>\n            `;
+                info.forEach((value => {
+                    const ramenIcons = `\n              <div class="ramen__specification specification-recipes">\n               <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${hardIcon}" class="lazy" alt="personIcon">\n                  <span>${value.recipeComplexity}</span>\n              </div>\n              <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                  <span>${value.time}</span>\n              </div>\n                <div class="specification-recipes__item">\n                    <img data-src="img/recipes/${groupIcon}" class="lazy" alt="hardIcon">\n                  <span>${value.inPortion}</span>\n              </div>\n           </div>\n              `;
+                    ramenInfoTemplate += articleRamenStart;
+                    ramenInfoTemplate += ramenIcons;
+                    ramenInfoTemplate += ramenRecipeLoad;
+                    ramenInfoTemplate += ramenInfo;
+                    ramenInfoTemplate += `</article>`;
+                    if ("1" == id) {
+                        ramenInfoBlock.insertAdjacentHTML("beforeend", ramenInfoTemplate);
                         lazyMedia.update();
-                    }));
-                    recipesAction(recipesBlock);
-                }
-            }
-            function recipesAction(recipesBlock) {
-                const recipesArray = recipesBlock.querySelectorAll(".items-recipes__item");
-                recipesArray.forEach((recipes => {
-                    recipes.addEventListener("mouseenter", (e => {
-                        e.preventDefault();
-                        const targetElement = e.target;
-                        const recipesHideInfo = targetElement.querySelector(".hide-recipes-items");
-                        const recipesInfo = targetElement.querySelector(".items-recipes__info");
-                        if (targetElement.closest(".items-recipes")) {
-                            if (recipesHideInfo.style.maxHeight) recipesHideInfo.style.maxHeight = null; else {
-                                recipesHideInfo.style.maxHeight = null;
-                                recipesHideInfo.style.maxHeight = recipesHideInfo.scrollHeight + 20 + "px";
-                                recipesHideInfo.classList.add("_show");
-                                recipesInfo.classList.add("_show");
-                                targetElement.classList.add("_show");
-                            }
-                            targetElement.addEventListener("mouseleave", (e => {
-                                e.preventDefault();
-                                if (recipesHideInfo.style.maxHeight && recipesInfo.classList.contains("_show")) {
-                                    recipesHideInfo.classList.remove("_show");
-                                    recipesInfo.classList.remove("_show");
-                                    targetElement.classList.remove("_show");
-                                    recipesHideInfo.style.maxHeight = null;
-                                }
-                            }));
-                        }
-                    }));
-                }));
-            }
-        }));
-        window.addEventListener("load", (e => {
-            const file = "json/recipes.json";
-            getRecipeData();
-            async function getRecipeData() {
-                try {
-                    const response = await fetch(file, {
-                        method: "GET"
-                    });
-                    const data = await response.json();
-                    if (response.ok) {
-                        console.log("Data:", data);
-                        loadRamenRecipe(data);
+                        downLoadFile();
                     }
-                } catch (err) {
-                    console.error(err);
-                } finally {
-                    console.log("Finally");
-                }
-            }
-            function loadRamenRecipe(data) {
-                const ramenInfoBlock = document.querySelector("#ramenInfo");
-                if (ramenInfoBlock) data.recipes.forEach((item => {
-                    const id = item.id, image = item.ramenPageImage, title = item.title, text = item.text, info = item.info, history = item.recipeHistory, timeIcon = item.timeIcon, groupIcon = item.groupIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon;
-                    let ramenInfoTemplate = "";
-                    const articleRamenStart = `\n               <article id="${id}" class="ramen__recipe">\n                   <div class="ramen__header">\n            `;
-                    const ramenRecipeLoad = `\n               <div id="loadRecipe" class="ramen__load load">\n                   <button class="load__button">\n                   Завантажити рецепт\n                     \t<svg class="load__icon">\n\t\t\t\t\t           <use xlink:href="img/icons/icons.svg#long-arrow-red"></use>\n\t\t\t\t            </svg>\n                   </button>\n               </div>\n                </div>\n            `;
-                    const ramenInfo = `\n                       <div class="ramen__top">\n                         <div class="ramen__info">\n                           <h3 class="ramen__title">${title}</h3>\n                            <div class="ramen__icon icon-recipes">\n                              <svg class="icon-recipes__icon">\n                               <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                            </svg>  \n                         </div>\n                       </div>\n                     <div class="ramen__text">${text}</div>\n                    <div class="ramen__history">\n                        <p>${history}</p>\n                    </div>\n                      <div class="ramen__image">\n                        <img data-src="img/recipes/page_recipes/${image}" class="lazy" alt="${title}">\n                     </div>\n            `;
-                    info.forEach((value => {
-                        const ramenIcons = `\n              <div class="ramen__specification specification-recipes">\n               <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${hardIcon}" class="lazy" alt="personIcon">\n                  <span>${value.recipeComplexity}</span>\n              </div>\n              <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                  <span>${value.time}</span>\n              </div>\n                <div class="specification-recipes__item">\n                    <img data-src="img/recipes/${groupIcon}" class="lazy" alt="hardIcon">\n                  <span>${value.inPortion}</span>\n              </div>\n           </div>\n              `;
-                        ramenInfoTemplate += articleRamenStart;
-                        ramenInfoTemplate += ramenIcons;
-                        ramenInfoTemplate += ramenRecipeLoad;
-                        ramenInfoTemplate += ramenInfo;
-                        ramenInfoTemplate += `</article>`;
-                        if ("1" == id) {
-                            ramenInfoBlock.insertAdjacentHTML("beforeend", ramenInfoTemplate);
-                            lazyMedia.update();
-                        }
-                    }));
                 }));
-            }
-        }));
+            }));
+        }
         const recipeNav = document.querySelector("#recipeNav");
         window.addEventListener("resize", (e => {
             resizeTabs(recipeNav);
         }));
+        function downLoadFile() {
+            const button = document.querySelector("[data-load]");
+            if (button) button.addEventListener("click", clickButton);
+        }
+        function clickButton(e) {
+            e.preventDefault();
+            const targetButton = e.target;
+            if (targetButton) downloadFile("files/ramen.pdf", "ramen.pdf");
+        }
+        function downloadFile(url, nameFile) {
+            const downloadLink = document.createElement("a");
+            downloadLink.href = url;
+            downloadLink.download = nameFile;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            downloadLink.addEventListener("click", (() => {
+                document.body.removeChild(downloadLink);
+            }));
+        }
         const news_file = "json/news_and_actions.json";
+        let news = [];
+        const newsPageBlock = document.querySelector("#news-actions");
+        const newsBlock = document.querySelector("#newsHome");
+        const newsDate = document.querySelector("#date");
+        const newsContent = document.querySelector("#content");
         window.addEventListener("load", (e => {
-            getNews();
+            if (newsPageBlock || newsBlock || newsDate && newsContent) getNews();
         }));
         async function getNews() {
             try {
@@ -7866,9 +8569,11 @@
                     method: "GET"
                 });
                 const data = await response.json();
+                news = [];
+                news = data;
                 if (response.ok) {
                     console.log("Data:", data);
-                    loadNews(data);
+                    await loadNews(news);
                     newsSlider();
                 }
             } catch (err) {
@@ -7877,38 +8582,109 @@
                 console.log("Finally");
             }
         }
-        function loadNews(data) {
-            const newsBlock = document.querySelector("#newsHome");
-            if (newsBlock) data.news.forEach((item => {
+        async function loadNews(data) {
+            const htmlDate = [];
+            const htmlImage = [];
+            const arrHomeNewsTemplate = [];
+            const arrNewsTemplate = [];
+            const arrActionsTemplate = [];
+            let newsTemplate = "";
+            data.news.forEach((item => {
                 const id = item.id, url = item.url, image = item.image, logo = item.logo, title = item.title, date = item.date, type = item.type;
-                let newsTemplate = "";
-                const newsItem = `\n                <article id="${id}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo">\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}">\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <h3 class="items-news__title">${title}</h3>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
+                newsTemplate = "";
+                const newsItem = `\n                <article id="${id}" data-type="${type}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo">\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}">\n                        <div class="swiper-lazy-preloader"></div>\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <h3 class="items-news__title">${title}</h3>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
                 newsTemplate += newsItem;
                 newsTemplate += `</article>`;
-                newsBlock.insertAdjacentHTML("beforeend", newsTemplate);
-                lazyMedia.update();
+                const newsActions_Date = `  \n                     <div class="news-actions__type news-type">${type}</div>\n                      <span>${date}</span>\n                   `;
+                const newsActions_ImageTitle = `\n               <div class="news-actions__image">\n                        <img data-src="img/news_and_actions/${image}" class="lazy" alt="${title}">\n                </div>\n                 <h3 class="news-actions__title">${title}</h3>\n            `;
+                htmlDate.push(newsActions_Date);
+                htmlImage.push(newsActions_ImageTitle);
+                arrHomeNewsTemplate.push(newsTemplate);
+                if ("#Новина" === type) arrNewsTemplate.push(newsTemplate);
+                if ("#Акція" === type) arrActionsTemplate.push(newsTemplate);
             }));
-            const newsDate = document.querySelector("#date");
-            const newsContent = document.querySelector("#content");
-            if (newsDate && newsContent) {
-                const htmlDate = [];
-                const htmlImage = [];
-                data.news.forEach((item => {
-                    item.id;
-                    const image = item.image, title = item.title, date = item.date, type = item.type;
-                    const newsActions_Date = `  \n                     <div class="news-actions__type news-type">${type}</div>\n                      <span>${date}</span>\n                   `;
-                    const newsActions_ImageTitle = `\n               <div class="news-actions__image">\n                        <img data-src="img/news_and_actions/${image}" class="lazy" alt="${title}">\n                </div>\n                 <h3 class="news-actions__title">${title}</h3>\n            `;
-                    htmlDate.push(newsActions_Date);
-                    htmlImage.push(newsActions_ImageTitle);
-                }));
-                const htmlDateArray = htmlDate.slice(3, 4);
-                const htmlDateTemplate = htmlDateArray.join("");
-                const htmlImageArray = htmlImage.slice(3, 4);
-                const htmlImageTemplate = htmlImageArray.join("");
-                newsDate.insertAdjacentHTML("beforeend", htmlDateTemplate);
-                newsContent.insertAdjacentHTML("beforeend", htmlImageTemplate);
+            if (newsPageBlock) {
+                await tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
                 lazyMedia.update();
             }
+            if (newsBlock) {
+                await homeBlockNews(arrHomeNewsTemplate, newsBlock);
+                lazyMedia.update();
+            }
+            if (newsDate && newsContent) {
+                await newsPageHtml(htmlDate, htmlImage, newsDate, newsContent);
+                lazyMedia.update();
+            }
+        }
+        async function newsPageHtml(arrDate, arrImage, blockDate, blockContent) {
+            const htmlDateArray = arrDate.slice(3, 4);
+            const htmlDateTemplate = htmlDateArray.join("");
+            const htmlImageArray = arrImage.slice(3, 4);
+            const htmlImageTemplate = htmlImageArray.join("");
+            blockDate.insertAdjacentHTML("beforeend", htmlDateTemplate);
+            blockContent.insertAdjacentHTML("beforeend", htmlImageTemplate);
+        }
+        async function homeBlockNews(arr, block) {
+            const htmlNews = arr.slice(0, 4);
+            const htmlNewsTemplate = htmlNews.join("");
+            block.insertAdjacentHTML("beforeend", htmlNewsTemplate);
+        }
+        function news_tabsClick() {
+            if (newsPageBlock) {
+                const tabsTitle = document.querySelectorAll(".tabs__title");
+                tabsTitle.forEach((title => {
+                    title.addEventListener("click", (e => {
+                        const tabsElement = e.target.closest(".tabs__title");
+                        if (title.classList.contains("_tab-active") || tabsElement.classList.contains("_tab-active")) return;
+                        getNews();
+                    }));
+                }));
+            }
+        }
+        news_tabsClick();
+        async function tabsBodyHtml(allArr, arrNews, arrActions) {
+            const newsPageBlock = document.querySelector("#news-actions");
+            const tabsBody = newsPageBlock.querySelectorAll(".tabs__body");
+            const tabsTitle = document.querySelectorAll(".tabs__title");
+            let indexTitle = 0;
+            tabsTitle.forEach(((el, index) => {
+                const activeTitle = el.classList.contains("_tab-active");
+                indexTitle = index;
+                tabsBody.forEach(((tab, index) => {
+                    const tabItem = tab.querySelector(".news-actions__item");
+                    const {news} = tabItem.dataset;
+                    if ("all" === news && activeTitle && index == indexTitle) {
+                        let numCards = 4;
+                        function updateCardsAll() {
+                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            pagination(allArr, tabItem, numCards, 1);
+                            _slideDown(tabItem, 800);
+                        }
+                        updateCardsAll();
+                        window.addEventListener("resize", updateCardsAll);
+                    }
+                    if ("news" === news && activeTitle && index === indexTitle) {
+                        let numCards = 4;
+                        function updateCardsNews() {
+                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            pagination(arrNews, tabItem, numCards, 1);
+                            _slideDown(tabItem, 800);
+                        }
+                        updateCardsNews();
+                        window.addEventListener("resize", updateCardsNews);
+                    }
+                    if ("actions" === news && activeTitle && index === indexTitle) {
+                        let numCards = 4;
+                        function updateCardsActions() {
+                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            pagination(arrActions, tabItem, numCards, 1);
+                            _slideDown(tabItem, 800);
+                        }
+                        updateCardsActions();
+                        window.addEventListener("resize", updateCardsActions);
+                    }
+                }));
+            }));
         }
         __webpack_require__(125);
         const inputMasks = document.querySelectorAll('input[type="tel"]');

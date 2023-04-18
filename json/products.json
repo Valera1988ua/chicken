@@ -2,7 +2,7 @@
    "products": [
       {
          "id": "1",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "fillet",
          "image": "chicken.png",
@@ -24,7 +24,7 @@
       },
       {
          "id": "2",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "carcass",
          "image": "carcass.png",
@@ -46,7 +46,7 @@
       },
       {
          "id": "3",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "lump",
          "image": "chicken.png",
@@ -68,7 +68,7 @@
       },
       {
          "id": "4",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "fillet",
          "image": "carcass.png",
@@ -90,7 +90,7 @@
       },
       {
          "id": "5",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "wings",
          "image": "chicken.png",
@@ -112,7 +112,7 @@
       },
       {
          "id": "6",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "shin",
          "image": "carcass.png",
@@ -134,7 +134,7 @@
       },
       {
          "id": "7",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "thigh",
          "image": "chicken.png",
@@ -156,7 +156,7 @@
       },
       {
          "id": "8",
-         "url": "#",
+         "url": "product.html",
          "type": "chicken",
          "product": "offal",
          "image": "carcass.png",
@@ -178,7 +178,7 @@
       },
       {
          "id": "10",
-         "url": "#",
+         "url": "product.html",
          "type": "souce",
          "product": "souce-3",
          "image": "souce.png",
@@ -200,7 +200,7 @@
       },
       {
          "id": "11",
-         "url": "#",
+         "url": "product.html",
          "type": "souce",
          "product": "souce-2",
          "image": "souce.png",
@@ -222,7 +222,7 @@
       },
       {
          "id": "12",
-         "url": "#",
+         "url": "product.html",
          "type": "souce",
          "product": "souce-1",
          "image": "souce.png",
@@ -244,7 +244,7 @@
       },
       {
          "id": "13",
-         "url": "#",
+         "url": "product.html",
          "type": "stew",
          "product": "stew-1",
          "image": "stew.png",
@@ -266,7 +266,7 @@
       },
       {
          "id": "14",
-         "url": "#",
+         "url": "product.html",
          "type": "stew",
          "product": "stew-1",
          "image": "stew.png",
@@ -288,7 +288,7 @@
       },
       {
          "id": "15",
-         "url": "#",
+         "url": "product.html",
          "type": "stew",
          "product": "stew-2",
          "image": "stew.png",

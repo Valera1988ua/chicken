@@ -2,6 +2,9 @@
    "recipes": [
       {
          "id": "1",
+         "way": "easy",
+         "type": "salad",
+         "meat": "chicken",
          "url": "chicken-ramen.html",
          "image": "chickenRamen.png",
          "ramenPageImage": "chickenRamen_page.png",
@@ -16,7 +19,7 @@
             {
                "time": "40 хв.",
                "portion": "1 порція",
-               "complexity": "Складний",
+               "complexity": "Легкий",
                "recipeComplexity": "Низька складність",
                "inPortion": "3 порції"
             }
@@ -33,6 +36,9 @@
       },
       {
          "id": "2",
+         "way": "hard",
+         "type": "dish",
+         "meat": "chicken",
          "url": "chicken-ramen.html",
          "image": "conCarne.png",
          "title": "Куряче Чиллі Кон Карне",
@@ -59,6 +65,96 @@
       },
       {
          "id": "3",
+         "way": "medium",
+         "type": "salad",
+         "meat": "chicken",
+         "url": "chicken-ramen.html",
+         "image": "cesar.png",
+         "title": "Тихуанський Цезар",
+         "text": "з курятиною та соусом з анчоусів",
+         "spicinessIcon": "peppers_2",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "40 хв.",
+               "portion": "1 порція",
+               "complexity": "Середній"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "4",
+         "way": "easy",
+         "type": "dish-2",
+         "meat": "meat",
+         "url": "chicken-ramen.html",
+         "image": "strips.png",
+         "title": "Пряні стріпси з соусом",
+         "text": "з рисом басматі та соусом «голландез»",
+         "spicinessIcon": "peppers_2",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "45 хв.",
+               "portion": "3 порція",
+               "complexity": "Легкий"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "5",
+         "way": "medium",
+         "type": "salad",
+         "meat": "meat",
+         "url": "chicken-ramen.html",
+         "image": "cesar.png",
+         "title": "Тихуанський Цезар",
+         "text": "з курятиною та соусом з анчоусів",
+         "spicinessIcon": "peppers_2",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "40 хв.",
+               "portion": "1 порція",
+               "complexity": "Середній"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "6",
+         "way": "hard",
+         "type": "salad",
+         "meat": "chicken",
          "url": "chicken-ramen.html",
          "image": "cesar.png",
          "title": "Тихуанський Цезар",
@@ -84,19 +180,51 @@
          ]
       },
       {
-         "id": "4",
+         "id": "7",
+         "way": "hard",
+         "type": "dish",
+         "meat": "meat",
          "url": "chicken-ramen.html",
-         "image": "strips.png",
-         "title": "Пряні стріпси з соусом",
-         "text": "з рисом басматі та соусом «голландез»",
+         "image": "conCarne.png",
+         "title": "Куряче Чиллі Кон Карне",
+         "text": "з булгуром та соусом «бешамель»",
          "spicinessIcon": "peppers_2",
          "timeIcon": "time.png",
          "personIcon": "person.png",
          "hardIcon": "hard.png",
          "info": [
             {
-               "time": "45 хв.",
-               "portion": "3 порція",
+               "time": "90 хв.",
+               "portion": "2 порція",
+               "complexity": "Складний"
+            }
+         ],
+         "energyText": "На 100г готової страви",
+         "energyValue": [
+            {
+               "kkal": "223",
+               "protein": "17",
+               "fat": "4"
+            }
+         ]
+      },
+      {
+         "id": "8",
+         "way": "easy",
+         "type": "dish-2",
+         "meat": "meat",
+         "url": "chicken-ramen.html",
+         "image": "conCarne.png",
+         "title": "Куряче Чиллі Кон Карне",
+         "text": "з булгуром та соусом «бешамель»",
+         "spicinessIcon": "peppers_2",
+         "timeIcon": "time.png",
+         "personIcon": "person.png",
+         "hardIcon": "hard.png",
+         "info": [
+            {
+               "time": "90 хв.",
+               "portion": "2 порція",
                "complexity": "Легкий"
             }
          ],

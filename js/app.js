@@ -7039,21 +7039,15 @@
             if (recipesPageBlock) pageBlockRecipes(recipesArray);
         }
         let numCards = 4;
-        let timeoutId;
+        let loadProduct = false;
         function pageBlockRecipes(arr) {
-            function updateCards() {
-                let newArray = [];
-                if (window.innerWidth < 668) numCards = 1; else numCards = 4;
-                newArray = updateArray(arr);
-                pagination(newArray, recipesPageBlock, numCards, 1);
-                _slideDown(recipesPageBlock, 800);
-                lazyMedia.update();
-            }
-            updateCards();
-            window.addEventListener("resize", (() => {
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(updateCards, 500);
-            }));
+            let newArray = [];
+            if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
+            newArray = updateArray(arr);
+            pagination(newArray, recipesPageBlock, numCards, 1);
+            _slideDown(recipesPageBlock, 800);
+            lazyMedia.update();
+            loadProduct = true;
         }
         function homeBlockRecipes(arr, block) {
             const htmlRecipes = arr.slice(0, 4);
@@ -7171,6 +7165,7 @@
                 if (filter.includes(meat)) count++;
                 if (count === filter.length) updateArray.push(item.outerHTML);
             }));
+            loadProduct = false;
             pageBlockRecipes(updateArray);
         }
         function checkBoxToggle() {
@@ -7391,50 +7386,39 @@
                 tabsBody.forEach(((tab, index) => {
                     const tabItem = tab.querySelector(".products-catalog__item");
                     const {products} = tabItem.dataset;
-                    let timeoutId;
+                    let loadProduct = false;
                     if ("chicken" === products && activeTitle && index == indexTitle) {
                         let numCards = 4;
-                        function updateCardsAll() {
-                            if (window.innerWidth < 669) numCards = 1; else numCards = 4;
+                        function updateCardsChicken() {
+                            if (window.innerWidth < 669 && false === loadProduct) numCards = 1; else numCards = 4;
                             newArrayChicken = returnArray(arrChicken);
                             pagination(newArrayChicken, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
+                            loadProduct = true;
                         }
-                        updateCardsAll();
-                        window.addEventListener("resize", (() => {
-                            clearTimeout(timeoutId);
-                            timeoutId = setTimeout(updateCardsAll, 500);
-                        }));
+                        updateCardsChicken();
                     }
                     if ("souce" === products && activeTitle && index == indexTitle) {
                         let numCards = 4;
-                        function updateCardsAll() {
-                            if (isMobile.any()) numCards = 1; else numCards = 4;
+                        function updateCardsSouce() {
+                            if (window.innerWidth < 669 && false === loadProduct) numCards = 1; else numCards = 4;
                             newArraySouce = returnArray(arrSouce);
                             pagination(newArraySouce, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
+                            loadProduct = true;
                         }
-                        updateCardsAll();
-                        window.addEventListener("resize", (() => {
-                            clearTimeout(timeoutId);
-                            timeoutId = setTimeout(updateCardsAll, 500);
-                            updateCardsAll();
-                        }));
+                        updateCardsSouce();
                     }
                     if ("stew" === products && activeTitle && index == indexTitle) {
                         let numCards = 4;
-                        function updateCardsAll() {
-                            if (isMobile.any()) numCards = 1; else numCards = 4;
+                        function updateCardsStew() {
+                            if (window.innerWidth < 669 && false === loadProduct) numCards = 1; else numCards = 4;
                             newArrayStew = returnArray(arrStew);
                             pagination(newArrayStew, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
+                            loadProduct = true;
                         }
-                        updateCardsAll();
-                        window.addEventListener("resize", (() => {
-                            clearTimeout(timeoutId);
-                            timeoutId = setTimeout(updateCardsAll, 500);
-                            updateCardsAll();
-                        }));
+                        updateCardsStew();
                     }
                 }));
             }));
@@ -8722,45 +8706,36 @@
                 tabsBody.forEach(((tab, index) => {
                     const tabItem = tab.querySelector(".news-actions__item");
                     const {news} = tabItem.dataset;
-                    let timeoutId;
+                    let loadProduct = false;
                     if ("all" === news && activeTitle && index == indexTitle) {
                         let numCards = 4;
                         function updateCardsAll() {
-                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
                             pagination(allArr, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
+                            loadProduct = true;
                         }
                         updateCardsAll();
-                        window.addEventListener("resize", (() => {
-                            clearTimeout(timeoutId);
-                            timeoutId = setTimeout(updateCardsAll, 500);
-                        }));
                     }
                     if ("news" === news && activeTitle && index === indexTitle) {
                         let numCards = 4;
                         function updateCardsNews() {
-                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
                             pagination(arrNews, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
+                            loadProduct = true;
                         }
                         updateCardsNews();
-                        window.addEventListener("resize", (() => {
-                            clearTimeout(timeoutId);
-                            timeoutId = setTimeout(updateCardsNews, 500);
-                        }));
                     }
                     if ("actions" === news && activeTitle && index === indexTitle) {
                         let numCards = 4;
                         function updateCardsActions() {
-                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
                             pagination(arrActions, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
+                            loadProduct = true;
                         }
                         updateCardsActions();
-                        window.addEventListener("resize", (() => {
-                            clearTimeout(timeoutId);
-                            timeoutId = setTimeout(updateCardsActions, 500);
-                        }));
                     }
                 }));
             }));

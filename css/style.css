@@ -1931,6 +1931,7 @@ body::after {
   display: -ms-grid;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(19.375rem, 1fr));
+  margin-bottom: 0.625rem;
   position: relative;
 }
 
@@ -4408,16 +4409,6 @@ button.swiper-pagination-bullet {
   }
 }
 
-@media (min-width: 41.8125em) {
-  .items-recipes__item .swiper-lazy-preloader {
-    display: none !important;
-  }
-
-  .items-news__item .swiper-lazy-preloader {
-    display: none !important;
-  }
-}
-
 @media (min-width: 47.99875em) {
   .phone__modal::before {
     position: absolute;
@@ -4464,10 +4455,6 @@ button.swiper-pagination-bullet {
   .callback__container {
     -ms-grid-columns: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
-  }
-
-  .more-products__items .items-product__item .items-product__big-image .swiper-lazy-preloader {
-    display: none !important;
   }
 }
 

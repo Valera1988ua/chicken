@@ -3808,7 +3808,7 @@
         }));
         function searchFilter(arr) {
             const searchBlock = document.querySelector(".body-input");
-            const searchInput = document.querySelector("#search");
+            const searchInput = document.querySelector("#search-input");
             const searchList = searchBlock.querySelector(".popup__list");
             searchInput.addEventListener("input", inputEvent);
             function inputEvent(e) {
@@ -7686,7 +7686,7 @@
                 if (response.ok) {
                     products = [];
                     products.push(...data.products);
-                    await loadProducts(products);
+                    loadProducts(products);
                     if (sliderLoad = true && window.innerWidth < 991.98) {
                         productSlider();
                         sliderLoad = false;
@@ -8035,10 +8035,21 @@
                         slidesPerView: 1.2,
                         spaceBetween: 10,
                         autoHeight: true,
-                        speed: 800
+                        speed: 800,
+                        preloadImages: true,
+                        lazy: true
                     });
                 }
-            } else destroyNewsSlider();
+            } else {
+                destroyNewsSlider();
+                const parentPreloader = document.querySelector(".news__slider");
+                if (parentPreloader) {
+                    const preloader = parentPreloader.querySelectorAll(".swiper-lazy-preloader");
+                    preloader.forEach((item => {
+                        item.style.display = "none";
+                    }));
+                }
+            }
         }
         function recipesSlider() {
             if (window.innerWidth <= 669.98 && null === recipesSwiper && isMobile.any()) {
@@ -8050,10 +8061,21 @@
                         slidesPerView: 1.2,
                         spaceBetween: 10,
                         autoHeight: true,
-                        speed: 800
+                        speed: 800,
+                        preloadImages: true,
+                        lazy: true
                     });
                 }
-            } else destroyRecipesSlider();
+            } else {
+                destroyRecipesSlider();
+                const parentPreloader = document.querySelector(".recipes__slider");
+                if (parentPreloader) {
+                    const preloader = parentPreloader.querySelectorAll(".swiper-lazy-preloader");
+                    preloader.forEach((item => {
+                        item.style.display = "none";
+                    }));
+                }
+            }
         }
         function moreProductSlider() {
             if (window.innerWidth <= 992 && null === productMoreSlider) {
@@ -8077,7 +8099,16 @@
                         }
                     });
                 }
-            } else destroyMoreProductSlider();
+            } else {
+                destroyMoreProductSlider();
+                const parentPreloader = document.querySelector(".more-products__slider");
+                if (parentPreloader) {
+                    const preloader = parentPreloader.querySelectorAll(".swiper-lazy-preloader");
+                    preloader.forEach((item => {
+                        item.style.display = "none";
+                    }));
+                }
+            }
         }
         function tabsSlider() {
             if (window.innerWidth < 860.98 && null === tabsSwiper && isMobile.any() && null !== productSwiper) {
@@ -8171,7 +8202,16 @@
                     });
                     productSwiper.slideTo(0);
                 }
-            } else destroyProductSwiper();
+            } else {
+                destroyProductSwiper();
+                const parentPreloader = document.querySelector(".products__slider");
+                if (parentPreloader) {
+                    const preloader = parentPreloader.querySelectorAll(".swiper-lazy-preloader");
+                    preloader.forEach((item => {
+                        item.style.display = "none";
+                    }));
+                }
+            }
         }
         function clickButtonEvent() {
             const filterButton = document.querySelectorAll(".tabs__button");

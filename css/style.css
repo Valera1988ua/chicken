@@ -1730,6 +1730,7 @@ body::after {
 }
 
 .recipes {
+  padding-bottom: 11.875rem;
   border-bottom: 0.0625rem solid #EFEFEF;
 }
 
@@ -1920,6 +1921,7 @@ body::after {
 }
 
 .news {
+  padding-top: 3.125rem;
   border-bottom: 0.0625rem solid #EFEFEF;
 }
 
@@ -4715,20 +4717,12 @@ button.swiper-pagination-bullet {
     padding-top: 4.6875rem;
   }
 
-  .recipes {
-    padding-bottom: 10.625rem;
-  }
-
   .items-recipes__title {
     font-size: 1.0625rem;
   }
 
   .items-recipes__text {
     font-size: 0.875rem;
-  }
-
-  .news {
-    padding-top: 4.6875rem;
   }
 
   .news {
@@ -5411,20 +5405,12 @@ button.swiper-pagination-bullet {
     padding-top: 1.875rem;
   }
 
-  .recipes {
-    padding-bottom: 1.875rem;
-  }
-
   .items-recipes__title {
     font-size: 0.875rem;
   }
 
   .items-recipes__text {
     font-size: 0.75rem;
-  }
-
-  .news {
-    padding-top: 1.875rem;
   }
 
   .news {
@@ -6141,6 +6127,12 @@ button.swiper-pagination-bullet {
   .error__image {
     -ms-grid-row: 2;
     grid-row: 2;
+  }
+}
+
+@media (max-width: 41.8125em) {
+  .recipes {
+    padding-bottom: 3.125rem;
   }
 }
 
@@ -7049,18 +7041,6 @@ button.swiper-pagination-bullet {
     }
 }
 
-@supports (padding-bottom: clamp( 1.875rem , -0.6475225225rem  +  12.6126126126vw , 10.625rem )) {
-    .recipes {
-      padding-bottom: clamp( 1.875rem , -0.6475225225rem  +  12.6126126126vw , 10.625rem );
-    }
-}
-
-@supports not (padding-bottom: clamp( 1.875rem , -0.6475225225rem  +  12.6126126126vw , 10.625rem )) {
-    .recipes {
-      padding-bottom: calc(1.875rem + 8.75 * (100vw - 20rem) / 69.375);
-    }
-}
-
 @supports (font-size: clamp( 0.875rem , 0.8209459459rem  +  0.2702702703vw , 1.0625rem )) {
     .items-recipes__title {
       font-size: clamp( 0.875rem , 0.8209459459rem  +  0.2702702703vw , 1.0625rem );
@@ -7082,18 +7062,6 @@ button.swiper-pagination-bullet {
 @supports not (font-size: clamp( 0.75rem , 0.713963964rem  +  0.1801801802vw , 0.875rem )) {
     .items-recipes__text {
       font-size: calc(0.75rem + 0.125 * (100vw - 20rem) / 69.375);
-    }
-}
-
-@supports (padding-top: clamp( 1.875rem , 1.0641891892rem  +  4.0540540541vw , 4.6875rem )) {
-    .news {
-      padding-top: clamp( 1.875rem , 1.0641891892rem  +  4.0540540541vw , 4.6875rem );
-    }
-}
-
-@supports not (padding-top: clamp( 1.875rem , 1.0641891892rem  +  4.0540540541vw , 4.6875rem )) {
-    .news {
-      padding-top: calc(1.875rem + 2.8125 * (100vw - 20rem) / 69.375);
     }
 }
 

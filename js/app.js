@@ -7038,8 +7038,9 @@
             }
             if (recipesPageBlock) pageBlockRecipes(recipesArray);
         }
+        let numCards = 4;
+        let timeoutId;
         function pageBlockRecipes(arr) {
-            let numCards = 4;
             function updateCards() {
                 let newArray = [];
                 if (window.innerWidth < 668) numCards = 1; else numCards = 4;
@@ -7049,7 +7050,10 @@
                 lazyMedia.update();
             }
             updateCards();
-            window.addEventListener("resize", updateCards);
+            window.addEventListener("resize", (() => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(updateCards, 500);
+            }));
         }
         function homeBlockRecipes(arr, block) {
             const htmlRecipes = arr.slice(0, 4);
@@ -8678,6 +8682,7 @@
                 tabsBody.forEach(((tab, index) => {
                     const tabItem = tab.querySelector(".news-actions__item");
                     const {news} = tabItem.dataset;
+                    let timeoutId;
                     if ("all" === news && activeTitle && index == indexTitle) {
                         let numCards = 4;
                         function updateCardsAll() {
@@ -8686,7 +8691,10 @@
                             _slideDown(tabItem, 800);
                         }
                         updateCardsAll();
-                        window.addEventListener("resize", updateCardsAll);
+                        window.addEventListener("resize", (() => {
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(updateCardsAll, 500);
+                        }));
                     }
                     if ("news" === news && activeTitle && index === indexTitle) {
                         let numCards = 4;
@@ -8696,7 +8704,10 @@
                             _slideDown(tabItem, 800);
                         }
                         updateCardsNews();
-                        window.addEventListener("resize", updateCardsNews);
+                        window.addEventListener("resize", (() => {
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(updateCardsNews, 500);
+                        }));
                     }
                     if ("actions" === news && activeTitle && index === indexTitle) {
                         let numCards = 4;
@@ -8706,7 +8717,10 @@
                             _slideDown(tabItem, 800);
                         }
                         updateCardsActions();
-                        window.addEventListener("resize", updateCardsActions);
+                        window.addEventListener("resize", (() => {
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(updateCardsActions, 500);
+                        }));
                     }
                 }));
             }));

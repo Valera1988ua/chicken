@@ -7004,7 +7004,7 @@
                     array = [];
                     array = data;
                     console.log("Data:", data);
-                    await loadRecipes(array);
+                    loadRecipes(array);
                     recipesSlider();
                 }
             } catch (err) {
@@ -7014,7 +7014,7 @@
             }
         }
         const recipesArray = [];
-        async function loadRecipes(data) {
+        function loadRecipes(data) {
             data.recipes.forEach((item => {
                 const id = item.id, way = item.way, type = item.type, meat = item.meat, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
                 let recipesTemplate = "";
@@ -7032,15 +7032,15 @@
                 recipesArray.push(recipesTemplate);
             }));
             if (recipesBlock) {
-                await homeBlockRecipes(recipesArray, recipesBlock);
+                homeBlockRecipes(recipesArray, recipesBlock);
                 lazyMedia.update();
                 recipesAction(recipesBlock);
             }
             if (recipesPageBlock) pageBlockRecipes(recipesArray);
         }
-        async function pageBlockRecipes(arr) {
+        function pageBlockRecipes(arr) {
             let numCards = 4;
-            async function updateCards() {
+            function updateCards() {
                 let newArray = [];
                 if (window.innerWidth < 668) numCards = 1; else numCards = 4;
                 newArray = updateArray(arr);
@@ -7048,10 +7048,10 @@
                 _slideDown(recipesPageBlock, 800);
                 lazyMedia.update();
             }
-            await updateCards();
+            updateCards();
             window.addEventListener("resize", updateCards);
         }
-        async function homeBlockRecipes(arr, block) {
+        function homeBlockRecipes(arr, block) {
             const htmlRecipes = arr.slice(0, 4);
             const htmlRecipesTemplate = htmlRecipes.join("");
             block.insertAdjacentHTML("beforeend", htmlRecipesTemplate);
@@ -7090,13 +7090,15 @@
         }
         checkBoxAction();
         function checkBoxAction() {
-            const checkBox = document.querySelectorAll(".input-filter__item");
-            checkBox.forEach((el => {
-                el.addEventListener("click", checkBoxToggle);
-            }));
+            if (recipesPageBlock) {
+                const checkBox = document.querySelectorAll(".input-filter__item");
+                checkBox.forEach((el => {
+                    el.addEventListener("click", checkBoxToggle);
+                }));
+            }
         }
         function removeActive(arr) {
-            Array.from(arr).forEach((checkBox => {
+            if (recipesPageBlock) Array.from(arr).forEach((checkBox => {
                 if (checkBox.classList.contains("_active")) checkBox.classList.remove("_active");
             }));
         }
@@ -7109,28 +7111,32 @@
             }));
         }
         function clearCheckbox() {
-            const buttonsClear = document.querySelectorAll(".button-spollers__clear");
-            buttonsClear.forEach((button => {
-                button.addEventListener("click", (e => {
-                    const targetElement = e.target;
-                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
-                    if (parentTarget) {
-                        removeActiveCheckbox(parentTarget);
-                        updateRecipes();
-                    }
+            if (recipesPageBlock) {
+                const buttonsClear = document.querySelectorAll(".button-spollers__clear");
+                buttonsClear.forEach((button => {
+                    button.addEventListener("click", (e => {
+                        const targetElement = e.target;
+                        const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                        if (parentTarget) {
+                            removeActiveCheckbox(parentTarget);
+                            updateRecipes();
+                        }
+                    }));
                 }));
-            }));
+            }
         }
         clearCheckbox();
         function enterCheckbox() {
-            const buttonsEnter = document.querySelectorAll(".button-spollers__enter");
-            buttonsEnter.forEach((button => {
-                button.addEventListener("click", (e => {
-                    const targetElement = e.target;
-                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
-                    if (parentTarget) updateRecipes();
+            if (recipesPageBlock) {
+                const buttonsEnter = document.querySelectorAll(".button-spollers__enter");
+                buttonsEnter.forEach((button => {
+                    button.addEventListener("click", (e => {
+                        const targetElement = e.target;
+                        const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                        if (parentTarget) updateRecipes();
+                    }));
                 }));
-            }));
+            }
         }
         enterCheckbox();
         function checkBoxFilterItems() {
@@ -7335,6 +7341,7 @@
                 window.addEventListener("resize", (e => {
                     resizeTabs(allProductsCategory);
                 }));
+                resizeTabs(allProductsCategory);
             }
             if (moreProduct) moreProductAdd(homeProducts, moreProduct, length);
         }
@@ -7380,38 +7387,50 @@
                 tabsBody.forEach(((tab, index) => {
                     const tabItem = tab.querySelector(".products-catalog__item");
                     const {products} = tabItem.dataset;
+                    let timeoutId;
                     if ("chicken" === products && activeTitle && index == indexTitle) {
                         let numCards = 4;
                         function updateCardsAll() {
-                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            if (window.innerWidth < 669) numCards = 1; else numCards = 4;
                             newArrayChicken = returnArray(arrChicken);
                             pagination(newArrayChicken, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
                         }
                         updateCardsAll();
-                        window.addEventListener("resize", updateCardsAll);
+                        window.addEventListener("resize", (() => {
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(updateCardsAll, 500);
+                        }));
                     }
                     if ("souce" === products && activeTitle && index == indexTitle) {
                         let numCards = 4;
                         function updateCardsAll() {
-                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            if (isMobile.any()) numCards = 1; else numCards = 4;
                             newArraySouce = returnArray(arrSouce);
                             pagination(newArraySouce, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
                         }
                         updateCardsAll();
-                        window.addEventListener("resize", updateCardsAll);
+                        window.addEventListener("resize", (() => {
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(updateCardsAll, 500);
+                            updateCardsAll();
+                        }));
                     }
                     if ("stew" === products && activeTitle && index == indexTitle) {
                         let numCards = 4;
                         function updateCardsAll() {
-                            if (window.innerWidth < 668) numCards = 1; else numCards = 4;
+                            if (isMobile.any()) numCards = 1; else numCards = 4;
                             newArrayStew = returnArray(arrStew);
                             pagination(newArrayStew, tabItem, numCards, 1);
                             _slideDown(tabItem, 800);
                         }
                         updateCardsAll();
-                        window.addEventListener("resize", updateCardsAll);
+                        window.addEventListener("resize", (() => {
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(updateCardsAll, 500);
+                            updateCardsAll();
+                        }));
                     }
                 }));
             }));
@@ -7459,28 +7478,32 @@
             }));
         }
         function toHTML_clearCheckbox() {
-            const buttonsClear = document.querySelectorAll(".button-spollers__clear");
-            buttonsClear.forEach((button => {
-                button.addEventListener("click", (e => {
-                    const targetElement = e.target;
-                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
-                    if (parentTarget) {
-                        toHTML_removeActiveCheckbox(parentTarget);
-                        catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
-                    }
+            if (catalogProducts) {
+                const buttonsClear = document.querySelectorAll(".button-spollers__clear");
+                buttonsClear.forEach((button => {
+                    button.addEventListener("click", (e => {
+                        const targetElement = e.target;
+                        const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                        if (parentTarget) {
+                            toHTML_removeActiveCheckbox(parentTarget);
+                            catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
+                        }
+                    }));
                 }));
-            }));
+            }
         }
         toHTML_clearCheckbox();
         function toHTML_enterCheckbox() {
-            const buttonsEnter = document.querySelectorAll(".button-spollers__enter");
-            buttonsEnter.forEach((button => {
-                button.addEventListener("click", (e => {
-                    const targetElement = e.target;
-                    const parentTarget = targetElement.closest(".filter-spollers__dropdown");
-                    if (parentTarget) updateProducts();
+            if (catalogProducts) {
+                const buttonsEnter = document.querySelectorAll(".button-spollers__enter");
+                buttonsEnter.forEach((button => {
+                    button.addEventListener("click", (e => {
+                        const targetElement = e.target;
+                        const parentTarget = targetElement.closest(".filter-spollers__dropdown");
+                        if (parentTarget) updateProducts();
+                    }));
                 }));
-            }));
+            }
         }
         toHTML_enterCheckbox();
         function toHTML_checkBoxFilterItems() {
@@ -7642,6 +7665,11 @@
         const products_moreProduct = document.querySelector(".more-products__items");
         window.addEventListener("load", (e => {
             if (productsBlock || products_catalogProducts || products_moreProduct) getProducts();
+            const filterProductsCategory = document.querySelector("#filterCategory");
+            window.addEventListener("resize", (e => {
+                resizeTabs(filterProductsCategory);
+            }));
+            resizeTabs(filterProductsCategory);
         }));
         async function getProducts() {
             if (productsLoaded) return;
@@ -7677,7 +7705,7 @@
                 }), 500);
             }));
         }
-        async function loadProducts(data) {
+        function loadProducts(data) {
             if (productsBlock) {
                 createHTML(data);
                 productsFilter();
@@ -7794,10 +7822,6 @@
                         button.classList.add("_active");
                     }));
                 }
-                const filterProductsCategory = document.querySelector("#filterCategory");
-                window.addEventListener("resize", (e => {
-                    resizeTabs(filterProductsCategory);
-                }));
             }
         }
         function cirlceActions(slider, index) {
@@ -8424,7 +8448,7 @@
                     productsArray = [];
                     productsArray.push(...data.products);
                     console.log("Data:", data);
-                    await loadProductPage(productsArray);
+                    loadProductPage(productsArray);
                 }
             } catch (err) {
                 console.error(err);
@@ -8432,7 +8456,7 @@
                 console.log("Finally");
             }
         }
-        async function loadProductPage(data) {
+        function loadProductPage(data) {
             const arrayProducts = [];
             data.forEach((item => {
                 const id = item.id, type = (item.url, item.type), product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
@@ -8446,9 +8470,9 @@
                     arrayProducts.push(productPageTemplate);
                 }));
             }));
-            if (productPage) await onePageProduct(arrayProducts, productPage);
+            if (productPage) onePageProduct(arrayProducts, productPage);
         }
-        async function onePageProduct(arr, block) {
+        function onePageProduct(arr, block) {
             const oneProduct = arr.slice(0, 1);
             const oneHtmlProduct = oneProduct.join("");
             block.insertAdjacentHTML("beforeend", oneHtmlProduct);
@@ -8492,6 +8516,11 @@
         const ramenInfoBlock = document.querySelector("#ramenInfo");
         window.addEventListener("load", (e => {
             if (ramenInfoBlock) getRecipeData();
+            const recipeNav = document.querySelector("#recipeNav");
+            window.addEventListener("resize", (e => {
+                resizeTabs(recipeNav);
+            }));
+            resizeTabs(recipeNav);
         }));
         async function getRecipeData() {
             try {
@@ -8501,7 +8530,7 @@
                 const data = await response.json();
                 if (response.ok) {
                     console.log("Data:", data);
-                    await loadRamenRecipe(data);
+                    loadRamenRecipe(data);
                 }
             } catch (err) {
                 console.error(err);
@@ -8509,7 +8538,7 @@
                 console.log("Finally");
             }
         }
-        async function loadRamenRecipe(data) {
+        function loadRamenRecipe(data) {
             data.recipes.forEach((item => {
                 const id = item.id, image = item.ramenPageImage, title = item.title, text = item.text, info = item.info, history = item.recipeHistory, timeIcon = item.timeIcon, groupIcon = item.groupIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon;
                 let ramenInfoTemplate = "";
@@ -8531,10 +8560,6 @@
                 }));
             }));
         }
-        const recipeNav = document.querySelector("#recipeNav");
-        window.addEventListener("resize", (e => {
-            resizeTabs(recipeNav);
-        }));
         function downLoadFile() {
             const button = document.querySelector("[data-load]");
             if (button) button.addEventListener("click", clickButton);
@@ -8573,7 +8598,7 @@
                 news = data;
                 if (response.ok) {
                     console.log("Data:", data);
-                    await loadNews(news);
+                    loadNews(news);
                     newsSlider();
                 }
             } catch (err) {
@@ -8582,7 +8607,7 @@
                 console.log("Finally");
             }
         }
-        async function loadNews(data) {
+        function loadNews(data) {
             const htmlDate = [];
             const htmlImage = [];
             const arrHomeNewsTemplate = [];
@@ -8604,19 +8629,19 @@
                 if ("#Акція" === type) arrActionsTemplate.push(newsTemplate);
             }));
             if (newsPageBlock) {
-                await tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
+                tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
                 lazyMedia.update();
             }
             if (newsBlock) {
-                await homeBlockNews(arrHomeNewsTemplate, newsBlock);
+                homeBlockNews(arrHomeNewsTemplate, newsBlock);
                 lazyMedia.update();
             }
             if (newsDate && newsContent) {
-                await newsPageHtml(htmlDate, htmlImage, newsDate, newsContent);
+                newsPageHtml(htmlDate, htmlImage, newsDate, newsContent);
                 lazyMedia.update();
             }
         }
-        async function newsPageHtml(arrDate, arrImage, blockDate, blockContent) {
+        function newsPageHtml(arrDate, arrImage, blockDate, blockContent) {
             const htmlDateArray = arrDate.slice(3, 4);
             const htmlDateTemplate = htmlDateArray.join("");
             const htmlImageArray = arrImage.slice(3, 4);
@@ -8624,7 +8649,7 @@
             blockDate.insertAdjacentHTML("beforeend", htmlDateTemplate);
             blockContent.insertAdjacentHTML("beforeend", htmlImageTemplate);
         }
-        async function homeBlockNews(arr, block) {
+        function homeBlockNews(arr, block) {
             const htmlNews = arr.slice(0, 4);
             const htmlNewsTemplate = htmlNews.join("");
             block.insertAdjacentHTML("beforeend", htmlNewsTemplate);
@@ -8642,7 +8667,7 @@
             }
         }
         news_tabsClick();
-        async function tabsBodyHtml(allArr, arrNews, arrActions) {
+        function tabsBodyHtml(allArr, arrNews, arrActions) {
             const newsPageBlock = document.querySelector("#news-actions");
             const tabsBody = newsPageBlock.querySelectorAll(".tabs__body");
             const tabsTitle = document.querySelectorAll(".tabs__title");

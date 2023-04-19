@@ -1332,6 +1332,12 @@ body::after {
 }
 
 .image-circle {
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  justify-items: flex-start;
   position: relative;
   -webkit-transform: translate(25%, 25%);
       -ms-transform: translate(25%, 25%);
@@ -1360,7 +1366,7 @@ body::after {
   position: absolute;
   top: 13%;
   left: 13%;
-  padding: 39% 97% 59% 1%;
+  padding: 0% 98% 98% 0%;
 }
 
 .image-circle__big-image img {

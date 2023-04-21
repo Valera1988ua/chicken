@@ -6998,7 +6998,7 @@
             try {
                 const response = await fetch(file, {
                     method: "GET",
-                    cache: "only-if-cached"
+                    cache: "force-cache"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -7688,7 +7688,7 @@
             try {
                 const response = await fetch(file, {
                     method: "GET",
-                    cache: "only-if-cached"
+                    cache: "force-cache"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -8485,7 +8485,7 @@
             try {
                 const response = await fetch(product_file, {
                     method: "GET",
-                    cache: "only-if-cached"
+                    cache: "force-cache"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -8570,7 +8570,7 @@
             try {
                 const response = await fetch(ramen_file, {
                     method: "GET",
-                    cache: "only-if-cached"
+                    cache: "force-cache"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -8638,7 +8638,7 @@
             try {
                 const response = await fetch(news_file, {
                     method: "GET",
-                    cache: "only-if-cached"
+                    cache: "force-cache"
                 });
                 const data = await response.json();
                 news = [];

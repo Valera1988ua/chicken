@@ -6997,7 +6997,8 @@
         async function getRecipes() {
             try {
                 const response = await fetch(file, {
-                    method: "GET"
+                    method: "GET",
+                    cache: "only-if-cached"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -7686,7 +7687,8 @@
             const file = "json/products.json";
             try {
                 const response = await fetch(file, {
-                    method: "GET"
+                    method: "GET",
+                    cache: "only-if-cached"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -8482,7 +8484,8 @@
         async function getProductPageData() {
             try {
                 const response = await fetch(product_file, {
-                    method: "GET"
+                    method: "GET",
+                    cache: "only-if-cached"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -8566,7 +8569,8 @@
         async function getRecipeData() {
             try {
                 const response = await fetch(ramen_file, {
-                    method: "GET"
+                    method: "GET",
+                    cache: "only-if-cached"
                 });
                 const data = await response.json();
                 if (response.ok) {
@@ -8633,7 +8637,8 @@
         async function getNews() {
             try {
                 const response = await fetch(news_file, {
-                    method: "GET"
+                    method: "GET",
+                    cache: "only-if-cached"
                 });
                 const data = await response.json();
                 news = [];

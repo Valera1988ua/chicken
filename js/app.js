@@ -6987,7 +6987,6 @@
             const spanCold = spanBlock.querySelector(".small-image__cold");
             if (target.closest(".items-product") || target.closest(".products-catalog__item") || target.closest(".more-products__items")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
         }
-        let array = [];
         const file = "json/recipes.json";
         const recipesBlock = document.querySelector("#recipesHome");
         const recipesPageBlock = document.querySelector("#all-recipes");
@@ -6996,16 +6995,24 @@
         }));
         async function getRecipes() {
             try {
+                const cacheKey = "recipesCache";
+                const cachedData = localStorage.getItem(cacheKey);
+                if (cachedData) {
+                    const data = JSON.parse(cachedData);
+                    console.log("Cached data:", data);
+                    loadRecipes(data);
+                    recipesSlider();
+                    return;
+                }
                 const response = await fetch(file, {
                     method: "GET",
                     cache: "reload"
                 });
-                const data = await response.json();
                 if (response.ok) {
-                    array = [];
-                    array = data;
+                    const data = await response.json();
+                    localStorage.setItem(cacheKey, JSON.stringify(data));
                     console.log("Data:", data);
-                    loadRecipes(array);
+                    loadRecipes(data);
                     recipesSlider();
                 }
             } catch (err) {
@@ -7308,28 +7315,6 @@
                 }));
             }
         }
-        function preloaderRemove() {
-            let images = document.querySelectorAll("img");
-            console.log(images);
-            let loadedImages = 0;
-            for (var i = 0; i < images.length; i++) {
-                let image = new Image;
-                image.onload = function() {
-                    loadedImages++;
-                    if (loadedImages == images.length) {
-                        const preloader = document.querySelectorAll(".preloader-image");
-                        preloader.forEach((item => {
-                            item.style.display = "none";
-                        }));
-                    }
-                };
-                image.src = images[i].src;
-            }
-        }
-        const contactImage = document.querySelector(".contact__image");
-        if (contactImage) preloaderRemove();
-        const aboutImage = document.querySelector(".about");
-        if (aboutImage) preloaderRemove();
         const productsHome = document.querySelector("#products");
         const catalogProducts = document.querySelector("#catalogProducts");
         const moreProduct = document.querySelector(".more-products__items");
@@ -7686,13 +7671,31 @@
             if (productsLoaded) return;
             const file = "json/products.json";
             try {
+                const cacheKey = "productsCache";
+                const cachedData = localStorage.getItem(cacheKey);
+                if (cachedData) {
+                    const data = JSON.parse(cachedData);
+                    products = [];
+                    products.push(...data.products);
+                    console.log("Cached data:", data);
+                    loadProducts(products);
+                    if (sliderLoad = true && window.innerWidth < 991.98) {
+                        productSlider();
+                        sliderLoad = false;
+                    }
+                    tabsSlider();
+                    productsLoaded = true;
+                    return;
+                }
                 const response = await fetch(file, {
                     method: "GET",
                     cache: "reload"
                 });
-                const data = await response.json();
                 if (response.ok) {
                     products = [];
+                    const data = await response.json();
+                    localStorage.setItem(cacheKey, JSON.stringify(data));
+                    console.log("Data:", data);
                     products.push(...data.products);
                     loadProducts(products);
                     if (sliderLoad = true && window.innerWidth < 991.98) {
@@ -7701,7 +7704,6 @@
                     }
                     tabsSlider();
                     productsLoaded = true;
-                    console.log("Data:", data);
                 }
             } catch (err) {
                 console.error(err);
@@ -7736,7 +7738,9 @@
                         const tabsElement = e.target.closest(".tabs__title");
                         if (title.classList.contains("_tab-active") || tabsElement.classList.contains("_tab-active")) return;
                         productsLoaded = false;
-                        getProducts();
+                        setTimeout((() => {
+                            getProducts();
+                        }), 0);
                         const spollers = title.closest("[data-tabs]").querySelectorAll("[data-spollers]");
                         spollers.forEach((spoller => {
                             if (!spoller.hasAttribute("data-spollers-init")) {
@@ -8483,15 +8487,26 @@
         }));
         async function getProductPageData() {
             try {
+                const cacheKey = "productCache";
+                const cachedData = localStorage.getItem(cacheKey);
+                if (cachedData) {
+                    const data = JSON.parse(cachedData);
+                    console.log("Cached data:", data);
+                    productsArray = [];
+                    productsArray.push(...data.products);
+                    loadProductPage(productsArray);
+                    return;
+                }
                 const response = await fetch(product_file, {
                     method: "GET",
                     cache: "reload"
                 });
-                const data = await response.json();
                 if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem(cacheKey, JSON.stringify(data));
+                    console.log("Data:", data);
                     productsArray = [];
                     productsArray.push(...data.products);
-                    console.log("Data:", data);
                     loadProductPage(productsArray);
                 }
             } catch (err) {
@@ -8568,12 +8583,21 @@
         }));
         async function getRecipeData() {
             try {
+                const cacheKey = "ramenCache";
+                const cachedData = localStorage.getItem(cacheKey);
+                if (cachedData) {
+                    const data = JSON.parse(cachedData);
+                    console.log("Cached data:", data);
+                    loadRamenRecipe(data);
+                    return;
+                }
                 const response = await fetch(ramen_file, {
                     method: "GET",
                     cache: "reload"
                 });
-                const data = await response.json();
                 if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem(cacheKey, JSON.stringify(data));
                     console.log("Data:", data);
                     loadRamenRecipe(data);
                 }
@@ -8625,8 +8649,6 @@
                 document.body.removeChild(downloadLink);
             }));
         }
-        const news_file = "json/news_and_actions.json";
-        let news = [];
         const newsPageBlock = document.querySelector("#news-actions");
         const newsBlock = document.querySelector("#newsHome");
         const newsDate = document.querySelector("#date");
@@ -8634,18 +8656,32 @@
         window.addEventListener("load", (e => {
             if (newsPageBlock || newsBlock || newsDate && newsContent) getNews();
         }));
+        let arrNews = [];
         async function getNews() {
             try {
-                const response = await fetch(news_file, {
+                const file = "json/news_and_actions.json";
+                const cacheKey = "newsCache";
+                const cachedData = localStorage.getItem(cacheKey);
+                if (cachedData) {
+                    const data = JSON.parse(cachedData);
+                    arrNews = [];
+                    arrNews.push(...data.news);
+                    console.log("Cached data:", data);
+                    loadNews(arrNews);
+                    newsSlider();
+                    return;
+                }
+                const response = await fetch(file, {
                     method: "GET",
                     cache: "reload"
                 });
-                const data = await response.json();
-                news = [];
-                news = data;
                 if (response.ok) {
+                    const data = await response.json();
+                    arrNews = [];
+                    arrNews.push(...data.news);
+                    localStorage.setItem(cacheKey, JSON.stringify(data));
                     console.log("Data:", data);
-                    loadNews(news);
+                    loadNews(arrNews);
                     newsSlider();
                 }
             } catch (err) {
@@ -8661,7 +8697,7 @@
             const arrNewsTemplate = [];
             const arrActionsTemplate = [];
             let newsTemplate = "";
-            data.news.forEach((item => {
+            data.forEach((item => {
                 const id = item.id, url = item.url, image = item.image, logo = item.logo, title = item.title, date = item.date, type = item.type;
                 newsTemplate = "";
                 const newsItem = `\n                <article id="${id}" data-type="${type}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo">\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}">\n                       <div class="swiper-lazy-preloader"></div>\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <h3 class="items-news__title">${title}</h3>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
@@ -8708,7 +8744,9 @@
                     title.addEventListener("click", (e => {
                         const tabsElement = e.target.closest(".tabs__title");
                         if (title.classList.contains("_tab-active") || tabsElement.classList.contains("_tab-active")) return;
-                        getNews();
+                        setTimeout((() => {
+                            getNews();
+                        }), 0);
                     }));
                 }));
             }

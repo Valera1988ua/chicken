@@ -6973,16 +6973,16 @@
         const recipesPageBlock = document.querySelector("#all-recipes");
         const preloaderRecipes = document.querySelector(".recipes__preloader");
         window.addEventListener("load", (e => {
-            if (recipesBlock) window.addEventListener("scroll", (() => {
-                const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
-                const topTargetElement = targetElement.getBoundingClientRect().top;
-                if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
-                    getRecipes();
-                    addRecipes = true;
-                    preloaderRecipes.remove();
-                }
-            }));
             if (recipesPageBlock) getRecipes();
+        }));
+        if (recipesBlock) window.addEventListener("scroll", (() => {
+            const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+            const topTargetElement = targetElement.getBoundingClientRect().top;
+            if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
+                getRecipes();
+                addRecipes = true;
+                preloaderRecipes.remove();
+            }
         }));
         async function getRecipes() {
             try {
@@ -7654,20 +7654,20 @@
         const preloaderProducts = document.querySelector(".products__preloader");
         window.addEventListener("load", (e => {
             if (products_catalogProducts || products_moreProduct) getProducts();
-            if (productsBlock) window.addEventListener("scroll", (() => {
-                const targetElement = document.querySelector(".page__products");
-                const topTargetElement = targetElement.getBoundingClientRect().top;
-                if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
-                    getProducts();
-                    productAdd = true;
-                    preloaderProducts.remove();
-                }
-            }));
             const filterProductsCategory = document.querySelector("#filterCategory");
             window.addEventListener("resize", (e => {
                 resizeTabs(filterProductsCategory);
             }));
             resizeTabs(filterProductsCategory);
+        }));
+        if (productsBlock) window.addEventListener("scroll", (() => {
+            const targetElement = document.querySelector(".page__products");
+            const topTargetElement = targetElement.getBoundingClientRect().top;
+            if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
+                getProducts();
+                productAdd = true;
+                preloaderProducts.remove();
+            }
         }));
         async function getProducts() {
             if (productsLoaded) return;
@@ -8629,19 +8629,20 @@
         const newsDate = document.querySelector("#date");
         const newsContent = document.querySelector("#content");
         const preloaderNews = document.querySelector(".news__preloader");
+        const newsHome = document.querySelector(".page__news");
         let newsAdd = false;
         window.addEventListener("load", (e => {
-            if (newsBlock) window.addEventListener("scroll", (() => {
-                const targetElement = document.querySelector(".page__news");
-                const topTargetElement = targetElement.getBoundingClientRect().top;
-                if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
-                    getNews();
-                    newsAdd = true;
-                    preloaderNews.remove();
-                }
-            }));
             if (newsPageBlock || newsDate && newsContent) {
                 getNews();
+                preloaderNews.remove();
+            }
+        }));
+        if (newsBlock && newsHome) window.addEventListener("scroll", (() => {
+            const targetElement = document.querySelector(".page__news");
+            const topTargetElement = targetElement.getBoundingClientRect().top;
+            if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
+                getNews();
+                newsAdd = true;
                 preloaderNews.remove();
             }
         }));

@@ -6975,8 +6975,8 @@
         window.addEventListener("load", (e => {
             if (recipesPageBlock) getRecipes();
         }));
-        if (recipesBlock) window.addEventListener("scroll", (() => {
-            const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+        const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+        if (recipesBlock && targetElement) window.addEventListener("scroll", (() => {
             const topTargetElement = targetElement.getBoundingClientRect().top;
             if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
                 getRecipes();
@@ -7660,9 +7660,9 @@
             }));
             resizeTabs(filterProductsCategory);
         }));
-        if (productsBlock) window.addEventListener("scroll", (() => {
-            const targetElement = document.querySelector(".page__products");
-            const topTargetElement = targetElement.getBoundingClientRect().top;
+        const products_targetElement = document.querySelector(".page__products");
+        if (productsBlock && products_targetElement) window.addEventListener("scroll", (() => {
+            const topTargetElement = products_targetElement.getBoundingClientRect().top;
             if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
                 getProducts();
                 productAdd = true;
@@ -8629,7 +8629,7 @@
         const newsDate = document.querySelector("#date");
         const newsContent = document.querySelector("#content");
         const preloaderNews = document.querySelector(".news__preloader");
-        const newsHome = document.querySelector(".page__news");
+        document.querySelector(".page__news");
         let newsAdd = false;
         window.addEventListener("load", (e => {
             if (newsPageBlock || newsDate && newsContent) {
@@ -8637,9 +8637,9 @@
                 preloaderNews.remove();
             }
         }));
-        if (newsBlock && newsHome) window.addEventListener("scroll", (() => {
-            const targetElement = document.querySelector(".page__news");
-            const topTargetElement = targetElement.getBoundingClientRect().top;
+        const news_targetElement = document.querySelector(".page__news");
+        if (newsBlock && news_targetElement) window.addEventListener("scroll", (() => {
+            const topTargetElement = news_targetElement.getBoundingClientRect().top;
             if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
                 getNews();
                 newsAdd = true;

@@ -2512,24 +2512,18 @@ body::after {
   transition: background 0.3s ease;
 }
 
-.no-webp .all-news .header-color {
-  background: url("../img/bg/bg-news.png") 0 0/100% no-repeat; }
-
 .all-news .header-color {
+  background: url("../img/bg/bg-news.png") 0 0/100% no-repeat;
   background-size: cover;
 }
-
-.no-webp .all-recipes .header-color {
-  background: url("../img/bg/bg-recipes.png") 0 0/100% no-repeat; }
 
 .all-recipes .header-color {
+  background: url("../img/bg/bg-recipes.png") 0 0/100% no-repeat;
   background-size: cover;
 }
 
-.no-webp .products-catalog .header-color {
-  background: url("../img/bg/bg-products.png") 0 0/100% no-repeat; }
-
 .products-catalog .header-color {
+  background: url("../img/bg/bg-products.png") 0 0/100% no-repeat;
   background-size: cover;
 }
 
@@ -2585,12 +2579,10 @@ body::after {
   display: grid !important;
 }
 
-.no-webp .about__photo-company {
-  background: url("../img/about/bg_company.png") 0 0/100% no-repeat; }
-
 .about__photo-company {
   position: relative;
   padding: 0% 0% 12% 0%;
+  background: url("../img/about/bg_company.png") 0 0/100% no-repeat;
 }
 
 .about__title {
@@ -8567,11 +8559,3 @@ button.swiper-pagination-bullet {
     color: #232323;
   }
 }
-
-.webp .all-news .header-color { background: url(../img/bg/bg-news.webp) 0 0/100% no-repeat; }
-
-.webp .all-recipes .header-color { background: url(../img/bg/bg-recipes.webp) 0 0/100% no-repeat; }
-
-.webp .products-catalog .header-color { background: url(../img/bg/bg-products.webp) 0 0/100% no-repeat; }
-
-.webp .about__photo-company { background: url(../img/about/bg_company.webp) 0 0/100% no-repeat; }

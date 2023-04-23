@@ -6973,16 +6973,16 @@
         const recipesPageBlock = document.querySelector("#all-recipes");
         const preloaderRecipes = document.querySelector(".recipes__preloader");
         window.addEventListener("load", (e => {
+            const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+            if (recipesBlock && targetElement) window.addEventListener("scroll", (() => {
+                const topTargetElement = targetElement.getBoundingClientRect().top;
+                if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
+                    getRecipes();
+                    addRecipes = true;
+                    preloaderRecipes.remove();
+                }
+            }));
             if (recipesPageBlock) getRecipes();
-        }));
-        const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
-        if (recipesBlock && targetElement) window.addEventListener("scroll", (() => {
-            const topTargetElement = targetElement.getBoundingClientRect().top;
-            if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
-                getRecipes();
-                addRecipes = true;
-                preloaderRecipes.remove();
-            }
         }));
         async function getRecipes() {
             try {
@@ -7654,20 +7654,20 @@
         const preloaderProducts = document.querySelector(".products__preloader");
         window.addEventListener("load", (e => {
             if (products_catalogProducts || products_moreProduct) getProducts();
+            const targetElement = document.querySelector(".page__products");
+            if (productsBlock && targetElement) window.addEventListener("scroll", (() => {
+                const topTargetElement = targetElement.getBoundingClientRect().top;
+                if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
+                    getProducts();
+                    productAdd = true;
+                    preloaderProducts.remove();
+                }
+            }));
             const filterProductsCategory = document.querySelector("#filterCategory");
             window.addEventListener("resize", (e => {
                 resizeTabs(filterProductsCategory);
             }));
             resizeTabs(filterProductsCategory);
-        }));
-        const products_targetElement = document.querySelector(".page__products");
-        if (productsBlock && products_targetElement) window.addEventListener("scroll", (() => {
-            const topTargetElement = products_targetElement.getBoundingClientRect().top;
-            if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
-                getProducts();
-                productAdd = true;
-                preloaderProducts.remove();
-            }
         }));
         async function getProducts() {
             if (productsLoaded) return;
@@ -8636,15 +8636,15 @@
                 getNews();
                 preloaderNews.remove();
             }
-        }));
-        const news_targetElement = document.querySelector(".page__news");
-        if (newsBlock && news_targetElement) window.addEventListener("scroll", (() => {
-            const topTargetElement = news_targetElement.getBoundingClientRect().top;
-            if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
-                getNews();
-                newsAdd = true;
-                preloaderNews.remove();
-            }
+            const targetElement = document.querySelector(".page__news");
+            if (newsBlock && targetElement) window.addEventListener("scroll", (() => {
+                const topTargetElement = targetElement.getBoundingClientRect().top;
+                if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
+                    getNews();
+                    newsAdd = true;
+                    preloaderNews.remove();
+                }
+            }));
         }));
         let arrNews = [];
         async function getNews() {

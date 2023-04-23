@@ -7745,7 +7745,9 @@
                         const tabsElement = e.target.closest(".tabs__title");
                         if (title.classList.contains("_tab-active") || tabsElement.classList.contains("_tab-active")) return;
                         productsLoaded = false;
-                        setTimeout((() => {}), 0);
+                        setTimeout((() => {
+                            getProducts();
+                        }), 0);
                         const spollers = title.closest("[data-tabs]").querySelectorAll("[data-spollers]");
                         spollers.forEach((spoller => {
                             if (!spoller.hasAttribute("data-spollers-init")) {
@@ -7788,7 +7790,9 @@
                             destroyProductSwiper();
                         }
                         clearBlock(productsBlock);
-                        setTimeout((() => {}), 500);
+                        setTimeout((() => {
+                            getProducts();
+                        }), 500);
                         remove_Class();
                         add_Class();
                     }

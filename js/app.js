@@ -6972,17 +6972,17 @@
         const recipesBlock = document.querySelector("#recipesHome");
         const recipesPageBlock = document.querySelector("#all-recipes");
         const preloaderRecipes = document.querySelector(".recipes__preloader");
-        window.addEventListener("load", (e => {
-            const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
-            if (recipesBlock && targetElement) window.addEventListener("scroll", (() => {
-                const topTargetElement = targetElement.getBoundingClientRect().top;
-                if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
-                    getRecipes();
-                    addRecipes = true;
-                    preloaderRecipes.remove();
-                }
-            }));
+        window.addEventListener("load", (() => {
             if (recipesPageBlock) getRecipes();
+        }));
+        const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+        if (recipesBlock && targetElement) window.addEventListener("scroll", (() => {
+            const topTargetElement = targetElement.getBoundingClientRect().top;
+            if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
+                getRecipes();
+                addRecipes = true;
+                preloaderRecipes.remove();
+            }
         }));
         async function getRecipes() {
             try {
@@ -7653,24 +7653,24 @@
         const products_catalogProducts = document.querySelector("#catalogProducts");
         const products_moreProduct = document.querySelector(".more-products__items");
         const preloaderProducts = document.querySelector(".products__preloader");
-        window.addEventListener("load", (e => {
+        window.addEventListener("load", (() => {
             if (products_catalogProducts || products_moreProduct) getProducts();
-            window.addEventListener("scroll", (() => {
-                const targetElement = document.querySelector(".page__products");
-                if (productsBlock && targetElement) {
-                    const topTargetElement = targetElement.getBoundingClientRect().top;
-                    if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
-                        getProducts();
-                        productAdd = true;
-                        preloaderProducts.remove();
-                    }
-                }
-            }));
             const filterProductsCategory = document.querySelector("#filterCategory");
             window.addEventListener("resize", (e => {
                 resizeTabs(filterProductsCategory);
             }));
             resizeTabs(filterProductsCategory);
+        }));
+        window.addEventListener("scroll", (() => {
+            const targetElement = document.querySelector(".page__products");
+            if (productsBlock && targetElement) {
+                const topTargetElement = targetElement.getBoundingClientRect().top;
+                if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
+                    getProducts();
+                    productAdd = true;
+                    preloaderProducts.remove();
+                }
+            }
         }));
         async function getProducts() {
             if (productsLoaded) return;
@@ -8637,20 +8637,20 @@
         const preloaderNews = document.querySelector(".news__preloader");
         let newsAdd = false;
         let arrNews = [];
-        window.addEventListener("load", (e => {
+        window.addEventListener("load", (() => {
             if (newsPageBlock || newsDate && newsContent) {
                 getNews();
                 if (newsDate && newsContent) preloaderNews.remove();
             }
-            const targetElement = document.querySelector(".page__news");
-            if (newsBlock && targetElement) window.addEventListener("scroll", (() => {
-                const topTargetElement = targetElement.getBoundingClientRect().top;
-                if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
-                    getNews();
-                    newsAdd = true;
-                    preloaderNews.remove();
-                }
-            }));
+        }));
+        const news_targetElement = document.querySelector(".page__news");
+        if (newsBlock && news_targetElement) window.addEventListener("scroll", (() => {
+            const topTargetElement = news_targetElement.getBoundingClientRect().top;
+            if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
+                getNews();
+                newsAdd = true;
+                preloaderNews.remove();
+            }
         }));
         async function getNews() {
             try {

@@ -2511,25 +2511,24 @@ body::after {
   transition: background 0.3s ease;
 }
 
-.no-webp .all-news .header-color {
-  background: url("../img/bg/bg-news.png") 0 0/100% no-repeat; }
-
-.all-news .header-color {
-  background-size: cover;
+.header-color {
+  position: relative;
 }
 
-.no-webp .all-recipes .header-color {
-  background: url("../img/bg/bg-recipes.png") 0 0/100% no-repeat; }
-
-.all-recipes .header-color {
-  background-size: cover;
+.header-color__bg {
+  position: relative;
 }
 
-.no-webp .products-catalog .header-color {
-  background: url("../img/bg/bg-products.png") 0 0/100% no-repeat; }
+.header-color__container {
+  position: relative;
+}
 
-.products-catalog .header-color {
-  background-size: cover;
+.header-color__wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -7.8125rem;
+  left: 0;
 }
 
 .header-color__links {
@@ -2542,6 +2541,7 @@ body::after {
   -webkit-column-gap: 0.625rem;
      -moz-column-gap: 0.625rem;
           column-gap: 0.625rem;
+  z-index: 5;
 }
 
 .header-color__links span {
@@ -4884,30 +4884,6 @@ button.swiper-pagination-bullet {
     margin-bottom: 3.75rem;
   }
 
-  .all-news .header-color {
-    padding-top: 3.125rem;
-  }
-
-  .all-news .header-color {
-    padding-bottom: 3.125rem;
-  }
-
-  .all-recipes .header-color {
-    padding-top: 3.125rem;
-  }
-
-  .all-recipes .header-color {
-    padding-bottom: 3.125rem;
-  }
-
-  .products-catalog .header-color {
-    padding-top: 3.125rem;
-  }
-
-  .products-catalog .header-color {
-    padding-bottom: 3.125rem;
-  }
-
   .header-color__title {
     font-size: 2.75rem;
   }
@@ -5562,30 +5538,6 @@ button.swiper-pagination-bullet {
 
   .callback__text:not(:last-child) {
     margin-bottom: 2.5rem;
-  }
-
-  .all-news .header-color {
-    padding-top: 1.5625rem;
-  }
-
-  .all-news .header-color {
-    padding-bottom: 1.5625rem;
-  }
-
-  .all-recipes .header-color {
-    padding-top: 1.5625rem;
-  }
-
-  .all-recipes .header-color {
-    padding-bottom: 1.5625rem;
-  }
-
-  .products-catalog .header-color {
-    padding-top: 1.5625rem;
-  }
-
-  .products-catalog .header-color {
-    padding-bottom: 1.5625rem;
   }
 
   .header-color__title {
@@ -7376,78 +7328,6 @@ button.swiper-pagination-bullet {
     }
 }
 
-@supports (padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-news .header-color {
-      padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem );
-    }
-}
-
-@supports not (padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-news .header-color {
-      padding-top: calc(1.5625rem + 1.5625 * (100vw - 20rem) / 69.375);
-    }
-}
-
-@supports (padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-news .header-color {
-      padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem );
-    }
-}
-
-@supports not (padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-news .header-color {
-      padding-bottom: calc(1.5625rem + 1.5625 * (100vw - 20rem) / 69.375);
-    }
-}
-
-@supports (padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-recipes .header-color {
-      padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem );
-    }
-}
-
-@supports not (padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-recipes .header-color {
-      padding-top: calc(1.5625rem + 1.5625 * (100vw - 20rem) / 69.375);
-    }
-}
-
-@supports (padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-recipes .header-color {
-      padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem );
-    }
-}
-
-@supports not (padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .all-recipes .header-color {
-      padding-bottom: calc(1.5625rem + 1.5625 * (100vw - 20rem) / 69.375);
-    }
-}
-
-@supports (padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .products-catalog .header-color {
-      padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem );
-    }
-}
-
-@supports not (padding-top: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .products-catalog .header-color {
-      padding-top: calc(1.5625rem + 1.5625 * (100vw - 20rem) / 69.375);
-    }
-}
-
-@supports (padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .products-catalog .header-color {
-      padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem );
-    }
-}
-
-@supports not (padding-bottom: clamp( 1.5625rem , 1.1120495495rem  +  2.2522522523vw , 3.125rem )) {
-    .products-catalog .header-color {
-      padding-bottom: calc(1.5625rem + 1.5625 * (100vw - 20rem) / 69.375);
-    }
-}
-
 @supports (font-size: clamp( 2rem , 1.7837837838rem  +  1.0810810811vw , 2.75rem )) {
     .header-color__title {
       font-size: clamp( 2rem , 1.7837837838rem  +  1.0810810811vw , 2.75rem );
@@ -8566,11 +8446,5 @@ button.swiper-pagination-bullet {
     color: #232323;
   }
 }
-
-.webp .all-news .header-color { background: url(../img/bg/bg-news.webp) 0 0/100% no-repeat; }
-
-.webp .all-recipes .header-color { background: url(../img/bg/bg-recipes.webp) 0 0/100% no-repeat; }
-
-.webp .products-catalog .header-color { background: url(../img/bg/bg-products.webp) 0 0/100% no-repeat; }
 
 .webp .about__photo-company { background: url(../img/about/bg_company.webp) 0 0/100% no-repeat; }

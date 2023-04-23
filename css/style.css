@@ -853,6 +853,51 @@ body::after {
   height: 0.75rem;
 }
 
+.preloader-style {
+  position: relative;
+  -ms-grid-column-span: 4;
+  grid-column: span 4;
+  height: 12.5rem;
+}
+
+.preloader-block {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.preloader-block::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2.625rem;
+  height: 2.625rem;
+  margin: -2.5rem 0 0 -2.5rem;
+  border: 0.25rem solid #ccc;
+  border-top-color: #007aff;
+  border-radius: 50%;
+  -webkit-animation: spin 1s infinite linear;
+          animation: spin 1s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
 .header {
   background: -o-linear-gradient(282.1deg, rgba(0, 54, 160, 0.7) 0.3%, rgba(24, 171, 187, 0.7) 118.94%);
   background: linear-gradient(167.9deg, rgba(0, 54, 160, 0.7) 0.3%, rgba(24, 171, 187, 0.7) 118.94%);

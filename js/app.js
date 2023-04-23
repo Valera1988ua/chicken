@@ -6968,10 +6968,21 @@
             if (target.closest(".items-product") || target.closest(".products-catalog__item") || target.closest(".more-products__items")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
         }
         const file = "json/recipes.json";
+        let addRecipes = false;
         const recipesBlock = document.querySelector("#recipesHome");
         const recipesPageBlock = document.querySelector("#all-recipes");
+        const preloaderRecipes = document.querySelector(".recipes__preloader");
         window.addEventListener("load", (e => {
-            if (recipesBlock || recipesPageBlock) getRecipes();
+            if (recipesBlock) window.addEventListener("scroll", (() => {
+                const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+                const topTargetElement = targetElement.getBoundingClientRect().top;
+                if (topTargetElement <= window.innerHeight / 2 && !addRecipes) {
+                    getRecipes();
+                    addRecipes = true;
+                    preloaderRecipes.remove();
+                }
+            }));
+            if (recipesPageBlock) getRecipes();
         }));
         async function getRecipes() {
             try {
@@ -7006,7 +7017,7 @@
             data.recipes.forEach((item => {
                 const id = item.id, way = item.way, type = item.type, meat = item.meat, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
                 let recipesTemplate = "";
-                const recipesItem = `\n           <article id="${id}" data-way=${way} data-type="${type}" data-meat=${meat} class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n                  <div class="swiper-lazy-preloader"></div>\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <h3 class="items-recipes__title">${title}</h3>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
+                const recipesItem = `\n           <article id="${id}" data-way=${way} data-type="${type}" data-meat=${meat} class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n                  <div class="swiper-lazy-preloader"></div>\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <div class="items-recipes__title">${title}</div>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
                 info.forEach((value => {
                     const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n                   <div class="specification-recipes__item">\n                   <svg>\n                         <use xlink:href="img/icons/icons.svg#time"></use>\n                     </svg>\n                       <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                       <span>${value.time}</span>\n                  </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                         <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                       <span>${value.complexity}</span>\n                    </div>\n               </div>\n            `;
                     recipesTemplate += recipesItem;
@@ -7309,9 +7320,9 @@
             products.forEach((item => {
                 const id = item.id, url = item.url, type = item.type, product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
                 let productTemplate = "";
-                const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product}">\n           <div class="items-product__image">\n             <div class="items-product__big-image">\n              <img data-src="img/products/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n               <div class="swiper-lazy-preloader"></div>\n            </div>\n          <div class="items-product__small-image small-image">\n            <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                  <img data-src="img/products/${freez}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n              </div>\n            <div class="small-image__item">\n              <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                <img data-src="img/products/${cold}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n            </div>\n          </div>\n        </div>\n          <div class="items-product__info">\n            <h3 class="items-product__title">${title}</h3>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n          </div>\n      `;
+                const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product}">\n           <div class="items-product__image">\n             <div class="items-product__big-image">\n              <img data-src="img/products/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n               <div class="swiper-lazy-preloader"></div>\n            </div>\n          <div class="items-product__small-image small-image">\n            <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                  <img data-src="img/products/${freez}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n              </div>\n            <div class="small-image__item">\n              <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                <img data-src="img/products/${cold}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n            </div>\n          </div>\n        </div>\n          <div class="items-product__info">\n            <div class="items-product__title">${title}</div>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n          </div>\n      `;
                 energyValue.forEach((value => {
-                    const productItemHideInfo = `<div class="items-product__hide-info info-hide">\n               <div class="info-hide__energy">\n                 <div class="info-hide__kkal">\n                   <div class="info-hide__title">${value.kkal}</div>\n                    <div class="info-hide__text">колорії</div>\n                  </div>\n                     <div class="info-hide__protein">\n                      <h6 class="info-hide__title">${value.protein}</h6>\n                       <div class="info-hide__text">білки</div>\n                   </div>\n                    <div class="info-hide__fat">\n                     <div class="info-hide__title">${value.fat}</div>\n                     <div class="info-hide__text">жири</div>\n                  </div>\n               </div>\n                <a href="${url}" class="info-hide__link-product product-link">\n                   <span class="product-link__text">Детальніше</span>\n                     <svg class="product-link__icon">\n                        <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n                    </svg>\n                  </a>\n              `;
+                    const productItemHideInfo = `<div class="items-product__hide-info info-hide">\n               <div class="info-hide__energy">\n                 <div class="info-hide__kkal">\n                   <div class="info-hide__title">${value.kkal}</div>\n                    <div class="info-hide__text">колорії</div>\n                  </div>\n                     <div class="info-hide__protein">\n                      <div class="info-hide__title">${value.protein}</div>\n                       <div class="info-hide__text">білки</div>\n                   </div>\n                    <div class="info-hide__fat">\n                     <div class="info-hide__title">${value.fat}</div>\n                     <div class="info-hide__text">жири</div>\n                  </div>\n               </div>\n                <a href="${url}" class="info-hide__link-product product-link">\n                   <span class="product-link__text">Детальніше</span>\n                     <svg class="product-link__icon">\n                        <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n                    </svg>\n                  </a>\n              `;
                     productTemplate += productItem;
                     productTemplate += productItemHideInfo;
                     productTemplate += `</article>`;
@@ -7636,11 +7647,22 @@
         let productsLoaded = false;
         let sliderLoad = false;
         let products = [];
+        let productAdd = false;
         const productsBlock = document.querySelector("#products");
         const products_catalogProducts = document.querySelector("#catalogProducts");
         const products_moreProduct = document.querySelector(".more-products__items");
+        const preloaderProducts = document.querySelector(".products__preloader");
         window.addEventListener("load", (e => {
-            if (productsBlock || products_catalogProducts || products_moreProduct) getProducts();
+            if (products_catalogProducts || products_moreProduct) getProducts();
+            if (productsBlock) window.addEventListener("scroll", (() => {
+                const targetElement = document.querySelector(".page__products");
+                const topTargetElement = targetElement.getBoundingClientRect().top;
+                if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
+                    getProducts();
+                    productAdd = true;
+                    preloaderProducts.remove();
+                }
+            }));
             const filterProductsCategory = document.querySelector("#filterCategory");
             window.addEventListener("resize", (e => {
                 resizeTabs(filterProductsCategory);
@@ -8566,7 +8588,7 @@
                 let ramenInfoTemplate = "";
                 const articleRamenStart = `\n               <article id="${id}" class="ramen__recipe">\n                   <div class="ramen__header">\n            `;
                 const ramenRecipeLoad = `\n               <div id="loadRecipe" class="ramen__load load">\n                   <button data-load class="load__button">\n                   Завантажити рецепт\n                     \t<svg class="load__icon">\n\t\t\t\t\t           <use xlink:href="img/icons/icons.svg#long-arrow-red"></use>\n\t\t\t\t            </svg>\n                   </button>\n               </div>\n                </div>\n            `;
-                const ramenInfo = `\n                       <div class="ramen__top">\n                         <div class="ramen__info">\n                           <h3 class="ramen__title">${title}</h3>\n                            <div class="ramen__icon icon-recipes">\n                              <svg class="icon-recipes__icon">\n                               <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                            </svg>  \n                         </div>\n                       </div>\n                     <div class="ramen__text">${text}</div>\n                    <div class="ramen__history">\n                        <p>${history}</p>\n                    </div>\n                      <div class="ramen__image">\n                        <img data-src="img/recipes/page_recipes/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n                     </div>\n            `;
+                const ramenInfo = `\n                       <div class="ramen__top">\n                         <div class="ramen__info">\n                           <div class="ramen__title">${title}</div>\n                            <div class="ramen__icon icon-recipes">\n                              <svg class="icon-recipes__icon">\n                               <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                            </svg>  \n                         </div>\n                       </div>\n                     <div class="ramen__text">${text}</div>\n                    <div class="ramen__history">\n                        <p>${history}</p>\n                    </div>\n                      <div class="ramen__image">\n                        <img data-src="img/recipes/page_recipes/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n                     </div>\n            `;
                 info.forEach((value => {
                     const ramenIcons = `\n              <div class="ramen__specification specification-recipes">\n               <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${hardIcon}" class="lazy" alt="personIcon">\n                  <span>${value.recipeComplexity}</span>\n              </div>\n              <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                  <span>${value.time}</span>\n              </div>\n                <div class="specification-recipes__item">\n                    <img data-src="img/recipes/${groupIcon}" class="lazy" alt="hardIcon">\n                  <span>${value.inPortion}</span>\n              </div>\n           </div>\n              `;
                     ramenInfoTemplate += articleRamenStart;
@@ -8606,8 +8628,22 @@
         const newsBlock = document.querySelector("#newsHome");
         const newsDate = document.querySelector("#date");
         const newsContent = document.querySelector("#content");
+        const preloaderNews = document.querySelector(".news__preloader");
+        let newsAdd = false;
         window.addEventListener("load", (e => {
-            if (newsPageBlock || newsBlock || newsDate && newsContent) getNews();
+            if (newsBlock) window.addEventListener("scroll", (() => {
+                const targetElement = document.querySelector(".page__news");
+                const topTargetElement = targetElement.getBoundingClientRect().top;
+                if (topTargetElement <= window.innerHeight / 2 && !newsAdd) {
+                    getNews();
+                    newsAdd = true;
+                    preloaderNews.remove();
+                }
+            }));
+            if (newsPageBlock || newsDate && newsContent) {
+                getNews();
+                preloaderNews.remove();
+            }
         }));
         let arrNews = [];
         async function getNews() {
@@ -8653,11 +8689,11 @@
             data.forEach((item => {
                 const id = item.id, url = item.url, image = item.image, logo = item.logo, title = item.title, date = item.date, type = item.type;
                 newsTemplate = "";
-                const newsItem = `\n                <article id="${id}" data-type="${type}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo" width="100%" height="100%" >\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}" width="100%" height="100%">\n                       <div class="swiper-lazy-preloader"></div>\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <h3 class="items-news__title">${title}</h3>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
+                const newsItem = `\n                <article id="${id}" data-type="${type}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo" width="100%" height="100%" >\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}" width="100%" height="100%">\n                       <div class="swiper-lazy-preloader"></div>\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <div class="items-news__title">${title}</div>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
                 newsTemplate += newsItem;
                 newsTemplate += `</article>`;
                 const newsActions_Date = `  \n                     <div class="news-actions__type news-type">${type}</div>\n                      <span>${date}</span>\n                   `;
-                const newsActions_ImageTitle = `\n               <div class="news-actions__image">\n                        <img src="img/news_and_actions/${image}" alt="${title}" width="100%" height="100%">\n                </div>\n                 <h3 class="news-actions__title">${title}</h3>\n            `;
+                const newsActions_ImageTitle = `\n               <div class="news-actions__image">\n                        <img src="img/news_and_actions/${image}" alt="${title}" width="100%" height="100%">\n                </div>\n                 <div class="news-actions__title">${title}</div>\n            `;
                 htmlDate.push(newsActions_Date);
                 htmlImage.push(newsActions_ImageTitle);
                 arrHomeNewsTemplate.push(newsTemplate);

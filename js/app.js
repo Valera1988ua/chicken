@@ -3604,12 +3604,12 @@
             }), 0);
         }
         var lazyload_min = __webpack_require__(732);
-        const lazyload_lazyMedia = new lazyload_min({
+        const lazyMedia = new lazyload_min({
             elements_selector: "[data-src],[data-srcset]",
             class_loaded: "_lazy-loaded",
             use_native: true
         });
-        lazyload_lazyMedia.update();
+        lazyMedia.update();
         let bodyLockStatus = true;
         let bodyLockToggle = (delay = 500) => {
             if (document.documentElement.classList.contains("lock")) bodyUnlock(delay); else general_functions_bodyLock(delay);
@@ -7032,7 +7032,7 @@
             }));
             if (recipesBlock) {
                 homeBlockRecipes(recipesArray, recipesBlock);
-                lazyload_lazyMedia.update();
+                lazyMedia.update();
                 recipesAction(recipesBlock);
             }
             if (recipesPageBlock) pageBlockRecipes(recipesArray);
@@ -7045,7 +7045,7 @@
             newArray = updateArray(arr);
             pagination(newArray, recipesPageBlock, numCards, 1);
             _slideDown(recipesPageBlock, 800);
-            lazyload_lazyMedia.update();
+            lazyMedia.update();
             loadProduct = true;
         }
         function homeBlockRecipes(arr, block) {
@@ -7199,7 +7199,7 @@
             function addElements(data, body) {
                 data.forEach((el => {
                     body.insertAdjacentHTML("beforeend", el);
-                    lazyload_lazyMedia.update();
+                    lazyMedia.update();
                 }));
                 const bodyElements = body;
                 recipesAction(bodyElements);
@@ -7352,7 +7352,7 @@
             const moreProducts = arr.slice(startIndex, startIndex + length);
             const htmlMoreProducts = moreProducts.join("");
             block.insertAdjacentHTML("beforeend", htmlMoreProducts);
-            lazyload_lazyMedia.update();
+            lazyMedia.update();
             spanClear(block);
             hideSmallImage(block);
             productsAction(block);
@@ -7360,7 +7360,7 @@
         function homeProductsAdd(arr, block) {
             const htmlProductsTemplate = arr.join("");
             block.insertAdjacentHTML("beforeend", htmlProductsTemplate);
-            lazyload_lazyMedia.update();
+            lazyMedia.update();
             spanClear(block);
             hideSmallImage(block);
             productsAction(block);
@@ -7653,21 +7653,23 @@
         const products_moreProduct = document.querySelector(".more-products__items");
         const preloaderProducts = document.querySelector(".products__preloader");
         window.addEventListener("load", (e => {
-            if (products_catalogProducts || products_moreProduct) ;
+            if (products_catalogProducts || products_moreProduct) getProducts();
+            const filterProductsCategory = document.querySelector("#filterCategory");
+            window.addEventListener("resize", (e => {
+                resizeTabs(filterProductsCategory);
+            }));
+            resizeTabs(filterProductsCategory);
+        }));
+        window.addEventListener("scroll", (() => {
             const targetElement = document.querySelector(".page__products");
-            if (productsBlock && targetElement) window.addEventListener("scroll", (() => {
+            if (productsBlock && targetElement) {
                 const topTargetElement = targetElement.getBoundingClientRect().top;
                 if (topTargetElement <= window.innerHeight / 2 && !productAdd) {
                     getProducts();
                     productAdd = true;
                     preloaderProducts.remove();
                 }
-            }));
-            const filterProductsCategory = document.querySelector("#filterCategory");
-            window.addEventListener("resize", (e => {
-                resizeTabs(filterProductsCategory);
-            }));
-            resizeTabs(filterProductsCategory);
+            }
         }));
         async function getProducts() {
             if (productsLoaded) return;
@@ -8454,10 +8456,98 @@
             spollerActive: "0",
             closeOutside: true
         });
+        const product_file = "json/products.json";
         const productPage = document.querySelector(".product-page__content");
+        let productsArray = [];
         window.addEventListener("load", (e => {
-            if (productPage) ;
+            if (productPage) getProductPageData();
         }));
+        async function getProductPageData() {
+            try {
+                const cacheKey = "productCache";
+                const cachedData = localStorage.getItem(cacheKey);
+                if (cachedData) {
+                    const data = JSON.parse(cachedData);
+                    console.log("Cached data:", data);
+                    productsArray = [];
+                    productsArray.push(...data.products);
+                    loadProductPage(productsArray);
+                    return;
+                }
+                const response = await fetch(product_file, {
+                    method: "GET",
+                    cache: "reload"
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem(cacheKey, JSON.stringify(data));
+                    console.log("Data:", data);
+                    productsArray = [];
+                    productsArray.push(...data.products);
+                    loadProductPage(productsArray);
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                console.log("Finally");
+            }
+        }
+        function loadProductPage(data) {
+            const arrayProducts = [];
+            data.forEach((item => {
+                const id = item.id, type = (item.url, item.type), product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
+                let productPageTemplate = "";
+                const productItem = `\n            <article id="${id}" data-type=${type} data-product=${product} class="content-product-page__item ${product}">\n              <div class="content-product-page__image">\n                  <img data-src="img/products/${image}" class="lazy" alt="${title}">\n                    <div class="preloader-image"></div>\n              </div>\n               <div class="content-product-page__info">\n                   <div class="content-product-page__small-image small-image-product">\n                     <div class="small-image-product__item">\n                       <span class="small-image-product__freez">${freezInfo ? info : ""}</span>\n                         <img data-src="img/products/${freez}" class="lazy" alt="${info ? info : "Іконка"}">\n                       </div>\n                      <div class="small-image-product__item">\n                        <span class="small-image-product__cold">${coldInfo ? info : ""}</span>\n                          <img data-src="img/products/${cold}" class="lazy" alt="${info ? info : "Іконка"}">\n                      </div>\n                    </div>\n                  <h2 class="content-product-page__title">${title}</h2> \n                    <div class="content-product-page__savings">\n                         <h3 class="content-product-page__savings-title">Умови зберігання</h3>\n                         <div class="content-product-page__savings-info">Термін зберігання:<span>${bestBefore}</span>\n                         <div class="content-product-page__savings-info">При температурі:<span>${storageFrom} ${storageTo ? storageTo : ""}</span>\n                   </div>\n                  </div>\n                   </div>\n                `;
+                energyValue.forEach((value => {
+                    const energyItem = ` \n                      <div class="content-product-page__nutritional">\n                        <h3 class="content-product-page__nutritional-title">Харчова цінність на 100 г продукту</h3>\n                           <div class="content-product-page__nutritional-info">Білки:<span>${value.protein}г;</span>\n                           <div class="content-product-page__nutritional-info">Жири:<span>${value.fat}г;</span>\n                           <div class="content-product-page__nutritional-info">Калорії:<span>${kkalCalc(value.kkal)}кДж/${value.kkal}ккал.</span>\n                      </div>\n                  </div >\n                  `;
+                    productPageTemplate += productItem;
+                    productPageTemplate += energyItem;
+                    productPageTemplate += `</article>`;
+                    arrayProducts.push(productPageTemplate);
+                }));
+            }));
+            if (productPage) onePageProduct(arrayProducts, productPage);
+        }
+        function onePageProduct(arr, block) {
+            const oneProduct = arr.slice(0, 1);
+            const oneHtmlProduct = oneProduct.join("");
+            block.insertAdjacentHTML("beforeend", oneHtmlProduct);
+            lazyMedia.update();
+            spanClearOneProduct(block);
+            hideSmallOneImage(block);
+        }
+        function kkalCalc(kkal) {
+            let power = 4.1868 * kkal;
+            return power.toFixed(1);
+        }
+        function spanClearOneProduct(productsBlock) {
+            const spanFreez = productsBlock.querySelector(".small-image-product__freez");
+            const spanCold = productsBlock.querySelector(".small-image-product__cold");
+            const parentFreez = spanFreez.closest(".small-image-product__item");
+            const imageFreez = parentFreez.querySelector("img");
+            if ("" === spanFreez.textContent) {
+                spanFreez.style.display = "none";
+                imageFreez.style.opacity = "0.5";
+            }
+            const parentCold = spanCold.closest(".small-image-product__item");
+            const imageCold = parentCold.querySelector("img");
+            if ("" === spanCold.textContent) {
+                spanCold.style.display = "none";
+                imageCold.style.opacity = "0.5";
+            }
+        }
+        function hideSmallOneImage(productsBlock) {
+            const product = productsBlock.querySelector(".content-product-page__item");
+            const {type} = product.dataset;
+            const smallImageBlock = product.querySelectorAll(".small-image-product img");
+            const smallImageBlockSpan = product.querySelectorAll(".small-image-product__item span");
+            smallImageBlock.forEach((img => {
+                if ("souce" === type || "stew" === type) img.remove();
+            }));
+            smallImageBlockSpan.forEach((span => {
+                if ("souce" === type || "stew" === type) span.remove();
+            }));
+        }
         const ramen_file = "json/recipes.json";
         const ramenInfoBlock = document.querySelector("#ramenInfo");
         window.addEventListener("load", (e => {
@@ -8514,7 +8604,7 @@
         }
         function addRecipe(arr, block) {
             block.insertAdjacentHTML("beforeend", arr);
-            lazyload_lazyMedia.update();
+            lazyMedia.update();
             downLoadFile();
         }
         function downLoadFile() {
@@ -8615,15 +8705,15 @@
             }));
             if (newsPageBlock) {
                 tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
-                lazyload_lazyMedia.update();
+                lazyMedia.update();
             }
             if (newsBlock) {
                 homeBlockNews(arrHomeNewsTemplate, newsBlock);
-                lazyload_lazyMedia.update();
+                lazyMedia.update();
             }
             if (newsDate && newsContent) {
                 newsPageHtml(htmlDate, htmlImage, newsDate, newsContent);
-                lazyload_lazyMedia.update();
+                lazyMedia.update();
             }
         }
         function newsPageHtml(arrDate, arrImage, blockDate, blockContent) {

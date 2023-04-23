@@ -3598,26 +3598,6 @@
                 document.documentElement.classList.add(className);
             }));
         }
-        let isMobile = {
-            Android: function() {
-                return navigator.userAgent.match(/Android/i);
-            },
-            BlackBerry: function() {
-                return navigator.userAgent.match(/BlackBerry/i);
-            },
-            iOS: function() {
-                return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-            },
-            Opera: function() {
-                return navigator.userAgent.match(/Opera Mini/i);
-            },
-            Windows: function() {
-                return navigator.userAgent.match(/IEMobile/i);
-            },
-            any: function() {
-                return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
-            }
-        };
         function FLS(message) {
             setTimeout((() => {
                 if (window.FLS) console.log(message);
@@ -8038,7 +8018,7 @@
             }));
         }
         function newsSlider() {
-            if (window.innerWidth <= 669.98 && null === newsSwiper && isMobile.any()) {
+            if (window.innerWidth <= 669.98 && null === newsSwiper) {
                 if (document.querySelector(".news__slider")) {
                     buildNewsSlider();
                     newsSwiper = new core(".news__slider", {
@@ -8052,19 +8032,10 @@
                         lazy: true
                     });
                 }
-            } else {
-                destroyNewsSlider();
-                const parentPreloader = document.querySelector(".news__slider");
-                if (parentPreloader) {
-                    const preloader = parentPreloader.querySelectorAll(".swiper-lazy-preloader");
-                    preloader.forEach((item => {
-                        item.style.display = "none";
-                    }));
-                }
-            }
+            } else destroyNewsSlider();
         }
         function recipesSlider() {
-            if (window.innerWidth <= 669.98 && null === recipesSwiper && isMobile.any()) {
+            if (window.innerWidth <= 669.98 && null === recipesSwiper) {
                 if (document.querySelector(".recipes__slider")) {
                     buildRecipesSlider();
                     recipesSwiper = new core(".recipes__slider", {
@@ -8078,16 +8049,7 @@
                         lazy: true
                     });
                 }
-            } else {
-                destroyRecipesSlider();
-                const parentPreloader = document.querySelector(".recipes__slider");
-                if (parentPreloader) {
-                    const preloader = parentPreloader.querySelectorAll(".swiper-lazy-preloader");
-                    preloader.forEach((item => {
-                        item.style.display = "none";
-                    }));
-                }
-            }
+            } else destroyRecipesSlider();
         }
         function moreProductSlider() {
             if (window.innerWidth <= 992 && null === productMoreSlider) {
@@ -8111,19 +8073,10 @@
                         }
                     });
                 }
-            } else {
-                destroyMoreProductSlider();
-                const parentPreloader = document.querySelector(".more-products__slider");
-                if (parentPreloader) {
-                    const preloader = parentPreloader.querySelectorAll(".swiper-lazy-preloader");
-                    preloader.forEach((item => {
-                        item.style.display = "none";
-                    }));
-                }
-            }
+            } else destroyMoreProductSlider();
         }
         function tabsSlider() {
-            if (window.innerWidth < 860.98 && null === tabsSwiper && isMobile.any() && null !== productSwiper) {
+            if (window.innerWidth < 860.98 && null === tabsSwiper && null !== productSwiper) {
                 if (document.querySelector(".tabs__slider")) {
                     buildTabsSlider();
                     tabsSwiper = new core(".tabs__slider", {

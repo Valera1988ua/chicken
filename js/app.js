@@ -7653,7 +7653,6 @@
         const products_catalogProducts = document.querySelector("#catalogProducts");
         const products_moreProduct = document.querySelector(".more-products__items");
         const preloaderProducts = document.querySelector(".products__preloader");
-        document.querySelector(".product-page__content");
         window.addEventListener("load", (e => {
             if (products_catalogProducts || products_moreProduct) getProducts();
             window.addEventListener("scroll", (() => {
@@ -7685,7 +7684,7 @@
                     products.push(...data.products);
                     console.log("Cached data:", data);
                     loadProducts(products);
-                    if (true === sliderLoad && window.innerWidth < 991.98) {
+                    if (sliderLoad = true && window.innerWidth < 991.98) {
                         productSlider();
                         sliderLoad = false;
                     }
@@ -7703,11 +7702,11 @@
                         localStorage.setItem(cacheKey, JSON.stringify(data));
                         console.log("Data:", data);
                         products.push(...data.products);
-                        if (true === sliderLoad && window.innerWidth < 991.98) {
+                        loadProducts(products);
+                        if (sliderLoad = true && window.innerWidth < 991.98) {
                             productSlider();
                             sliderLoad = false;
                         }
-                        loadProducts(products);
                         tabsSlider();
                         productsLoaded = true;
                     } else throw new Error("Response Products not OK");
@@ -8460,10 +8459,10 @@
             closeOutside: true
         });
         const product_file = "json/products.json";
-        const product_productPage = document.querySelector(".product-page__content");
+        const productPage = document.querySelector(".product-page__content");
         let productsArray = [];
         window.addEventListener("load", (e => {
-            if (product_productPage) getProductPageData();
+            if (productPage) getProductPageData();
         }));
         async function getProductPageData() {
             try {
@@ -8510,7 +8509,7 @@
                     arrayProducts.push(productPageTemplate);
                 }));
             }));
-            if (product_productPage) onePageProduct(arrayProducts, product_productPage);
+            if (productPage) onePageProduct(arrayProducts, productPage);
         }
         function onePageProduct(arr, block) {
             const oneProduct = arr.slice(0, 1);

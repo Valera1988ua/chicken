@@ -7069,13 +7069,14 @@
         const recipesBlock = document.querySelector("#recipesHome");
         const recipesPageBlock = document.querySelector("#all-recipes");
         const preloaderRecipes = document.querySelector(".recipes__preloader");
+        document.querySelector(".more-recipes__block");
         window.addEventListener("load", (() => {
             if (recipesPageBlock) getRecipes();
         }));
         window.addEventListener("scroll", initRecipes);
         window.addEventListener("resize", getRecipes);
         async function initRecipes() {
-            const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+            const targetElement = document.querySelector(".page__recipes") || document.querySelector(".more-recipes");
             if (true === addRecipes) return;
             if (targetElement.classList.contains("_watcher-view") && !addRecipes) {
                 await getRecipes();
@@ -7114,6 +7115,7 @@
             }
         }
         const recipesArray = [];
+        let createRecipes = false;
         async function loadRecipes(data) {
             data.recipes.forEach((item => {
                 const id = item.id, way = item.way, type = item.type, meat = item.meat, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
@@ -7132,6 +7134,7 @@
                 recipesArray.push(recipesTemplate);
             }));
             if (recipesBlock) {
+                if (true === createRecipes) return;
                 homeBlockRecipes(recipesArray, recipesBlock);
                 lazyMedia.update();
                 recipesAction(recipesBlock);
@@ -7153,6 +7156,7 @@
             const htmlRecipes = arr.slice(0, 4);
             const htmlRecipesTemplate = htmlRecipes.join("");
             block.insertAdjacentHTML("beforeend", htmlRecipesTemplate);
+            createRecipes = true;
         }
         function recipesAction(recipesBlock) {
             const recipesArray = recipesBlock.querySelectorAll(".items-recipes__item");
@@ -7845,6 +7849,7 @@
                         if (title.classList.contains("_tab-active") || tabsElement.classList.contains("_tab-active")) return;
                         productsLoaded = false;
                         setTimeout((() => {
+                            productAdd = false;
                             getProducts();
                         }), 0);
                         const spollers = title.closest("[data-tabs]").querySelectorAll("[data-spollers]");
@@ -7890,6 +7895,7 @@
                         }
                         clearBlock(productsBlock);
                         setTimeout((() => {
+                            productAdd = false;
                             getProducts();
                         }), 500);
                         remove_Class();

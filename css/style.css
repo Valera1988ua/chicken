@@ -872,7 +872,7 @@ body::after {
 .preloader-block::before {
   content: "";
   position: absolute;
-  left: 50%;
+  left: 55%;
   top: 50%;
   width: 2.625rem;
   height: 2.625rem;
@@ -1040,7 +1040,7 @@ body::after {
 .body-header__mobile {
   display: none;
   position: absolute;
-  top: 30%;
+  top: 20%;
   right: 0;
 }
 

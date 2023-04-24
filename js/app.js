@@ -7064,28 +7064,32 @@
             const spanCold = spanBlock.querySelector(".small-image__cold");
             if (target.closest(".items-product") || target.closest(".products-catalog__item") || target.closest(".more-products__items")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
         }
-        const file = "json/recipes.json";
         let addRecipes = false;
+        let firstLoad = false;
         const recipesBlock = document.querySelector("#recipesHome");
         const recipesPageBlock = document.querySelector("#all-recipes");
         const preloaderRecipes = document.querySelector(".recipes__preloader");
-        document.querySelector(".more-recipes__block");
-        window.addEventListener("load", (() => {
-            if (recipesPageBlock) getRecipes();
-        }));
-        window.addEventListener("scroll", initRecipes);
+        const pageRecipes = document.querySelector(".page__recipes");
+        const moreRecipes = document.querySelector(".more-recipes");
+        if (recipesPageBlock) getRecipes();
+        if (pageRecipes || moreRecipes) {
+            window.addEventListener("scroll", initRecipes);
+            initRecipes();
+        }
         window.addEventListener("resize", getRecipes);
         async function initRecipes() {
             const targetElement = document.querySelector(".page__recipes") || document.querySelector(".more-recipes");
-            if (true === addRecipes) return;
+            if (true == addRecipes) return;
             if (targetElement.classList.contains("_watcher-view") && !addRecipes) {
+                firstLoad = true;
                 await getRecipes();
-                addRecipes = true;
                 preloaderRecipes.remove();
+                addRecipes = true;
             }
         }
         async function getRecipes() {
-            if (addRecipes) return;
+            if (addRecipes || !firstLoad) return;
+            const file = `json/recipes.json?version=${(new Date).getTime()}`;
             try {
                 const cacheKey = "recipesCache";
                 const cachedData = localStorage.getItem(cacheKey);
@@ -7135,15 +7139,15 @@
             }));
             if (recipesBlock) {
                 if (true === createRecipes) return;
-                homeBlockRecipes(recipesArray, recipesBlock);
+                await homeBlockRecipes(recipesArray, recipesBlock);
                 lazyMedia.update();
                 recipesAction(recipesBlock);
             }
-            if (recipesPageBlock) pageBlockRecipes(recipesArray);
+            if (recipesPageBlock) await pageBlockRecipes(recipesArray);
         }
         let numCards = 4;
         let loadProduct = false;
-        function pageBlockRecipes(arr) {
+        async function pageBlockRecipes(arr) {
             let newArray = [];
             if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
             newArray = updateArray(arr);
@@ -7152,7 +7156,7 @@
             lazyMedia.update();
             loadProduct = true;
         }
-        function homeBlockRecipes(arr, block) {
+        async function homeBlockRecipes(arr, block) {
             const htmlRecipes = arr.slice(0, 4);
             const htmlRecipesTemplate = htmlRecipes.join("");
             block.insertAdjacentHTML("beforeend", htmlRecipesTemplate);
@@ -7417,7 +7421,7 @@
         let catalogProductsChicken = [];
         let catalogProductsSouce = [];
         let catalogProductsStew = [];
-        function createHTML(products) {
+        async function createHTML(products) {
             const homeProducts = [];
             catalogProductsChicken = [];
             catalogProductsSouce = [];
@@ -7437,21 +7441,21 @@
                     if ("stew" === type) catalogProductsStew.push(productTemplate);
                 }));
             }));
-            if (productsHome) homeProductsAdd(homeProducts, productsHome);
+            if (productsHome) await homeProductsAdd(homeProducts, productsHome);
             if (catalogProducts) {
-                catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
+                await catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
                 const allProductsCategory = document.querySelector("#allProducts");
                 window.addEventListener("resize", (e => {
                     resizeTabs(allProductsCategory);
                 }));
                 resizeTabs(allProductsCategory);
             }
-            if (moreProduct) moreProductAdd(homeProducts, moreProduct, length);
+            if (moreProduct) await moreProductAdd(homeProducts, moreProduct, length);
         }
         function getRandomIndex(maxIndex, length) {
             return Math.floor(Math.random() * (maxIndex - length + 1));
         }
-        function moreProductAdd(arr, block) {
+        async function moreProductAdd(arr, block) {
             const length = 3;
             const startIndex = getRandomIndex(arr.length, length);
             const moreProducts = arr.slice(startIndex, startIndex + length);
@@ -7462,7 +7466,7 @@
             hideSmallImage(block);
             productsAction(block);
         }
-        function homeProductsAdd(arr, block) {
+        async function homeProductsAdd(arr, block) {
             const htmlProductsTemplate = arr.join("");
             block.insertAdjacentHTML("beforeend", htmlProductsTemplate);
             lazyMedia.update();
@@ -7476,7 +7480,7 @@
         let newArrayChicken = [];
         let newArraySouce = [];
         let newArrayStew = [];
-        function catalogProductsAdd(arrChicken, arrSouce, arrStew) {
+        async function catalogProductsAdd(arrChicken, arrSouce, arrStew) {
             const newsPageBlock = document.querySelector("#catalogProducts");
             const tabsBody = newsPageBlock.querySelectorAll(".tabs__body");
             const tabsTitle = document.querySelectorAll(".tabs__title");
@@ -7753,42 +7757,48 @@
         let sliderLoad = false;
         let products = [];
         let productAdd = false;
+        let products_firstLoad = false;
         const productsBlock = document.querySelector("#products");
         const products_catalogProducts = document.querySelector("#catalogProducts");
         const products_moreProduct = document.querySelector(".more-products__items");
         const preloaderProducts = document.querySelector(".products__preloader");
-        window.addEventListener("load", (() => {
-            if (products_catalogProducts || products_moreProduct) getProducts();
-            const filterProductsCategory = document.querySelector("#filterCategory");
-            window.addEventListener("resize", (e => {
-                resizeTabs(filterProductsCategory);
-            }));
+        const pageProducts = document.querySelector(".page__products");
+        const moreProductsPage = document.querySelector(".more-products");
+        if (products_catalogProducts) getProducts();
+        const filterProductsCategory = document.querySelector("#filterCategory");
+        window.addEventListener("resize", (e => {
             resizeTabs(filterProductsCategory);
         }));
-        window.addEventListener("scroll", initProduct);
+        resizeTabs(filterProductsCategory);
+        if (pageProducts || moreProductsPage) {
+            window.addEventListener("scroll", initProduct);
+            initProduct();
+        }
         window.addEventListener("resize", getProducts);
         async function initProduct() {
-            const targetElement = document.querySelector(".page__products");
+            const targetElement = document.querySelector(".page__products") || document.querySelector(".product__more");
             if (true === productAdd) return;
             if (productsBlock && targetElement.classList.contains("_watcher-view") && !productAdd) {
+                products_firstLoad = true;
                 await getProducts();
-                productAdd = true;
                 preloaderProducts.remove();
+                productAdd = true;
             }
         }
         async function getProducts() {
             if (productsLoaded || productAdd) return;
-            const file = "json/products.json";
+            if (!products_firstLoad) return;
+            const file = `json/products.json?version=${(new Date).getTime()}`;
             try {
                 const cacheKey = "productsCache";
                 const cachedData = localStorage.getItem(cacheKey);
                 if (cachedData) {
                     const data = JSON.parse(cachedData);
-                    products = [];
-                    products.push(...data.products);
                     console.log("Cached data:", data);
+                    products = [];
+                    products = [ ...data.products ];
                     await loadProducts(products);
-                    if (sliderLoad = true && window.innerWidth < 991.98) {
+                    if (sliderLoad = true && pageProducts && window.innerWidth < 991.98) {
                         await productSlider();
                         sliderLoad = false;
                     }
@@ -7805,9 +7815,9 @@
                         const data = await response.json();
                         localStorage.setItem(cacheKey, JSON.stringify(data));
                         console.log("Data:", data);
-                        products.push(...data.products);
+                        products = [ ...data.products ];
                         await loadProducts(products);
-                        if (sliderLoad = true && window.innerWidth < 991.98) {
+                        if (sliderLoad = true && pageProducts && window.innerWidth < 991.98) {
                             await productSlider();
                             sliderLoad = false;
                         }
@@ -7831,12 +7841,12 @@
         }
         async function loadProducts(data) {
             if (productsBlock) {
-                createHTML(data);
+                await createHTML(data);
                 productsFilter();
             }
-            if (products_catalogProducts) createHTML(data);
+            if (products_catalogProducts) await createHTML(data);
             if (products_moreProduct) {
-                createHTML(data);
+                await createHTML(data);
                 moreProductSlider();
             }
         }
@@ -7996,14 +8006,14 @@
         }
         window.addEventListener("load", (function(e) {
             initSliders();
-            window.addEventListener("resize", (e => {
-                bigBannerSlider();
-                productSlider();
-                tabsSlider();
-                recipesSlider();
-                newsSlider();
-                moreProductSlider();
-            }));
+        }));
+        window.addEventListener("resize", (e => {
+            bigBannerSlider();
+            productSlider();
+            tabsSlider();
+            recipesSlider();
+            newsSlider();
+            moreProductSlider();
         }));
         function aboutSlider() {
             if (document.querySelector(".cycle__slider")) aboutSwiper = new core(".cycle__slider", {
@@ -8109,7 +8119,7 @@
                 for (const slide of slider.children) slide.classList.add("swiper-slide");
             }));
         }
-        function buildProductSlider() {
+        async function buildProductSlider() {
             let sliders = document.querySelectorAll('[class*="__product-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
@@ -8133,7 +8143,7 @@
                 }
             }
         }
-        function buildRecipesSlider() {
+        async function buildRecipesSlider() {
             let sliders = document.querySelectorAll('[class*="__recipes-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
@@ -8141,7 +8151,7 @@
                 for (const slide of slider.children) slide.classList.add("swiper-slide");
             }));
         }
-        function buildNewsSlider() {
+        async function buildNewsSlider() {
             let sliders = document.querySelectorAll('[class*="__news-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
@@ -8152,7 +8162,7 @@
         async function newsSlider() {
             if (window.innerWidth <= 669.98 && null === newsSwiper) {
                 if (document.querySelector(".news__slider")) {
-                    buildNewsSlider();
+                    await buildNewsSlider();
                     newsSwiper = new core(".news__slider", {
                         observer: true,
                         observeParents: true,
@@ -8169,7 +8179,7 @@
         async function recipesSlider() {
             if (window.innerWidth <= 669.98 && null === recipesSwiper) {
                 if (document.querySelector(".recipes__slider")) {
-                    buildRecipesSlider();
+                    await buildRecipesSlider();
                     recipesSwiper = new core(".recipes__slider", {
                         observer: true,
                         observeParents: true,
@@ -8270,7 +8280,7 @@
         async function productSlider() {
             if (window.innerWidth < 991.98 && null === productSwiper || sliderLoad) {
                 if (document.querySelector(".products__slider")) {
-                    buildProductSlider();
+                    await buildProductSlider();
                     productSwiper = new core(".products__slider", {
                         allowTouchMove: true,
                         observer: true,
@@ -8564,7 +8574,7 @@
             spollerActive: "0",
             closeOutside: true
         });
-        const product_file = "json/products.json";
+        const file = "json/products.json";
         const productPage = document.querySelector(".product-page__content");
         let productsArray = [];
         window.addEventListener("load", (e => {
@@ -8582,7 +8592,7 @@
                     loadProductPage(productsArray);
                     return;
                 } else {
-                    const response = await fetch(product_file, {
+                    const response = await fetch(file, {
                         method: "GET",
                         cache: "reload"
                     });
@@ -8741,35 +8751,42 @@
         const newsDate = document.querySelector("#date");
         const newsContent = document.querySelector("#content");
         const preloaderNews = document.querySelector(".news__preloader");
+        const pageNews = document.querySelector(".page__products");
+        const moreNews = document.querySelector(".more-news");
+        const allNews = document.querySelector(".all-news");
         let newsAdd = false;
         let arrNews = [];
-        window.addEventListener("load", (() => {
-            if (newsPageBlock || newsDate && newsContent) {
-                getNews();
-                if (newsDate && newsContent) preloaderNews.remove();
-            }
-        }));
-        window.addEventListener("scroll", initNews);
+        let news_firstLoad = false;
+        if (newsDate && newsContent) {
+            getNews();
+            preloaderNews.remove();
+        }
+        if (pageNews || moreNews) {
+            window.addEventListener("scroll", initNews);
+            initNews();
+        }
+        if (allNews) getNews();
         window.addEventListener("resize", getNews);
         async function initNews() {
             const targetElement = document.querySelector(".page__news");
             if (true === newsAdd) return;
             if (newsBlock && targetElement) if (targetElement.classList.contains("_watcher-view") && !newsAdd) {
+                news_firstLoad = true;
                 await getNews();
-                newsAdd = true;
                 preloaderNews.remove();
+                newsAdd = true;
             }
         }
         async function getNews() {
-            if (newsAdd) return;
+            if (newsAdd || !news_firstLoad) return;
             try {
-                const file = "json/news_and_actions.json";
+                const file = `json/news_and_actions.json?version=${(new Date).getTime()}`;
                 const cacheKey = "newsCache";
                 const cachedData = localStorage.getItem(cacheKey);
                 if (cachedData) {
                     const data = JSON.parse(cachedData);
                     arrNews = [];
-                    arrNews.push(...data.news);
+                    arrNews = [ ...data.news ];
                     console.log("Cached data:", data);
                     await loadNews(arrNews);
                     if (window.innerWidth <= 669.98) await newsSlider();
@@ -8782,7 +8799,7 @@
                     if (response.ok) {
                         const data = await response.json();
                         arrNews = [];
-                        arrNews.push(...data.news);
+                        arrNews = [ ...data.news ];
                         localStorage.setItem(cacheKey, JSON.stringify(data));
                         console.log("Data:", data);
                         await loadNews(arrNews);
@@ -8795,7 +8812,6 @@
                 console.log("Finally");
             }
         }
-        let createNews = false;
         async function loadNews(data) {
             const htmlDate = [];
             const htmlImage = [];
@@ -8817,21 +8833,23 @@
                 if ("#Новина" === type) arrNewsTemplate.push(newsTemplate);
                 if ("#Акція" === type) arrActionsTemplate.push(newsTemplate);
             }));
-            if (newsBlock) {
-                if (true === createNews) return;
-                homeBlockNews(arrHomeNewsTemplate, newsBlock);
+            if (newsBlock && pageNews || newsBlock && moreNews) {
+                await homeBlockNews(arrHomeNewsTemplate, newsBlock);
                 lazyMedia.update();
+                newsAdd = true;
             }
             if (newsPageBlock) {
-                tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
+                await tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
                 lazyMedia.update();
+                newsAdd = true;
             }
             if (newsDate && newsContent) {
-                newsPageHtml(htmlDate, htmlImage, newsDate, newsContent);
+                await newsPageHtml(htmlDate, htmlImage, newsDate, newsContent);
                 lazyMedia.update();
+                newsAdd = true;
             }
         }
-        function newsPageHtml(arrDate, arrImage, blockDate, blockContent) {
+        async function newsPageHtml(arrDate, arrImage, blockDate, blockContent) {
             const htmlDateArray = arrDate.slice(3, 4);
             const htmlDateTemplate = htmlDateArray.join("");
             const htmlImageArray = arrImage.slice(3, 4);
@@ -8839,11 +8857,10 @@
             blockDate.insertAdjacentHTML("beforeend", htmlDateTemplate);
             blockContent.insertAdjacentHTML("beforeend", htmlImageTemplate);
         }
-        function homeBlockNews(arr, block) {
+        async function homeBlockNews(arr, block) {
             const htmlNews = arr.slice(0, 4);
             const htmlNewsTemplate = htmlNews.join("");
             block.insertAdjacentHTML("beforeend", htmlNewsTemplate);
-            createNews = true;
         }
         function news_tabsClick() {
             if (newsPageBlock) {
@@ -8853,6 +8870,7 @@
                         const tabsElement = e.target.closest(".tabs__title");
                         if (title.classList.contains("_tab-active") || tabsElement.classList.contains("_tab-active")) return;
                         setTimeout((() => {
+                            newsAdd = false;
                             getNews();
                         }), 0);
                     }));
@@ -8860,7 +8878,7 @@
             }
         }
         news_tabsClick();
-        function tabsBodyHtml(allArr, arrNews, arrActions) {
+        async function tabsBodyHtml(allArr, arrNews, arrActions) {
             const newsPageBlock = document.querySelector("#news-actions");
             const tabsBody = newsPageBlock.querySelectorAll(".tabs__body");
             const tabsTitle = document.querySelectorAll(".tabs__title");

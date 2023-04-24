@@ -6,8 +6,8 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<meta http-equiv="Cache-Control" content="max-age=3600, must-revalidate" />
-	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230424180541" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.min.css?_v=20230424180541">
+	<link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Roboto+Mono:wght@400;500;600&display=swap&_v=20230425002433" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.min.css?_v=20230425002433">
 	<link rel="shortcut icon" href="favicon.ico">
 	<!--<meta name="robots" content="noindex, nofollow">-->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,7 +55,7 @@
 						</div>
 					</div>
 					<div class="product-page__content content-product-page"></div>
-					<div class="product__more more-products">
+					<div data-watch-threshold="0.1" data-watch-once data-watch class="product__more more-products">
 						<h3 class="more-products__title">Вас також може зацікавити</h3>
 						<div class="more-products__slider">
 							<div class="more-products__items more-products__more-swiper"></div>
@@ -381,13 +381,16 @@
 					}
 
 					function addLoadedClass() {
-						htmlDocument.classList.add('loaded');
-						htmlDocument.classList.remove('lock');
-						htmlDocument.classList.remove('loading');
-						setInterval(() => {
-							preloader.remove();
-							preloaderContainer.remove();
-						}, 100);
+						setTimeout(() => {
+							htmlDocument.classList.add('loaded');
+							htmlDocument.classList.remove('lock');
+							htmlDocument.classList.remove('loading');
+							setInterval(() => {
+								preloader.remove();
+								preloaderContainer.remove();
+							}, 100);
+						}, 1500)
+
 					}
 				} else {
 					preloaderContainer.remove();
@@ -396,7 +399,7 @@
 			preloader();
 		</script>
 	</div>
-	<script async src="js/app.min.js?_v=20230424180541"></script>
+	<script defer src="js/app.min.js?_v=20230425002433"></script>
 </body>
 
 </html>

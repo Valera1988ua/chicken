@@ -7072,25 +7072,27 @@
         window.addEventListener("load", (() => {
             if (recipesPageBlock) getRecipes();
         }));
-        window.addEventListener("scroll", (() => {
+        window.addEventListener("scroll", initRecipes);
+        window.addEventListener("resize", getRecipes);
+        async function initRecipes() {
             const targetElement = document.querySelector(".page__recipes") || document.querySelector(".recipes__items");
+            if (true === addRecipes) return;
             if (targetElement.classList.contains("_watcher-view") && !addRecipes) {
-                setTimeout((() => {
-                    getRecipes();
-                }), 500);
+                await getRecipes();
                 addRecipes = true;
                 preloaderRecipes.remove();
             }
-        }));
+        }
         async function getRecipes() {
+            if (addRecipes) return;
             try {
                 const cacheKey = "recipesCache";
                 const cachedData = localStorage.getItem(cacheKey);
                 if (cachedData) {
                     const data = JSON.parse(cachedData);
                     console.log("Cached data:", data);
-                    loadRecipes(data);
-                    recipesSlider();
+                    await loadRecipes(data);
+                    if (window.innerWidth <= 669.98) await recipesSlider();
                     return;
                 } else {
                     const response = await fetch(file, {
@@ -7101,8 +7103,8 @@
                         const data = await response.json();
                         localStorage.setItem(cacheKey, JSON.stringify(data));
                         console.log("Data:", data);
-                        loadRecipes(data);
-                        recipesSlider();
+                        await loadRecipes(data);
+                        if (window.innerWidth <= 669.98) await recipesSlider();
                     } else throw new Error("Response Recipes not OK");
                 }
             } catch (err) {
@@ -7112,7 +7114,7 @@
             }
         }
         const recipesArray = [];
-        function loadRecipes(data) {
+        async function loadRecipes(data) {
             data.recipes.forEach((item => {
                 const id = item.id, way = item.way, type = item.type, meat = item.meat, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
                 let recipesTemplate = "";
@@ -7759,18 +7761,19 @@
             }));
             resizeTabs(filterProductsCategory);
         }));
-        window.addEventListener("scroll", (() => {
+        window.addEventListener("scroll", initProduct);
+        window.addEventListener("resize", getProducts);
+        async function initProduct() {
             const targetElement = document.querySelector(".page__products");
-            if (targetElement.classList.contains("_watcher-view") && !productAdd) {
-                setTimeout((() => {
-                    getProducts();
-                }), 500);
+            if (true === productAdd) return;
+            if (productsBlock && targetElement.classList.contains("_watcher-view") && !productAdd) {
+                await getProducts();
                 productAdd = true;
                 preloaderProducts.remove();
             }
-        }));
+        }
         async function getProducts() {
-            if (productsLoaded) return;
+            if (productsLoaded || productAdd) return;
             const file = "json/products.json";
             try {
                 const cacheKey = "productsCache";
@@ -7780,9 +7783,9 @@
                     products = [];
                     products.push(...data.products);
                     console.log("Cached data:", data);
-                    loadProducts(products);
+                    await loadProducts(products);
                     if (sliderLoad = true && window.innerWidth < 991.98) {
-                        productSlider();
+                        await productSlider();
                         sliderLoad = false;
                     }
                     tabsSlider();
@@ -7799,9 +7802,9 @@
                         localStorage.setItem(cacheKey, JSON.stringify(data));
                         console.log("Data:", data);
                         products.push(...data.products);
-                        loadProducts(products);
+                        await loadProducts(products);
                         if (sliderLoad = true && window.innerWidth < 991.98) {
-                            productSlider();
+                            await productSlider();
                             sliderLoad = false;
                         }
                         tabsSlider();
@@ -7822,7 +7825,7 @@
                 }), 500);
             }));
         }
-        function loadProducts(data) {
+        async function loadProducts(data) {
             if (productsBlock) {
                 createHTML(data);
                 productsFilter();
@@ -8140,7 +8143,7 @@
                 for (const slide of slider.children) slide.classList.add("swiper-slide");
             }));
         }
-        function newsSlider() {
+        async function newsSlider() {
             if (window.innerWidth <= 669.98 && null === newsSwiper) {
                 if (document.querySelector(".news__slider")) {
                     buildNewsSlider();
@@ -8157,7 +8160,7 @@
                 }
             } else destroyNewsSlider();
         }
-        function recipesSlider() {
+        async function recipesSlider() {
             if (window.innerWidth <= 669.98 && null === recipesSwiper) {
                 if (document.querySelector(".recipes__slider")) {
                     buildRecipesSlider();
@@ -8258,7 +8261,7 @@
                 }
             } else destroyBannerSwiper();
         }
-        function productSlider() {
+        async function productSlider() {
             if (window.innerWidth < 991.98 && null === productSwiper || sliderLoad) {
                 if (document.querySelector(".products__slider")) {
                     buildProductSlider();
@@ -8740,17 +8743,19 @@
                 if (newsDate && newsContent) preloaderNews.remove();
             }
         }));
-        window.addEventListener("scroll", (() => {
+        window.addEventListener("scroll", initNews);
+        window.addEventListener("resize", getNews);
+        async function initNews() {
             const targetElement = document.querySelector(".page__news");
-            if (targetElement.classList.contains("_watcher-view") && !newsAdd) {
-                setTimeout((() => {
-                    getNews();
-                }), 500);
+            if (true === newsAdd) return;
+            if (newsBlock && targetElement) if (targetElement.classList.contains("_watcher-view") && !newsAdd) {
+                await getNews();
                 newsAdd = true;
                 preloaderNews.remove();
             }
-        }));
+        }
         async function getNews() {
+            if (newsAdd) return;
             try {
                 const file = "json/news_and_actions.json";
                 const cacheKey = "newsCache";
@@ -8760,8 +8765,8 @@
                     arrNews = [];
                     arrNews.push(...data.news);
                     console.log("Cached data:", data);
-                    loadNews(arrNews);
-                    newsSlider();
+                    await loadNews(arrNews);
+                    if (window.innerWidth <= 669.98) await newsSlider();
                     return;
                 } else {
                     const response = await fetch(file, {
@@ -8774,8 +8779,8 @@
                         arrNews.push(...data.news);
                         localStorage.setItem(cacheKey, JSON.stringify(data));
                         console.log("Data:", data);
-                        loadNews(arrNews);
-                        newsSlider();
+                        await loadNews(arrNews);
+                        if (window.innerWidth <= 669.98) await newsSlider();
                     } else throw new Error("Response News not OK");
                 }
             } catch (err) {
@@ -8784,7 +8789,8 @@
                 console.log("Finally");
             }
         }
-        function loadNews(data) {
+        let createNews = false;
+        async function loadNews(data) {
             const htmlDate = [];
             const htmlImage = [];
             const arrHomeNewsTemplate = [];
@@ -8805,12 +8811,13 @@
                 if ("#Новина" === type) arrNewsTemplate.push(newsTemplate);
                 if ("#Акція" === type) arrActionsTemplate.push(newsTemplate);
             }));
-            if (newsPageBlock) {
-                tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
+            if (newsBlock) {
+                if (true === createNews) return;
+                homeBlockNews(arrHomeNewsTemplate, newsBlock);
                 lazyMedia.update();
             }
-            if (newsBlock) {
-                homeBlockNews(arrHomeNewsTemplate, newsBlock);
+            if (newsPageBlock) {
+                tabsBodyHtml(arrHomeNewsTemplate, arrNewsTemplate, arrActionsTemplate);
                 lazyMedia.update();
             }
             if (newsDate && newsContent) {
@@ -8830,6 +8837,7 @@
             const htmlNews = arr.slice(0, 4);
             const htmlNewsTemplate = htmlNews.join("");
             block.insertAdjacentHTML("beforeend", htmlNewsTemplate);
+            createNews = true;
         }
         function news_tabsClick() {
             if (newsPageBlock) {

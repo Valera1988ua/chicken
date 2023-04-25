@@ -7065,39 +7065,40 @@
             if (target.closest(".items-product") || target.closest(".products-catalog__item") || target.closest(".more-products__items")) if (spanCold) if ("" == !spanCold.textContent) if (!spanBlock.classList.contains("revers")) spanBlock.classList.add("revers"); else spanBlock.classList.remove("revers");
         }
         let addRecipes = false;
-        let firstLoad = false;
         const recipesBlock = document.querySelector("#recipesHome");
         const recipesPageBlock = document.querySelector("#all-recipes");
         const preloaderRecipes = document.querySelector(".recipes__preloader");
         const pageRecipes = document.querySelector(".page__recipes");
         const moreRecipes = document.querySelector(".more-recipes");
-        if (recipesPageBlock) getRecipes();
-        if (pageRecipes || moreRecipes) {
-            window.addEventListener("scroll", initRecipes);
-            initRecipes();
+        window.addEventListener("load", (() => {
+            if (recipesPageBlock) getRecipes();
+        }));
+        if (pageRecipes || moreRecipes) window.addEventListener("scroll", initRecipes);
+        async function sliderInitRecipes() {
+            if (window.innerWidth <= 669.98 && pageRecipes.classList.contains("_watcher-view")) await recipesSlider();
         }
-        window.addEventListener("resize", getRecipes);
-        async function initRecipes() {
+        function initRecipes() {
             const targetElement = document.querySelector(".page__recipes") || document.querySelector(".more-recipes");
             if (true == addRecipes) return;
             if (targetElement.classList.contains("_watcher-view") && !addRecipes) {
-                firstLoad = true;
-                await getRecipes();
+                getRecipes();
                 preloaderRecipes.remove();
                 addRecipes = true;
             }
         }
         async function getRecipes() {
-            if (addRecipes || !firstLoad) return;
+            if (addRecipes) return;
             const file = `json/recipes.json?version=${(new Date).getTime()}`;
             try {
                 const cacheKey = "recipesCache";
                 const cachedData = localStorage.getItem(cacheKey);
                 if (cachedData) {
                     const data = JSON.parse(cachedData);
-                    console.log("Cached data:", data);
+                    console.log("Cached data recipes:", data);
                     await loadRecipes(data);
-                    if (window.innerWidth <= 669.98) await recipesSlider();
+                    window.addEventListener("resize", sliderInitRecipes);
+                    window.addEventListener("scroll", sliderInitRecipes);
+                    await sliderInitRecipes();
                     return;
                 } else {
                     const response = await fetch(file, {
@@ -7107,9 +7108,11 @@
                     if (response.ok) {
                         const data = await response.json();
                         localStorage.setItem(cacheKey, JSON.stringify(data));
-                        console.log("Data:", data);
+                        console.log("Data recipes:", data);
                         await loadRecipes(data);
-                        if (window.innerWidth <= 669.98) await recipesSlider();
+                        window.addEventListener("resize", sliderInitRecipes);
+                        window.addEventListener("scroll", sliderInitRecipes);
+                        await sliderInitRecipes();
                     } else throw new Error("Response Recipes not OK");
                 }
             } catch (err) {
@@ -7124,7 +7127,7 @@
             data.recipes.forEach((item => {
                 const id = item.id, way = item.way, type = item.type, meat = item.meat, url = item.url, image = item.image, title = item.title, text = item.text, info = item.info, timeIcon = item.timeIcon, personIcon = item.personIcon, hardIcon = item.hardIcon, pepperIcon = item.spicinessIcon, energyText = item.energyText, energyValue = item.energyValue;
                 let recipesTemplate = "";
-                const recipesItem = `\n           <article id="${id}" data-way=${way} data-type="${type}" data-meat=${meat} class="items-recipes__item">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n                  <div class="swiper-lazy-preloader"></div>\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <div class="items-recipes__title">${title}</div>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
+                const recipesItem = `\n           <article id="${id}" data-way=${way} data-type="${type}" data-meat=${meat} class="items-recipes__item swiper-slide">\n             <div class="items-recipes__image">\n               <a href="${url}">\n                  <img data-src="img/recipes/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n                  <div class="swiper-lazy-preloader"></div>\n               </a>\n           </div>\n          <div class="items-recipes__info">\n            <div class="items-recipes__header">\n            <div class="items-recipes__title">${title}</div>\n             <div class="items-recipes__icon icon-recipes">\n                   <svg class="icon-recipes__icon">\n                       <use xlink:href="img/icons/icons.svg#${pepperIcon}"></use>\n                  </svg>  \n               </div>\n            </div>\n            <div class="items-recipes__text">${text}</div>\n      `;
                 info.forEach((value => {
                     const specificationRecipes = `\n                   <div class="items-recipes__specification specification-recipes">\n                   <div class="specification-recipes__item">\n                   <svg>\n                         <use xlink:href="img/icons/icons.svg#time"></use>\n                     </svg>\n                       <img data-src="img/recipes/${timeIcon}" class="lazy" alt="timeIcon">\n                       <span>${value.time}</span>\n                  </div>\n                <div class="specification-recipes__item">\n                  <img data-src="img/recipes/${personIcon}" class="lazy" alt="personIcon">\n                  <span>${value.portion}</span>\n              </div>\n                <div class="specification-recipes__item">\n                         <img data-src="img/recipes/${hardIcon}" class="lazy" alt="hardIcon">\n                       <span>${value.complexity}</span>\n                    </div>\n               </div>\n            `;
                     recipesTemplate += recipesItem;
@@ -7421,7 +7424,7 @@
         let catalogProductsChicken = [];
         let catalogProductsSouce = [];
         let catalogProductsStew = [];
-        async function createHTML(products) {
+        function createHTML(products) {
             const homeProducts = [];
             catalogProductsChicken = [];
             catalogProductsSouce = [];
@@ -7429,7 +7432,7 @@
             products.forEach((item => {
                 const id = item.id, url = item.url, type = item.type, product = item.product, image = item.image, title = item.title, freez = item.freez, cold = item.cold, info = item.info, freezInfo = item.freezProduct, coldInfo = item.coldProduct, storageFrom = item.storageFrom, storageTo = item.storageTo, bestBefore = item.bestBefore, energyValue = item.energyValue;
                 let productTemplate = "";
-                const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product}">\n           <div class="items-product__image">\n             <div class="items-product__big-image">\n              <img data-src="img/products/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n               <div class="swiper-lazy-preloader"></div>\n            </div>\n          <div class="items-product__small-image small-image">\n            <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                  <img data-src="img/products/${freez}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n              </div>\n            <div class="small-image__item">\n              <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                <img data-src="img/products/${cold}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n            </div>\n          </div>\n        </div>\n          <div class="items-product__info">\n            <div class="items-product__title">${title}</div>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n          </div>\n      `;
+                const productItem = `\n        <article id="${id}" data-type=${type} data-product=${product} class="items-product__item ${product} swiper-slide">\n           <div class="items-product__image">\n             <div class="items-product__big-image">\n              <img data-src="img/products/${image}" class="lazy" alt="${title}" width="100%" height="100%">\n               <div class="swiper-lazy-preloader"></div>\n            </div>\n          <div class="items-product__small-image small-image">\n            <div class="small-image__item">\n               <span class="small-image__freez">${freezInfo ? info : ""}</span>\n                  <img data-src="img/products/${freez}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n              </div>\n            <div class="small-image__item">\n              <span class="small-image__cold">${coldInfo ? info : ""}</span>\n                <img data-src="img/products/${cold}" class="lazy" alt="${info ? info : "Іконка"}" width="100%" height="100%">\n            </div>\n          </div>\n        </div>\n          <div class="items-product__info">\n            <div class="items-product__title">${title}</div>\n              <span>${storageFrom}<span><span>${storageTo}<span>|</span>${bestBefore}</span>\n          </div>\n      `;
                 energyValue.forEach((value => {
                     const productItemHideInfo = `<div class="items-product__hide-info info-hide">\n               <div class="info-hide__energy">\n                 <div class="info-hide__kkal">\n                   <div class="info-hide__title">${value.kkal}</div>\n                    <div class="info-hide__text">колорії</div>\n                  </div>\n                     <div class="info-hide__protein">\n                      <div class="info-hide__title">${value.protein}</div>\n                       <div class="info-hide__text">білки</div>\n                   </div>\n                    <div class="info-hide__fat">\n                     <div class="info-hide__title">${value.fat}</div>\n                     <div class="info-hide__text">жири</div>\n                  </div>\n               </div>\n                <a href="${url}" class="info-hide__link-product product-link">\n                   <span class="product-link__text">Детальніше</span>\n                     <svg class="product-link__icon">\n                        <use xlink:href="img/icons/icons.svg#arrow-btn"></use>\n                    </svg>\n                  </a>\n              `;
                     productTemplate += productItem;
@@ -7441,21 +7444,21 @@
                     if ("stew" === type) catalogProductsStew.push(productTemplate);
                 }));
             }));
-            if (productsHome) await homeProductsAdd(homeProducts, productsHome);
+            if (productsHome) homeProductsAdd(homeProducts, productsHome);
             if (catalogProducts) {
-                await catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
+                catalogProductsAdd(catalogProductsChicken, catalogProductsSouce, catalogProductsStew);
                 const allProductsCategory = document.querySelector("#allProducts");
                 window.addEventListener("resize", (e => {
                     resizeTabs(allProductsCategory);
                 }));
                 resizeTabs(allProductsCategory);
             }
-            if (moreProduct) await moreProductAdd(homeProducts, moreProduct, length);
+            if (moreProduct) moreProductAdd(homeProducts, moreProduct, length);
         }
         function getRandomIndex(maxIndex, length) {
             return Math.floor(Math.random() * (maxIndex - length + 1));
         }
-        async function moreProductAdd(arr, block) {
+        function moreProductAdd(arr, block) {
             const length = 3;
             const startIndex = getRandomIndex(arr.length, length);
             const moreProducts = arr.slice(startIndex, startIndex + length);
@@ -7466,7 +7469,7 @@
             hideSmallImage(block);
             productsAction(block);
         }
-        async function homeProductsAdd(arr, block) {
+        function homeProductsAdd(arr, block) {
             const htmlProductsTemplate = arr.join("");
             block.insertAdjacentHTML("beforeend", htmlProductsTemplate);
             lazyMedia.update();
@@ -7480,7 +7483,7 @@
         let newArrayChicken = [];
         let newArraySouce = [];
         let newArrayStew = [];
-        async function catalogProductsAdd(arrChicken, arrSouce, arrStew) {
+        function catalogProductsAdd(arrChicken, arrSouce, arrStew) {
             const newsPageBlock = document.querySelector("#catalogProducts");
             const tabsBody = newsPageBlock.querySelectorAll(".tabs__body");
             const tabsTitle = document.querySelectorAll(".tabs__title");
@@ -7757,53 +7760,57 @@
         let sliderLoad = false;
         let products = [];
         let productAdd = false;
-        let products_firstLoad = false;
         const productsBlock = document.querySelector("#products");
         const products_catalogProducts = document.querySelector("#catalogProducts");
         const products_moreProduct = document.querySelector(".more-products__items");
         const preloaderProducts = document.querySelector(".products__preloader");
         const pageProducts = document.querySelector(".page__products");
         const moreProductsPage = document.querySelector(".more-products");
-        if (products_catalogProducts) getProducts();
+        window.addEventListener("load", (() => {
+            if (products_catalogProducts) getProducts();
+            if (pageProducts || moreProductsPage) window.addEventListener("scroll", initProduct);
+        }));
         const filterProductsCategory = document.querySelector("#filterCategory");
         window.addEventListener("resize", (e => {
             resizeTabs(filterProductsCategory);
         }));
         resizeTabs(filterProductsCategory);
-        if (pageProducts || moreProductsPage) {
-            window.addEventListener("scroll", initProduct);
-            initProduct();
-        }
-        window.addEventListener("resize", getProducts);
-        async function initProduct() {
+        function initProduct() {
             const targetElement = document.querySelector(".page__products") || document.querySelector(".product__more");
             if (true === productAdd) return;
             if (productsBlock && targetElement.classList.contains("_watcher-view") && !productAdd) {
-                products_firstLoad = true;
-                await getProducts();
+                getProducts();
+                preloaderProducts.remove();
+                productAdd = true;
+            }
+            if (moreProductsPage && targetElement.classList.contains("_watcher-view") && !productAdd) {
+                getProducts();
                 preloaderProducts.remove();
                 productAdd = true;
             }
         }
+        async function sliderInitProduct() {
+            if (sliderLoad = true && pageProducts && window.innerWidth < 991.98 && pageProducts.classList.contains("_watcher-view")) {
+                productSlider();
+                sliderLoad = false;
+            }
+        }
         async function getProducts() {
             if (productsLoaded || productAdd) return;
-            if (!products_firstLoad) return;
             const file = `json/products.json?version=${(new Date).getTime()}`;
             try {
                 const cacheKey = "productsCache";
                 const cachedData = localStorage.getItem(cacheKey);
                 if (cachedData) {
                     const data = JSON.parse(cachedData);
-                    console.log("Cached data:", data);
+                    console.log("Cached data products:", data);
                     products = [];
                     products = [ ...data.products ];
                     await loadProducts(products);
-                    if (sliderLoad = true && pageProducts && window.innerWidth < 991.98) {
-                        await productSlider();
-                        sliderLoad = false;
-                    }
-                    tabsSlider();
+                    await sliderInitProduct();
                     productsLoaded = true;
+                    window.addEventListener("scroll", tabsSlider);
+                    tabsSlider();
                     return;
                 } else {
                     const response = await fetch(file, {
@@ -7814,15 +7821,13 @@
                         products = [];
                         const data = await response.json();
                         localStorage.setItem(cacheKey, JSON.stringify(data));
-                        console.log("Data:", data);
+                        console.log("Data products:", data);
                         products = [ ...data.products ];
                         await loadProducts(products);
-                        if (sliderLoad = true && pageProducts && window.innerWidth < 991.98) {
-                            await productSlider();
-                            sliderLoad = false;
-                        }
-                        tabsSlider();
+                        await sliderInitProduct();
                         productsLoaded = true;
+                        window.addEventListener("scroll", tabsSlider);
+                        tabsSlider();
                     } else throw new Error("Response Products not OK");
                 }
             } catch (err) {
@@ -7841,12 +7846,12 @@
         }
         async function loadProducts(data) {
             if (productsBlock) {
-                await createHTML(data);
+                createHTML(data);
                 productsFilter();
             }
-            if (products_catalogProducts) await createHTML(data);
+            if (products_catalogProducts) createHTML(data);
             if (products_moreProduct) {
-                await createHTML(data);
+                createHTML(data);
                 moreProductSlider();
             }
         }
@@ -8116,15 +8121,15 @@
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
                 slider.classList.add("swiper-wrapper");
-                for (const slide of slider.children) slide.classList.add("swiper-slide");
+                for (const slide of slider.children) if (!slide.classList.contains("swiper-slide")) slide.classList.add("swiper-slide");
             }));
         }
-        async function buildProductSlider() {
+        function buildProductSlider() {
             let sliders = document.querySelectorAll('[class*="__product-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
                 slider.classList.add("swiper-wrapper");
-                for (const slide of slider.children) slide.classList.add("swiper-slide");
+                for (const slide of slider.children) if (!slide.classList.contains("swiper-slide")) slide.classList.add("swiper-slide");
             }));
         }
         function buildTabsSlider() {
@@ -8143,26 +8148,26 @@
                 }
             }
         }
-        async function buildRecipesSlider() {
+        function buildRecipesSlider() {
             let sliders = document.querySelectorAll('[class*="__recipes-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
                 slider.classList.add("swiper-wrapper");
-                for (const slide of slider.children) slide.classList.add("swiper-slide");
+                for (const slide of slider.children) if (!slide.classList.contains("swiper-slide")) slide.classList.add("swiper-slide");
             }));
         }
-        async function buildNewsSlider() {
+        function buildNewsSlider() {
             let sliders = document.querySelectorAll('[class*="__news-swiper"]:not(.swiper-wrapper)');
             if (sliders) sliders.forEach((slider => {
                 slider.parentElement.classList.add("swiper");
                 slider.classList.add("swiper-wrapper");
-                for (const slide of slider.children) slide.classList.add("swiper-slide");
+                for (const slide of slider.children) if (!slide.classList.contains("swiper-slide")) slide.classList.add("swiper-slide");
             }));
         }
         async function newsSlider() {
             if (window.innerWidth <= 669.98 && null === newsSwiper) {
                 if (document.querySelector(".news__slider")) {
-                    await buildNewsSlider();
+                    buildNewsSlider();
                     newsSwiper = new core(".news__slider", {
                         observer: true,
                         observeParents: true,
@@ -8179,7 +8184,7 @@
         async function recipesSlider() {
             if (window.innerWidth <= 669.98 && null === recipesSwiper) {
                 if (document.querySelector(".recipes__slider")) {
-                    await buildRecipesSlider();
+                    buildRecipesSlider();
                     recipesSwiper = new core(".recipes__slider", {
                         observer: true,
                         observeParents: true,
@@ -8277,10 +8282,10 @@
                 }
             } else destroyBannerSwiper();
         }
-        async function productSlider() {
+        function productSlider() {
             if (window.innerWidth < 991.98 && null === productSwiper || sliderLoad) {
                 if (document.querySelector(".products__slider")) {
-                    await buildProductSlider();
+                    buildProductSlider();
                     productSwiper = new core(".products__slider", {
                         allowTouchMove: true,
                         observer: true,
@@ -8586,7 +8591,7 @@
                 const cachedData = localStorage.getItem(cacheKey);
                 if (cachedData) {
                     const data = JSON.parse(cachedData);
-                    console.log("Cached data:", data);
+                    console.log("Cached data one product:", data);
                     productsArray = [];
                     productsArray.push(...data.products);
                     loadProductPage(productsArray);
@@ -8599,11 +8604,11 @@
                     if (response.ok) {
                         const data = await response.json();
                         localStorage.setItem(cacheKey, JSON.stringify(data));
-                        console.log("Data:", data);
+                        console.log("Data one product:", data);
                         productsArray = [];
                         productsArray.push(...data.products);
                         loadProductPage(productsArray);
-                    } else throw new Error("Response News not OK");
+                    } else throw new Error("Response OneProduct not OK");
                 }
             } catch (err) {
                 console.error(err);
@@ -8683,7 +8688,7 @@
                 const cachedData = localStorage.getItem(cacheKey);
                 if (cachedData) {
                     const data = JSON.parse(cachedData);
-                    console.log("Cached data:", data);
+                    console.log("Cached data remen:", data);
                     loadRamenRecipe(data);
                     return;
                 } else {
@@ -8694,7 +8699,7 @@
                     if (response.ok) {
                         const data = await response.json();
                         localStorage.setItem(cacheKey, JSON.stringify(data));
-                        console.log("Data:", data);
+                        console.log("Data ramen:", data);
                         loadRamenRecipe(data);
                     } else throw new Error("Response Ramen not OK");
                 }
@@ -8751,34 +8756,33 @@
         const newsDate = document.querySelector("#date");
         const newsContent = document.querySelector("#content");
         const preloaderNews = document.querySelector(".news__preloader");
-        const pageNews = document.querySelector(".page__products");
+        const pageNews = document.querySelector(".page__news");
         const moreNews = document.querySelector(".more-news");
         const allNews = document.querySelector(".all-news");
         let newsAdd = false;
         let arrNews = [];
-        let news_firstLoad = false;
-        if (newsDate && newsContent) {
-            getNews();
-            preloaderNews.remove();
-        }
-        if (pageNews || moreNews) {
-            window.addEventListener("scroll", initNews);
-            initNews();
-        }
-        if (allNews) getNews();
-        window.addEventListener("resize", getNews);
-        async function initNews() {
+        window.addEventListener("load", (() => {
+            if (newsDate && newsContent) {
+                getNews();
+                preloaderNews.remove();
+            }
+            if (allNews) getNews();
+        }));
+        if (pageNews || moreNews) window.addEventListener("scroll", initNews);
+        function initNews() {
             const targetElement = document.querySelector(".page__news");
             if (true === newsAdd) return;
             if (newsBlock && targetElement) if (targetElement.classList.contains("_watcher-view") && !newsAdd) {
-                news_firstLoad = true;
-                await getNews();
+                getNews();
                 preloaderNews.remove();
                 newsAdd = true;
             }
         }
+        async function sliderInitNews() {
+            if (window.innerWidth <= 669.98 && pageNews.classList.contains("_watcher-view")) await newsSlider();
+        }
         async function getNews() {
-            if (newsAdd || !news_firstLoad) return;
+            if (newsAdd) return;
             try {
                 const file = `json/news_and_actions.json?version=${(new Date).getTime()}`;
                 const cacheKey = "newsCache";
@@ -8787,9 +8791,11 @@
                     const data = JSON.parse(cachedData);
                     arrNews = [];
                     arrNews = [ ...data.news ];
-                    console.log("Cached data:", data);
+                    console.log("Cached data news:", data);
                     await loadNews(arrNews);
-                    if (window.innerWidth <= 669.98) await newsSlider();
+                    window.addEventListener("resize", sliderInitNews);
+                    window.addEventListener("scroll", sliderInitNews);
+                    await sliderInitNews();
                     return;
                 } else {
                     const response = await fetch(file, {
@@ -8801,9 +8807,11 @@
                         arrNews = [];
                         arrNews = [ ...data.news ];
                         localStorage.setItem(cacheKey, JSON.stringify(data));
-                        console.log("Data:", data);
+                        console.log("Data news:", data);
                         await loadNews(arrNews);
-                        if (window.innerWidth <= 669.98) await newsSlider();
+                        window.addEventListener("resize", sliderInitNews);
+                        window.addEventListener("scroll", sliderInitNews);
+                        await sliderInitNews();
                     } else throw new Error("Response News not OK");
                 }
             } catch (err) {
@@ -8822,7 +8830,7 @@
             data.forEach((item => {
                 const id = item.id, url = item.url, image = item.image, logo = item.logo, title = item.title, date = item.date, type = item.type;
                 newsTemplate = "";
-                const newsItem = `\n                <article id="${id}" data-type="${type}" class="items-news__item">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo" width="100%" height="100%" >\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}" width="100%" height="100%">\n                       <div class="swiper-lazy-preloader"></div>\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <div class="items-news__title">${title}</div>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
+                const newsItem = `\n                <article id="${id}" data-type="${type}" class="items-news__item swiper-slide">\n                    <div class="items-news__logo">\n                      <img data-src="img/news_and_actions/${logo}" class="lazy" alt="Logo" width="100%" height="100%" >\n                   </div>\n                 <div class="items-news__image">\n                     <a href="${url}">\n                        <img data-src="img/news_and_actions/${image}" class=""lazy alt="${type}" width="100%" height="100%">\n                       <div class="swiper-lazy-preloader"></div>\n                    </a>\n                </div>\n                 <div class="items-news__info">\n                      <div class="items-news__title">${title}</div>\n                      <span>${date}</span>\n                 </div>\n               <div class="items-news__type news-type">${type}</div>\n              `;
                 newsTemplate += newsItem;
                 newsTemplate += `</article>`;
                 const newsActions_Date = `  \n                     <div class="news-actions__type news-type">${type}</div>\n                      <span>${date}</span>\n                   `;

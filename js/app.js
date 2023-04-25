@@ -7151,6 +7151,7 @@
         let numCards = 4;
         let loadProduct = false;
         async function pageBlockRecipes(arr) {
+            const currentOrientation = window.screen.orientation.type;
             function updateRecipesActions() {
                 let newArray = [];
                 if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
@@ -7160,11 +7161,11 @@
                 lazyMedia.update();
                 loadProduct = true;
             }
-            window.addEventListener("resize", (e => {
-                if (window.innerWidth > window.innerHeight) {
+            window.screen.orientation.addEventListener("change", (() => {
+                if ("landscape-primary" === currentOrientation) {
                     loadProduct = false;
                     updateRecipesActions();
-                } else {
+                } else if ("portrait-primary" === currentOrientation) {
                     loadProduct = false;
                     updateRecipesActions();
                 }
@@ -7506,6 +7507,7 @@
             tabsTitle.forEach(((el, index) => {
                 const activeTitle = el.classList.contains("_tab-active");
                 indexTitle = index;
+                const currentOrientation = window.screen.orientation.type;
                 tabsBody.forEach(((tab, index) => {
                     const tabItem = tab.querySelector(".products-catalog__item");
                     const {products} = tabItem.dataset;
@@ -7519,11 +7521,11 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
-                        window.addEventListener("resize", (e => {
-                            if (window.innerWidth > window.innerHeight) {
+                        window.screen.orientation.addEventListener("change", (() => {
+                            if ("landscape-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsChicken();
-                            } else {
+                            } else if ("portrait-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsChicken();
                             }
@@ -7539,11 +7541,11 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
-                        window.addEventListener("resize", (e => {
-                            if (window.innerWidth > window.innerHeight) {
+                        window.screen.orientation.addEventListener("change", (() => {
+                            if ("landscape-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsSouce();
-                            } else {
+                            } else if ("portrait-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsSouce();
                             }
@@ -7559,11 +7561,11 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
-                        window.addEventListener("resize", (e => {
-                            if (window.innerWidth > window.innerHeight) {
+                        window.screen.orientation.addEventListener("change", (() => {
+                            if ("landscape-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsStew();
-                            } else {
+                            } else if ("portrait-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsStew();
                             }
@@ -8937,6 +8939,7 @@
                     const tabItem = tab.querySelector(".news-actions__item");
                     const {news} = tabItem.dataset;
                     let loadProduct = false;
+                    const currentOrientation = window.screen.orientation.type;
                     if ("all" === news && activeTitle && index == indexTitle) {
                         let numCards = 4;
                         function updateCardsAll() {
@@ -8945,11 +8948,11 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
-                        window.addEventListener("resize", (e => {
-                            if (window.innerWidth > window.innerHeight) {
+                        window.screen.orientation.addEventListener("change", (() => {
+                            if ("landscape-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsAll();
-                            } else {
+                            } else if ("portrait-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsAll();
                             }
@@ -8964,11 +8967,11 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
-                        window.addEventListener("resize", (e => {
-                            if (window.innerWidth > window.innerHeight) {
+                        window.screen.orientation.addEventListener("change", (() => {
+                            if ("landscape-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsNews();
-                            } else {
+                            } else if ("portrait-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsNews();
                             }
@@ -8983,11 +8986,11 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
-                        window.addEventListener("resize", (e => {
-                            if (window.innerWidth > window.innerHeight) {
+                        window.screen.orientation.addEventListener("change", (() => {
+                            if ("landscape-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsActions();
-                            } else {
+                            } else if ("portrait-primary" === currentOrientation) {
                                 loadProduct = false;
                                 updateCardsActions();
                             }

@@ -7151,13 +7151,25 @@
         let numCards = 4;
         let loadProduct = false;
         async function pageBlockRecipes(arr) {
-            let newArray = [];
-            if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
-            newArray = updateArray(arr);
-            pagination(newArray, recipesPageBlock, numCards, 1);
-            _slideDown(recipesPageBlock, 800);
-            lazyMedia.update();
-            loadProduct = true;
+            function updateRecipesActions() {
+                let newArray = [];
+                if (window.innerWidth < 668 && false === loadProduct) numCards = 1; else numCards = 4;
+                newArray = updateArray(arr);
+                pagination(newArray, recipesPageBlock, numCards, 1);
+                _slideDown(recipesPageBlock, 800);
+                lazyMedia.update();
+                loadProduct = true;
+            }
+            window.addEventListener("resize", (e => {
+                if (window.innerWidth > window.innerHeight) {
+                    loadProduct = false;
+                    updateRecipesActions();
+                } else {
+                    loadProduct = false;
+                    updateRecipesActions();
+                }
+            }));
+            updateRecipesActions();
         }
         async function homeBlockRecipes(arr, block) {
             const htmlRecipes = arr.slice(0, 4);
@@ -7507,6 +7519,15 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
+                        window.addEventListener("resize", (e => {
+                            if (window.innerWidth > window.innerHeight) {
+                                loadProduct = false;
+                                updateCardsChicken();
+                            } else {
+                                loadProduct = false;
+                                updateCardsChicken();
+                            }
+                        }));
                         updateCardsChicken();
                     }
                     if ("souce" === products && activeTitle && index == indexTitle) {
@@ -7518,6 +7539,15 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
+                        window.addEventListener("resize", (e => {
+                            if (window.innerWidth > window.innerHeight) {
+                                loadProduct = false;
+                                updateCardsSouce();
+                            } else {
+                                loadProduct = false;
+                                updateCardsSouce();
+                            }
+                        }));
                         updateCardsSouce();
                     }
                     if ("stew" === products && activeTitle && index == indexTitle) {
@@ -7529,6 +7559,15 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
+                        window.addEventListener("resize", (e => {
+                            if (window.innerWidth > window.innerHeight) {
+                                loadProduct = false;
+                                updateCardsStew();
+                            } else {
+                                loadProduct = false;
+                                updateCardsStew();
+                            }
+                        }));
                         updateCardsStew();
                     }
                 }));
@@ -8906,6 +8945,15 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
+                        window.addEventListener("resize", (e => {
+                            if (window.innerWidth > window.innerHeight) {
+                                loadProduct = false;
+                                updateCardsAll();
+                            } else {
+                                loadProduct = false;
+                                updateCardsAll();
+                            }
+                        }));
                         updateCardsAll();
                     }
                     if ("news" === news && activeTitle && index === indexTitle) {
@@ -8916,6 +8964,15 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
+                        window.addEventListener("resize", (e => {
+                            if (window.innerWidth > window.innerHeight) {
+                                loadProduct = false;
+                                updateCardsNews();
+                            } else {
+                                loadProduct = false;
+                                updateCardsNews();
+                            }
+                        }));
                         updateCardsNews();
                     }
                     if ("actions" === news && activeTitle && index === indexTitle) {
@@ -8926,6 +8983,15 @@
                             _slideDown(tabItem, 800);
                             loadProduct = true;
                         }
+                        window.addEventListener("resize", (e => {
+                            if (window.innerWidth > window.innerHeight) {
+                                loadProduct = false;
+                                updateCardsActions();
+                            } else {
+                                loadProduct = false;
+                                updateCardsActions();
+                            }
+                        }));
                         updateCardsActions();
                     }
                 }));

@@ -2968,7 +2968,6 @@ body::after {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  cursor: pointer;
   background: #EFEFEF;
   -webkit-transform-origin: 100% 100%;
       -ms-transform-origin: 100% 100%;
@@ -2981,7 +2980,7 @@ body::after {
 }
 
 .menu-cycle__item._active {
-  background-color: #E50746;
+  background: #E50746;
 }
 
 .menu-cycle__item:nth-child(1) {
@@ -5195,12 +5194,6 @@ button.swiper-pagination-bullet {
   }
 }
 
-@media (max-width: 25em) {
-  .info__image {
-    padding: 88% 0% 0% 0%;
-  }
-}
-
 @media (max-width: 20em) {
   .tabs__title {
     font-size: 0.9375rem;
@@ -5569,7 +5562,7 @@ button.swiper-pagination-bullet {
   }
 
   .certificates {
-    padding-top: 3.125rem;
+    padding-top: 4.375rem;
   }
 
   .certificates__title {
@@ -5806,6 +5799,10 @@ button.swiper-pagination-bullet {
         -ms-flex-direction: column-reverse;
             flex-direction: column-reverse;
     row-gap: 1.875rem;
+  }
+
+  .info__image {
+    padding: 100% 0% 0% 0%;
   }
 }
 
@@ -7412,15 +7409,15 @@ button.swiper-pagination-bullet {
     }
 }
 
-@supports (padding-top: clamp( 3.125rem , 1.8637387387rem  +  6.3063063063vw , 7.5rem )) {
+@supports (padding-top: clamp( 4.375rem , 3.4740990991rem  +  4.5045045045vw , 7.5rem )) {
     .certificates {
-      padding-top: clamp( 3.125rem , 1.8637387387rem  +  6.3063063063vw , 7.5rem );
+      padding-top: clamp( 4.375rem , 3.4740990991rem  +  4.5045045045vw , 7.5rem );
     }
 }
 
-@supports not (padding-top: clamp( 3.125rem , 1.8637387387rem  +  6.3063063063vw , 7.5rem )) {
+@supports not (padding-top: clamp( 4.375rem , 3.4740990991rem  +  4.5045045045vw , 7.5rem )) {
     .certificates {
-      padding-top: calc(3.125rem + 4.375 * (100vw - 20rem) / 69.375);
+      padding-top: calc(4.375rem + 3.125 * (100vw - 20rem) / 69.375);
     }
 }
 
@@ -8140,18 +8137,6 @@ button.swiper-pagination-bullet {
   }
 }
 
-@media (min-width: 48.1875em) and (max-width: 81.25em) {
-  .info__image {
-    padding: 37% 0% 0% 0%;
-  }
-}
-
-@media (min-width: 25em) and (max-width: 48.125em) {
-  .info__image {
-    padding: 70% 0% 0% 0%;
-  }
-}
-
 @media (any-hover: hover) {
   .form__button:hover,
   .error__button:hover,
@@ -8387,6 +8372,11 @@ button.swiper-pagination-bullet {
     color: #E50746;
   }
 
+  .menu-cycle__item:hover {
+    background: #e3e3e3;
+    cursor: pointer;
+  }
+
   .contact__link:hover {
     color: #E50746;
   }
@@ -8444,6 +8434,12 @@ button.swiper-pagination-bullet {
 
   .header-white .menu__link:hover {
     color: #232323;
+  }
+}
+
+@media (pointer: coarse) {
+  .menu-cycle__link {
+    cursor: none;
   }
 }
 
